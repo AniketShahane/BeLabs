@@ -1,0 +1,27 @@
+<div class="navbar-fixed">
+  <nav class="main-navbar">
+    <div class="nav-wrapper container">
+      <a href="{% url 'main' %}" class="brand-logo valign-wrapper">BeLabs</a>
+      <a href="#" class="sidenav-trigger" data-target="mobile-nav">
+        <i class="fas fa-bars"></i>
+      </a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="{% url 'blogs' %}" style="font-size: 2.2vh !important;">Blogs</a></li>
+        <li><a href="{% url 'login' %}" style="font-size: 2.2vh !important;">Login</a></li>
+        <li><a href="{% url 'register' %}" style="font-size: 2.2vh !important;">Register</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+<ul class="sidenav" id="mobile-nav" style="background: #272727;">
+  <li>
+    <a href="{% url 'blogs' %}" style="color: #f4f4f4 !important;">Blogs</a>
+  </li>
+  <li>
+    <a href="{% url 'login' %}" style="color: #f4f4f4 !important;">Login</a>
+  </li>
+  <li>
+    <a href="{% url 'register' %}" style="color: #f4f4f4 !important;">Register</a>
+  </li>
+</ul>

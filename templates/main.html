@@ -1,0 +1,18 @@
+{% extends 'partials/base.html' %}
+{% block content %}
+
+<div class="bodyback"></div>
+<div class="overlay"></div>
+{% include 'partials/_navbar.html' %}
+
+<div class="main-header">
+  <p class="head"><span id="head-welcome">Welcome To </span><span id="head-name" style="color: #f4f4f4; font-size: 6vh;">BeLabs</span></p>
+  <hr>
+  <p id="main-content">This is a platform for Novice Programmers. It allows users to share their expertise on a field and help beginners learn better and quicker.</p>
+  <small id="main-quote">Develop a passion for learning. If you do, you will never cease to grow.</small>
+</div>
+
+<script src="https://unpkg.com/scrollreveal"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+{% endblock %}

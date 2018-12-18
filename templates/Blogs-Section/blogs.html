@@ -1,0 +1,96 @@
+{% extends 'partials/base.html' %}
+
+{% block content %}
+{% include 'partials/_navbar.html' %}
+
+<!-- Resources Collapsible Section  -->
+<div class="main-rb-section">
+  <div class="collapsing-resources center">
+    <h3 class="blog-header" style="margin: 0.6rem 0;">Get Started</h3>
+    <ul class="collapsible main-collapse">
+      <li>
+        <div class="collapsible-header"><i class="far fa-star"></i>Resources</div>
+        <div class="collapsible-body" style="background: #f4f4f4;">
+          <ul class="collapsible">
+            <li>
+              <div class="collapsible-header"><i class="fab fa-firefox"></i>Web Dev</div>
+              <div class="collapsible-body" style="">
+                <span>
+                  <div class="collection" style="border:2px solid #272727;">
+                    <a href="https://www.udemy.com" target="_blank" class="collection-item" style="color: #272727;">Udemy</a>
+                    <a href="https://www.udacity.com" target="_blank" class="collection-item" style="color: #272727;">Udacity</a>
+                    <a href="#!" class="collection-item" style="color: #272727;">Coursera</a>
+                    <a href="#!" class="collection-item" style="color: #272727;">EdX</a>
+                  </div>
+
+                </span>
+              </div>
+            </li>
+            <li>
+              <div class="collapsible-header"><i class="fas fa-laptop"></i>Programming</div>
+              <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+            </li>
+            <li>
+              <div class="collapsible-header"><i class="fas fa-brain"></i>Machine Learning & AI</div>
+              <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+            </li>
+            <li>
+              <div class="collapsible-header"><i class="fas fa-globe"></i>Networking & Security</div>
+              <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+            </li>
+            <li>
+              <div class="collapsible-header"><i class="fas fa-mobile"></i>Android & IOS</div>
+              <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+            </li>
+            <li>
+              <div class="collapsible-header"><i class="fas fa-wifi"></i>Internet Of Things</div>
+              <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+            </li>
+            <li>
+              <div class="collapsible-header"><i class="fas fa-infinity"></i>Other Resources</div>
+              <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+            </li>
+            <li>
+              <div class="collapsible-header"><i class="fas fa-hands-helping"></i>Help Us Expand</div>
+              <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <li>
+        <div class="collapsible-header"><i class="fab fa-blogger"></i>Blogger of the Month</div>
+        <div class="collapsible-body" style="background: #f4f4f4;"><span>Lorem ipsum dolor sit amet.</span></div>
+      </li>
+    </ul>
+  </div>
+
+
+  <div class="blog-section">
+    <div class="blog-head-section">
+      <h3 class="blog-header">Blogs</h3>
+      <div class="search">
+        <a href="{% url 'search' %}" class="blog-header-search"><i class="fas fa-search"></i></a>
+      </div>
+    </div>
+    <div class="row">
+      {% for blog in blogs %}
+      <div class="col s12 m6 l4">
+        <div class="card">
+          <div class="card-image">
+            <img src="Resources/CSS/Background.jpg" style="object-fit:cover;" height="200" width="100%">
+            <span class="card-title hoverable"><a href="blog.html" style="color: #f4f4f4;">Card Title</a></span>
+            <a class="btn-floating halfway-fab waves-effect waves-light red btn-large"><i class="far fa-heart"></i></a>
+          </div>
+          <div class="card-content">
+            <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/scrollreveal"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+{% endblock %}

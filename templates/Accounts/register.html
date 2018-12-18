@@ -1,0 +1,49 @@
+{% extends 'partials/base.html' %}
+
+{% block content %}
+{% include 'partials/_navbar.html' %}
+
+  <div class="center form-container" style="margin-top: 1rem !important;">
+    <h3 class="blog-header" style="margin-top: 2rem;">Register</h3>
+    <div class="center">
+      <div class="row">
+        <form class="col s10 m10 offset-m1 offset-s1">
+          <div class="row">
+            <div class="input-field col s6">
+              <input id="firstname" type="text" class="validate" name="FirstName" style="color: #272727; font-size: 2.6vh; font-family: 'Roboto Condensed', sans-serif;">
+              <label for="firstname" style="color: #272727; font-size: 2.4vh;">First Name</label>
+            </div>
+            <div class="input-field col s6">
+              <input id="lastname" type="text" class="validate" name="LastName" style="color: #272727; font-size: 2.6vh; font-family: 'Roboto Condensed', sans-serif;">
+              <label for="lastname" style="color: #272727; font-size: 2.4vh;">Last Name</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="email" type="email" class="validate" name="email" style="color: #272727; font-size: 2.6vh; font-family: 'Roboto Condensed', sans-serif;">
+              <label for="email" style="color: #272727; font-size: 2.4vh;">Email</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="password" type="password" class="validate" name="password" style="color: #272727; font-size: 2.6vh; font-family: 'Roboto Condensed', sans-serif;">
+              <label for="password" style="color: #272727; font-size: 2.4vh;">Password</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="cpassword" type="password" class="validate" name="cpassword" style="color: #272727; font-size: 2.6vh; font-family: 'Roboto Condensed', sans-serif;">
+              <label for="cpassword" style="color: #272727; font-size: 2.4vh;">Confirm Password</label>
+            </div>
+          </div>
+          <button type="submit" name="submit" id="register-button" class="btn btn-large waves-light waves-effect" style="background: #272727; color: #f4f4f4; font-family: 'Poppins', cursive; font-size: 2.2vh; margin-bottom: 2rem;">Register <i class="fas fa-share-square"
+              style="margin-left: 4px"></i></button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="https://unpkg.com/scrollreveal"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+{% endblock %}
