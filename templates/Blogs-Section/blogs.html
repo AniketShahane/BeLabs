@@ -74,18 +74,20 @@
     </div>
     <div class="row">
       {% for blog in blogs %}
+      {% if blog.is_published %}
       <div class="col s12 m6 l4">
         <div class="card">
           <div class="card-image">
-            <img src="Resources/CSS/Background.jpg" style="object-fit:cover;" height="200" width="100%">
-            <span class="card-title hoverable"><a href="blog.html" style="color: #f4f4f4;">Card Title</a></span>
+            <img src="{{blog.main_image.url}}" style="object-fit:cover;" height="200" width="100%">
+            <span class="card-title hoverable"><a href="{% url 'blog' blog.id %}" style="color: #f4f4f4;">{{blog.title}}</a></span>
             <a class="btn-floating halfway-fab waves-effect waves-light red btn-large"><i class="far fa-heart"></i></a>
           </div>
           <div class="card-content">
-            <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+            <p>{{blog.small_body}}</p>
           </div>
         </div>
       </div>
+      {% endif %}
       {% endfor %}
     </div>
   </div>

@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+{% extends 'partials/base.html' %}
+<!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -13,43 +14,15 @@
   <title>BeLabs</title>
 </head>
 
-<body class="bodyback-plain">
+<body class="bodyback-plain"> -->
   <!-- <div class="overlay"></div> -->
-  <div class="navbar-fixed">
-    <nav class="main-navbar">
-      <div class="nav-wrapper container">
-        <a href="main.html" class="brand-logo valign-wrapper">BeLabs</a>
-        <a href="#" class="sidenav-trigger" data-target="mobile-nav">
-          <i class="fas fa-bars"></i>
-        </a>
-        <ul class="right hide-on-med-and-down">
-          <li><a href="blogs.html" style="font-size: 2.2vh !important;">Blogs</a></li>
-          <li><a href="login.html" style="font-size: 2.2vh !important;">Login</a></li>
-          <li><a href="register.html" style="font-size: 2.2vh !important;">Register</a></li>
-        </ul>
-      </div>
-    </nav>
-  </div>
-
-  <ul class="sidenav" id="mobile-nav" style="background: #272727;">
-    <li>
-      <a href="blogs.html" style="color: #f4f4f4 !important;"><i class="fas fa-smile-wink" style="color: #f4f4f4; font-size: 3vh !important;"></i></a>
-    </li>
-    <li>
-      <a href="blogs.html" style="color: #f4f4f4 !important; font-size: 3vh !important;">Blogs</a>
-    </li>
-    <li>
-      <a href="login.html" style="color: #f4f4f4 !important; font-size: 3vh !important;">Login</a>
-    </li>
-    <li>
-      <a href="register.html" style="color: #f4f4f4 !important; font-size: 3vh !important;">Register</a>
-    </li>
-  </ul>
+  {% block content %}
+  {% include 'partials/_navbar.html' %}
 
   <div class="complete-blog center">
     <div class="main-blog-image">
       <div class="container img-contain">
-        <img src="Resources/CSS/t3.jpg" class="complete-blog-img materialboxed">
+        <img src="{{blog.main_image.url}}" class="complete-blog-img materialboxed">
       </div>
 
       <!-- <div class="container"> -->
@@ -59,11 +32,10 @@
         <div class="col s12 m12 l8">
           <div class="card" style="background: rgba(37, 37, 37,0.8); border: 2px solid #f4f4f4;margin-top: 0.8rem;">
             <div class="card-content white-text center">
-              <span class="card-title" style="display: inline-block; font-size: 3.4vh;font-family: 'Poppins', cursive; line-height: 1.2em ; padding: 1rem !important; margin: 0.2rem auto !important;"><i class="far fa-clipboard"></i> Theory Of
-                Computation</span>
+              <span class="card-title" style="display: inline-block; font-size: 3.4vh;font-family: 'Poppins', cursive; line-height: 1.2em ; padding: 1rem !important; margin: 0.2rem auto !important;"><i class="far fa-clipboard"></i> {{blog.title}}</span>
               <div class="courtesy-p">
-                <p style="margin-left: 1rem;font-size: 2vh; margin-top: 0.4rem;">Written By: Aniket Shahane</p>
-                <p style="margin-left: 1rem;font-size: 2vh; margin-top: 0.4rem;">Contact: shahaneaniket11@gmail.com</p>
+                <p style="margin-left: 1rem;font-size: 2vh; margin-top: 0.4rem;">Written By: {{blog.author.first_name}} {{blog.author.last_name}}</p>
+                <p style="margin-left: 1rem;font-size: 2vh; margin-top: 0.4rem;">Contact: {{blog.author.email}}</p>
               </div>
             </div>
           </div>
@@ -73,7 +45,7 @@
               <div class="card-content white-text center"> -->
           <a href="#">
             <span class="card-title"><i class="far fa-heart"></i></span>
-            <p>400</p>
+            <p>{{blog.likes}}</p>
           </a>
           <!-- </div> -->
           <!-- </div> -->
@@ -83,7 +55,7 @@
               <div class="card-content white-text center"> -->
           <a href="#">
             <span class="card-title"><i class="fas fa-comments"></i></span>
-            <p>10</p>
+            <p>{{blog.comments}}</p>
           </a>
           <!-- </div> -->
           <!-- </div> -->
@@ -95,15 +67,8 @@
     <div class="container">
       <div class="main-blog-content" style="border: 2px solid #f4f4f4; margin-bottom: 1.5rem !important;">
         <div class="author-details" style="border: 2px solid #f4f4f4;">
-          <h3>The Theory of Computation</h3>
-          <p>In theoretical computer science and mathematics, the theory of computation is the branch that deals with how efficiently problems can be solved on a model of computation, using an algorithm. The field is divided into three major
-            branches: automata theorResources/lightbox2-master/disty and languages, computability theory, and computational complexity theory, which are linked by the question: "What are the fundamental capabilities and limitations of
-            computers?".[1]
-
-            In order to perform a rigorous study of computation, computer scientists work with a mathematical abstraction of computers called a model of computation. There are several models in use, but the most commonly examined is the Turing
-            machine.[2] Computer scientists study the Turing machine because it is simple to formulate, can be analyzed and used to prove results, and because it represents what many consider the most powerful possible "reasonable" model of
-            computation (see Church–Turing thesis).[3] It might seem that the potentially infinite memory capacity is an unrealizable attribute, but any decidable problem[4] solved by a Turing machine will always require only a finite amount of
-            memory. So in principle, any problem that can be solved (decided) by a Turing machine can be solved by a computer that has a finite amount of memory.</p>
+          <h3>{{blog.title}}</h3>
+          <p>{{blog.body}}</p>
         </div>
       </div>
     </div>
@@ -135,7 +100,4 @@
   <script src="https://unpkg.com/scrollreveal"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <script src="Resources/lightbox2-master/dist/js/lightbox.js"></script>
-  <script type="text/javascript" src="Resources/JavaScript/main.js"></script>
-</body>
-
-</html>
+  {% endblock %}
