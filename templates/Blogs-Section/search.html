@@ -7,7 +7,8 @@
     <div class="collapsing-resources center">
       <h3 class="blog-header" style="margin: 1rem 0;">Quick Search</h3>
       <div class="row" style="padding: 0.8rem 0;">
-        <form class="col s10 m10 offset-m1 offset-s1">
+        <form class="col s10 m10 offset-m1 offset-s1" method="post" action="{% url 'search' %}">
+          {% csrf_token %}
           <div class="row">
             <div class="input-field col s12">
               <input id="title" type="text" class="validate" name="title" style="color: #272727; font-size: 2.6vh; font-family: 'Roboto Condensed', sans-serif;">
@@ -42,12 +43,12 @@
         <div class="col s12 m6 l4">
           <div class="card">
             <div class="card-image">
-              <img src="Resources/CSS/t6.jpg" style="object-fit:cover;" height="200" width="100%">
-              <span class="card-title hoverable"><a href="#" style="color: #f4f4f4;">Card Title</a></span>
+              <img src="{{result.main_image.url}}" style="object-fit:cover;" height="200" width="100%">
+              <span class="card-title hoverable"><a href="{% url 'blog' result.id %}" style="color: #f4f4f4;">{{result.title}}</a></span>
               <a class="btn-floating halfway-fab waves-effect waves-light red btn-large"><i class="far fa-heart"></i></a>
             </div>
             <div class="card-content">
-              <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+              <p>{{result.small_body}}</p>
             </div>
           </div>
         </div>

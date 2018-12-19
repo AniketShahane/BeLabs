@@ -19,6 +19,7 @@ class Blog(models.Model):
     comments = models.IntegerField(default=0)
     views = models.IntegerField(default=1)
     is_published = models.BooleanField(default=True)
+    # author_name = 
 
     def words(self):
         return len(self.body.split())
