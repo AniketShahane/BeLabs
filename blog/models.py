@@ -19,17 +19,17 @@ class Blog(models.Model):
     comments = models.IntegerField(default=0)
     views = models.IntegerField(default=1)
     is_published = models.BooleanField(default=True)
-    # author_name = 
+    likers = models.TextField(default='', blank=True)
 
     def words(self):
         return len(self.body.split())
 
     def pretty_pub(self):
-        return pub_date.strftime('%b %e, 20%Y')
+        return self.pub_date.strftime('%b %e, 20%Y')
 
     def small_body(self):
-        if len(self.body) > 100:
-            return self.body[:100]+'...'
+        if len(self.body) > 80:
+            return self.body[:80]+'...'
 
         else:
             return self.body

@@ -8,4 +8,5 @@ urlpatterns = [
     path('', views.main, name='main'),
     path('blogs/', include('blog.urls')),
     path('accounts/', include('accounts.urls')),
+    path('comments/', include('comment.urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

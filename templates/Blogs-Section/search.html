@@ -45,10 +45,11 @@
             <div class="card-image">
               <img src="{{result.main_image.url}}" style="object-fit:cover;" height="200" width="100%">
               <span class="card-title hoverable"><a href="{% url 'blog' result.id %}" style="color: #f4f4f4;">{{result.title}}</a></span>
-              <a class="btn-floating halfway-fab waves-effect waves-light red btn-large"><i class="far fa-heart"></i></a>
+              <!-- <a class="btn-floating halfway-fab waves-effect waves-light red btn-large"><i class="far fa-heart"></i></a> -->
             </div>
             <div class="card-content">
-              <p>{{result.small_body}}</p>
+              <p style="font-weight: 500; font-size: 2vh;">{{result.small_body}}</p>
+              <p style="font-weight: 600; font-size: 1.6vh; float:right; margin-bottom: 4px;">~ {{result.author.first_name}} {{result.author.last_name}} ({{result.author.username}})</p>
             </div>
           </div>
         </div>

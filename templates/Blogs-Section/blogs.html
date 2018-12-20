@@ -74,19 +74,24 @@
     </div>
     <div class="row">
       {% for blog in blogs %}
-      {% if blog.is_published %}
+      {% if blog.blog.is_published %}
       <div class="col s12 m6 l4">
         <div class="card">
           <div class="card-image">
-            <img src="{{blog.main_image.url}}" style="object-fit:cover;" height="200" width="100%">
-            <span class="card-title hoverable"><a href="{% url 'blog' blog.id %}" style="color: #f4f4f4;">{{blog.title}}</a></span>
-            <a class="btn-floating halfway-fab waves-effect waves-light red btn-large"><i class="far fa-heart"></i></a>
+            <a href="{% url 'blog' blog.blog.id %}"><img src="{{blog.blog.main_image.url}}" style="object-fit:cover;" height="200" width="100%"></a>
+            <span class="card-title hoverable"><a href="{% url 'blog' blog.blog.id %}" style="color: #f4f4f4;">{{blog.blog.title}}</a></span>
+            <a href="javascript:{document.querySelector('#liker2{{blog.blog.id}}').submit()}" class="btn-floating halfway-fab waves-effect waves-light red btn-large"> {% if blog.is_liked %} <i class="fas fa-heart"></i> {% else %} <i class="far fa-heart"></i> {% endif %} </a>
           </div>
           <div class="card-content">
-            <p>{{blog.small_body}}</p>
+            <p style="font-weight: 500; font-size: 2vh;">{{blog.blog.small_body}}</p>
+            <p style="font-weight: 600; font-size: 1.8vh; float:right; margin-bottom: 4px;">~ {{blog.blog.author.first_name}} {{blog.blog.author.last_name}} ({{blog.blog.author.username}})</p>
           </div>
         </div>
       </div>
+      <form id="liker2{{blog.blog.id}}" action="{% url 'liker2' blog.blog.id %}" method="POST" style="display: none;">
+        {% csrf_token %}
+        <input type="text" style="display: none;">
+      </form>
       {% endif %}
       {% endfor %}
     </div>

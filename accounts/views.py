@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib import auth
 from django.contrib.auth import authenticate
 from blog.models import Blog
+from comment.models import Comment
 # Create your views here.
 def login(request):
     if request.method == "POST":
@@ -57,9 +58,9 @@ def register(request):
 
 def dashboard(request):
     # Get all the blogs written by the user
-    blogs = Blog.objects.all().filter(author_id=request.user.id)
+    blogs = Blog.objects.order_by('-pub_date').filter(author_id=request.user.id)
     likes = 0
-    # comments = 0
+    comments = 0
     no_blogs = len(blogs)
     # views = 0
     words = 0
@@ -67,9 +68,11 @@ def dashboard(request):
     for blog in blogs:
         likes += blog.likes
         words += len(blog.body.split())
+        comments += len(Comment.objects.all().filter(blog=blog))
     content = {
         'likes':likes,
         'words':words,
+        'comments':comments,
         'no_blogs':no_blogs,
         'blogs':blogs
     }

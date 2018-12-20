@@ -43,19 +43,23 @@
         <div class="col s6 m6 l2 blog-icons">
           <!-- <div class="card" style="background: rgba(37, 37, 37, 0); border: none;margin-top: 1.2rem;">
               <div class="card-content white-text center"> -->
-          <a href="#">
-            <span class="card-title"><i class="far fa-heart"></i></span>
+          <a href="javascript:{document.querySelector('#liker').submit()}">
+            <span class="card-title"> {% if is_liked %} <i class="fas fa-heart"></i> {% else %} <i class="far fa-heart"></i> {% endif %} </span>
             <p>{{blog.likes}}</p>
           </a>
+          <form id="liker" action="{% url 'liker' blog.id %}" method="post" style="display:none;">
+            {% csrf_token %}
+            <input type="text" style="display:none;">
+          </form>
           <!-- </div> -->
           <!-- </div> -->
         </div>
         <div class="col s6 m6 l2 blog-icons">
           <!-- <div class="card" style="background: rgba(37, 37, 37, 0); border: none;margin-top: 1.2rem;">
               <div class="card-content white-text center"> -->
-          <a href="#">
+          <a href="#comment_section_box">
             <span class="card-title"><i class="fas fa-comments"></i></span>
-            <p>{{blog.comments}}</p>
+            <p>{{num_comments}}</p>
           </a>
           <!-- </div> -->
           <!-- </div> -->
@@ -73,22 +77,19 @@
       </div>
     </div>
 
-    <div class="container comments_section">
+    <div class="container comments_section" id="comment_section_box">
       <h4 style="font-size: 5vh; font-family: 'Kaushan Script', cursive; font-weight: 600; margin: 0.4rem auto !important;"><i class="far fa-comment-dots"></i> Comment Section <i class="far fa-comment-dots" style="margin-left: 8px !important;"></i></h4>
 
       <div class="comments" style="margin: 0.6rem auto !important;">
         <div class="person_comments" style="height: 50vh">
-          <p class="comment_text" style="padding: 0.6rem 0.4rem !important;"><span class="comment_poster" style="color: #ffe400; font-size: 2.4vh;">@Phil Hellmuth</span>: Hey Son, Just wanted to say Hello This is a Simple comment</p>
-          <p class="comment_text" style="padding: 0.6rem 0.4rem !important;"><span class="comment_poster" style="color: #ffe400; font-size: 2.4vh;">@Daniel Negreanu</span>: Cool that is</p>
-          <p class="comment_text" style="padding: 0.6rem 0.4rem !important;"><span class="comment_poster" style="color: #ffe400; font-size: 2.4vh;">@Phil Hellmuth</span>: Hey Son, Just wanted to say Hello This is a Simple comment</p>
-          <p class="comment_text" style="padding: 0.6rem 0.4rem !important;"><span class="comment_poster" style="color: #ffe400; font-size: 2.4vh;">@Daniel Negreanu</span>: Cool that is</p>
-          <p class="comment_text" style="padding: 0.6rem 0.4rem !important;"><span class="comment_poster" style="color: #ffe400; font-size: 2.4vh;">@Phil Hellmuth</span>: Hey Son, Just wanted to say Hello This is a Simple comment</p>
-          <p class="comment_text" style="padding: 0.6rem 0.4rem !important;"><span class="comment_poster" style="color: #ffe400; font-size: 2.4vh;">@Daniel Negreanu</span>: Cool that is</p>
-          <p class="comment_text" style="padding: 0.6rem 0.4rem !important;"><span class="comment_poster" style="color: #ffe400; font-size: 2.4vh;">@Daniel Negreanu</span>: Cool that is</p>
+          {% for comment in comments %}
+          <p class="comment_text" style="padding: 0.6rem 0.4rem !important;"><span class="comment_poster" style="color: #ffe400; font-size: 2.4vh;">@{{comment.writer.username}}</span>: {{comment.comment_text}}</p>
+          {% endfor %}
         </div>
         <div class="post_comment" style="margin-bottom: 1rem; margin-top: 1rem;">
-          <form style="display: flex; align-items:center;">
-            <input style="flex: 6; font-size: 2vh; font-family: 'Roboto Condensed', sans-serif;" id="comment" type="text" name="comment" value="" placeholder="Write a comment...">
+          <form style="display: flex; align-items:center;" method="POST" action="{% url 'comment' blog.id %}">
+            {% csrf_token %}
+            <input style="flex: 6; font-size: 2vh; font-family: 'Roboto Condensed', sans-serif;" id="comment" type="text" name="comment" value="" placeholder="Write a comment..." required>
             <button style="flex: 1; margin-left: 1rem;" type="submit" name="post_comment_button" id="post_button">Post</button>
           </form>
         </div>
@@ -100,4 +101,31 @@
   <script src="https://unpkg.com/scrollreveal"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <script src="Resources/lightbox2-master/dist/js/lightbox.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+  // Add smooth scrolling to all links
+  $("a").on('click', function(event) {
+
+    // Make sure this.hash has a value before overriding default behavior
+    if (this.hash !== "") {
+      // Prevent default anchor click behavior
+      event.preventDefault();
+
+      // Store hash
+      var hash = this.hash;
+
+      // Using jQuery's animate() method to add smooth page scroll
+      // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+      $('html, body').animate({
+        scrollTop: $(hash).offset().top
+      }, 800, function(){
+
+        // Add hash (#) to URL when done scrolling (default click behavior)
+        window.location.hash = hash;
+      });
+    } // End if
+  });
+});
+</script>
   {% endblock %}

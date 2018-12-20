@@ -1,22 +1,28 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Blog
 from django.contrib.auth.models import User
+from comment.models import Comment
 # Create your views here.
 
 
 def blogs(request):
-    blogs = Blog.objects.all()
+    blogs_list = Blog.objects.order_by('-pub_date')
+    blogs = []
+    for blog in blogs_list:
+        likers_list = [int(x) for x in blog.likers.split()]
+        is_liked = request.user.id in likers_list
+        blogs.append({'blog':blog, 'is_liked': is_liked})
     # This is a temporary fix for the blogs section. Later use database
     return render(request, 'Blogs-Section/blogs.html', {'blogs':blogs})
 
 def search(request):
-    results = Blog.objects.all() # Gets all the objects
+    results = Blog.objects.order_by('-pub_date') # Gets all the objects
     if request.method == "POST":
         # Check to see if title is in the post request that was made
         if 'title' in request.POST:
             title = request.POST['title']
             if title:
-                results = results.filter(title__iexact=title)
+                results = results.filter(title__icontains=title)
 
         if 'keywords' in request.POST:
             keywords = request.POST['keywords']
@@ -37,7 +43,8 @@ def search(request):
                         id.append(obj.id)
                 author_results = []
                 for d in id:
-                    author_results.append(Blog.objects.get(author_id=d))
+                    for obj in Blog.objects.filter(author_id=d):
+                        author_results.append(obj)
                 results_temp = []
                 for result in author_results:
                     if result in results:
@@ -50,5 +57,49 @@ def search(request):
 
 def blog(request, blog_id):
     blog = get_object_or_404(Blog, pk=blog_id)
-    # blog = Blog.objects.get(id=blog_id)
-    return render(request, 'Blogs-Section/blog.html', {'blog':blog})
+    list_likers = blog.likers.split()
+    likers = [int(x) for x in list_likers]
+    is_liked = False
+    if request.user.id in likers:
+        is_liked = True
+
+    blog = Blog.objects.get(id=blog_id)
+    comments = Comment.objects.order_by('pub_time').filter(blog=blog)
+    num_comments = len(comments)
+    return render(request, 'Blogs-Section/blog.html', {'blog':blog, 'is_liked':is_liked, 'comments':comments, 'num_comments':num_comments})
+
+def liker(request, blog_id):
+    if request.user.is_authenticated and request.method=="POST":
+        blog = get_object_or_404(Blog, pk=blog_id)
+        list_likers = blog.likers.split()
+        likers = [int(x) for x in list_likers]
+        if request.user.id not in likers:
+            blog.likers += str(request.user.id) + ' '
+            blog.likes += 1
+            blog.save()
+        else:
+            likers.remove(request.user.id)
+            list_likers_intd = [str(x) for x in likers]
+            list_likers = " ".join(list_likers_intd)
+            blog.likers = list_likers
+            blog.likes -= 1
+            blog.save()
+        return redirect('/blogs/'+str(blog_id))
+
+def liker2(request, blog_id):
+    if request.user.is_authenticated and request.method=="POST":
+        blog = get_object_or_404(Blog, pk=blog_id)
+        list_likers = blog.likers.split()
+        likers = [int(x) for x in list_likers]
+        if request.user.id not in likers:
+            blog.likers += str(request.user.id) + ' '
+            blog.likes += 1
+            blog.save()
+        else:
+            likers.remove(request.user.id)
+            list_likers_intd = [str(x) for x in likers]
+            list_likers = " ".join(list_likers_intd)
+            blog.likers = list_likers
+            blog.likes -= 1
+            blog.save()
+        return redirect('blogs')
