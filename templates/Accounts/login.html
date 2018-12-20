@@ -6,11 +6,13 @@
     <h3 class="blog-header" style="margin-top: 4rem;">Login</h3>
     <div class="center">
       <div class="row">
-        <form class="col s10 m8 offset-m2 offset-s1">
+        <form class="col s10 m8 offset-m2 offset-s1" method="post" action="{% url 'login' %}">
+          {% csrf_token %}
           <div class="row">
             <div class="input-field col s12">
-              <input id="email" type="email" class="validate" name="email" style="color: #272727; font-size: 2.6vh; font-family: 'Roboto Condensed', sans-serif;">
-              <label for="email" style="color: #272727; font-size: 2.4vh;">Email</label>
+              <!-- class="validate" -->
+              <input id="email" type="text"  name="username" style="color: #272727; font-size: 2.6vh; font-family: 'Roboto Condensed', sans-serif;">
+              <label for="email" style="color: #272727; font-size: 2.4vh;">Username</label>
             </div>
           </div>
           <div class="row">
@@ -19,8 +21,10 @@
               <label for="password" style="color: #272727; font-size: 2.4vh;">Password</label>
             </div>
           </div>
-          <button type="submit" name="submit" class="btn btn-large waves-light waves-effect form-buttons" style="background: #272727; color: #f4f4f4; font-family: 'Poppins', cursive; font-size: 2.2vh; margin-bottom: 4rem;">Login <i class="fas fa-share-square"
+          <div id="login-button">
+            <button type="submit" name="submit" class="btn btn-large waves-light waves-effect form-buttons" style="background: #272727; color: #f4f4f4; font-family: 'Poppins', cursive; font-size: 2.2vh; margin-bottom: 4rem;">Login <i class="fas fa-share-square"
               style="margin-left: 4px"></i></button>
+          </div>
         </form>
       </div>
     </div>

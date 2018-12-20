@@ -7,7 +7,8 @@
     <h3 class="blog-header" style="margin-top: 2rem;">Register</h3>
     <div class="center">
       <div class="row">
-        <form class="col s10 m10 offset-m1 offset-s1">
+        <form class="col s10 m10 offset-m1 offset-s1" method="POST" action="{% url 'register' %}">
+          {% csrf_token %}
           <div class="row">
             <div class="input-field col s6">
               <input id="firstname" type="text" class="validate" name="FirstName" style="color: #272727; font-size: 2.6vh; font-family: 'Roboto Condensed', sans-serif;">
@@ -16,6 +17,12 @@
             <div class="input-field col s6">
               <input id="lastname" type="text" class="validate" name="LastName" style="color: #272727; font-size: 2.6vh; font-family: 'Roboto Condensed', sans-serif;">
               <label for="lastname" style="color: #272727; font-size: 2.4vh;">Last Name</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="username" type="text" name="username" style="color: #272727; font-size: 2.6vh; font-family: 'Roboto Condensed', sans-serif;">
+              <label for="username" style="color: #272727; font-size: 2.4vh;">Username</label>
             </div>
           </div>
           <div class="row">
@@ -36,8 +43,10 @@
               <label for="cpassword" style="color: #272727; font-size: 2.4vh;">Confirm Password</label>
             </div>
           </div>
-          <button type="submit" name="submit" id="register-button" class="btn btn-large waves-light waves-effect" style="background: #272727; color: #f4f4f4; font-family: 'Poppins', cursive; font-size: 2.2vh; margin-bottom: 2rem;">Register <i class="fas fa-share-square"
+          <div id="register-button">
+            <button type="submit" name="submit" class="btn btn-large waves-light waves-effect" style="background: #272727; color: #f4f4f4; font-family: 'Poppins', cursive; font-size: 2.2vh; margin-bottom: 2rem;">Register <i class="fas fa-share-square"
               style="margin-left: 4px"></i></button>
+          </div>
         </form>
       </div>
     </div>

@@ -1,50 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'partials/base.html' %}
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="Resources/CSS/main.css">
-  <link href="https://fonts.googleapis.com/css?family=Kaushan+Script|Poppins|Roboto+Condensed" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <title>BeLabs</title>
-</head>
-
-<body class="bodyback-plain">
-  <!-- <div class="overlay"></div> -->
-  <div class="navbar-fixed">
-    <nav class="main-navbar">
-      <div class="nav-wrapper container">
-        <a href="main.html" class="brand-logo valign-wrapper">BeLabs</a>
-        <a href="#" class="sidenav-trigger" data-target="mobile-nav">
-          <i class="fas fa-bars"></i>
-        </a>
-        <ul class="right hide-on-med-and-down">
-          <li><a href="blogs.html" style="font-size: 2.2vh !important;">Blogs</a></li>
-          <li><a href="login.html" style="font-size: 2.2vh !important;">Login</a></li>
-          <li><a href="register.html" style="font-size: 2.2vh !important;">Register</a></li>
-        </ul>
-      </div>
-    </nav>
-  </div>
-
-  <ul class="sidenav" id="mobile-nav" style="background: #272727;">
-    <li>
-      <a href="blogs.html" style="color: #f4f4f4 !important;">Blogs</a>
-    </li>
-    <li>
-      <a href="login.html" style="color: #f4f4f4 !important;">Login</a>
-    </li>
-    <li>
-      <a href="register.html" style="color: #f4f4f4 !important;">Register</a>
-    </li>
-  </ul>
+{% block content %}
+{% include 'partials/_navbar.html' %}
 
   <div class="container center" style="margin-bottom: 2rem;">
-    <h4 style="font-size: 4.6vh; font-family: 'Poppins', sans-serif; font-weight: 600;" class="dashboard-header">Welcome to your <span style="color: #f9a825;">Dashboard</span>, Aniket</h4>
+    <h4 style="font-size: 4.6vh; font-family: 'Poppins', sans-serif; font-weight: 600;" class="dashboard-header">Welcome to your <span style="color: #f9a825;">Dashboard</span>, {{request.user.first_name}}</h4>
     <hr style="width: 80%; border: 2px solid #f4f4f4;border-radius: 6px;margin: 1rem auto;">
   </div>
 
@@ -54,13 +14,13 @@
         <div class="row" style="margin: 0 auto !important;">
           <div class="col s6 m6">
             <div class="card-panel center" style="padding: 0 0.2rem; width: 100%; height: 100%; display: flex; flex-direction: column;">
-              <span style="font-size: 5vh;color: #ffab00" class="count">100</span>
+              <span style="font-size: 5vh;color: #ffab00" class="count">{{no_blogs}}</span>
               <small style="font-size: 2.8vh; font-weight: 300; margin: auto 0.4rem; align-self:" class="card-small"> BLOGS </small>
             </div>
           </div>
           <div class="col s6 m6">
             <div class="card-panel center" style="padding: 0 0.2rem; width: 100%; height: 100%; display: flex; flex-direction: column;">
-              <span style="font-size: 5vh; margin; color: #e64a19" class="count">1000</span>
+              <span style="font-size: 5vh; margin; color: #e64a19" class="count">{{likes}}</span>
               <small style="font-size: 2.8vh; font-weight: 300; margin: auto 0.4rem; padding: auto 0.1rem;" class="card-small"> LIKES</small>
             </div>
           </div>
@@ -68,13 +28,13 @@
         <div class="row" style="margin: 0 auto !important;">
           <div class="col s6 m6 center">
             <div class="card-panel" style="padding: 0 0.2rem; width: 100%; height: 100%; display: flex; flex-direction: column;">
-              <span style="font-size: 5vh; color: #0288d1" class="count">10000</span>
+              <span style="font-size: 5vh; color: #0288d1" class="count">xxx</span>
               <small style="font-size: 2.8vh; font-weight: 300; margin: auto 0.4rem; padding: auto 0.1rem;" class="card-small"> COMMENTS</small>
             </div>
           </div>
           <div class="col s6 m6 center">
             <div class="card-panel " style="padding: 0 0.2rem; width: 100%; height: 100%; display: flex; flex-direction: column;">
-              <span style="font-size: 5vh; color: #388e3c" class="count">100</span>
+              <span style="font-size: 5vh; color: #388e3c" class="count">xxx</span>
               <small style="font-size: 2.8vh; font-weight: 300; margin: auto 0.4rem; padding: auto 0.1rem;" class="card-small"> VIEWS</small>
             </div>
           </div>
@@ -85,7 +45,7 @@
         <div class="row" style="margin: 0 auto !important;">
           <div class="col s12 m12 center">
             <div class="card-panel" style="padding: 0 0.2rem; width: 100%; height: 100%; display: flex; flex-direction: column;">
-              <span style="font-size: 5vh; color: #4a148c" class="count">25000</span>
+              <span style="font-size: 5vh; color: #4a148c" class="count">{{words}}</span>
               <small style="font-size: 2.8vh; font-weight: 300; margin: auto 0.4rem; padding: auto 0.1rem;" class="card-small"> WORDS</small>
             </div>
           </div>
@@ -93,7 +53,7 @@
         <div class="row" style="margin: 0 auto !important;">
           <div class="col s12 m12 center">
             <div class="card-panel" style="padding: 0 0.2rem; width: 100%; height: 100%; display: flex; flex-direction: column;">
-              <span style="font-size: 5vh; color: #4a148c" class="count">300</span>
+              <span style="font-size: 5vh; color: #4a148c" class="count">xxx</span>
               <small style="font-size: 2.8vh; font-weight: 300; margin: auto 0.4rem; padding: auto 0.1rem;" class="card-small"> MESSAGES</small>
             </div>
           </div>
@@ -173,66 +133,13 @@
         Your Blogs
       </div>
       <div class="row blogboard" style="overflow-y: scroll; height: 22rem;">
+        {% for blog in blogs %}
         <div class="col s6 m4 l3">
-          <a href="blog.html" class="tooltipped" data-position="top" data-tooltip="Blog Title">
-            <img src="Resources/CSS/t1.jpg" class="hoverable img-reveal" style="object-fit:cover;" height="142" width="100%">
+          <a href="{% url 'blog' blog.id %}" class="tooltipped" data-position="top" data-tooltip="{{blog.title}}">
+            <img src="{{blog.main_image.url}}" class="hoverable img-reveal" style="object-fit:cover;" height="142" width="100%">
           </a>
         </div>
-        <div class="col s6 m4 l3">
-          <a href="blog.html" class="tooltipped" data-position="top" data-tooltip="Blog Title">
-            <img src="Resources/CSS/t2.jpg" class="hoverable img-reveal" style="object-fit:cover;" height="142" width="100%">
-          </a>
-        </div>
-        <div class="col s6 m4 l3">
-          <a href="blog.html" class="tooltipped" data-position="top" data-tooltip="Blog Title">
-            <img src="Resources/CSS/t3.jpg" class="hoverable img-reveal" style="object-fit:cover;" height="142" width="100%">
-          </a>
-        </div>
-        <div class="col s6 m4 l3">
-          <a href="blog.html" class="tooltipped" data-position="top" data-tooltip="Blog Title">
-            <img src="Resources/CSS/t4.jpg" class="hoverable img-reveal" style="object-fit:cover;" height="142" width="100%">
-          </a>
-        </div>
-        <div class="col s6 m4 l3">
-          <a href="blog.html" class="tooltipped" data-position="top" data-tooltip="Blog Title">
-            <img src="Resources/CSS/t5.jpg" class="hoverable img-reveal" style="object-fit:cover;" height="142" width="100%">
-          </a>
-        </div>
-        <div class="col s6 m4 l3">
-          <a href="blog.html" class="tooltipped" data-position="top" data-tooltip="Blog Title">
-            <img src="Resources/CSS/t6.jpg" class="hoverable img-reveal" style="object-fit:cover;" height="142" width="100%">
-          </a>
-        </div>
-        <div class="col s6 m4 l3">
-          <a href="blog.html" class="tooltipped" data-position="top" data-tooltip="Blog Title">
-            <img src="Resources/CSS/t7.jpg" class="hoverable img-reveal" style="object-fit:cover;" height="142" width="100%">
-          </a>
-        </div>
-        <div class="col s6 m4 l3">
-          <a href="blog.html" class="tooltipped" data-position="top" data-tooltip="Blog Title">
-            <img src="Resources/CSS/t8.jpg" class="hoverable img-reveal" style="object-fit:cover;" height="142" width="100%">
-          </a>
-        </div>
-        <div class="col s6 m4 l3">
-          <a href="blog.html" class="tooltipped" data-position="top" data-tooltip="Blog Title">
-            <img src="Resources/CSS/t8.jpg" class="hoverable img-reveal" style="object-fit:cover;" height="142" width="100%">
-          </a>
-        </div>
-        <div class="col s6 m4 l3">
-          <a href="blog.html" class="tooltipped" data-position="top" data-tooltip="Blog Title">
-            <img src="Resources/CSS/t8.jpg" class="hoverable img-reveal" style="object-fit:cover;" height="142" width="100%">
-          </a>
-        </div>
-        <div class="col s6 m4 l3">
-          <a href="blog.html" class="tooltipped" data-position="top" data-tooltip="Blog Title">
-            <img src="Resources/CSS/t8.jpg" class="hoverable img-reveal" style="object-fit:cover;" height="142" width="100%">
-          </a>
-        </div>
-        <div class="col s6 m4 l3">
-          <a href="blog.html" class="tooltipped" data-position="top" data-tooltip="Blog Title">
-            <img src="Resources/CSS/t8.jpg" class="hoverable img-reveal" style="object-fit:cover;" height="142" width="100%">
-          </a>
-        </div>
+        {% endfor %}
       </div>
     </div>
 
@@ -302,17 +209,7 @@
     </div>
   </div>
 
-
-
-
-
-
-
-
   <script src="https://unpkg.com/scrollreveal"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-  <script type="text/javascript" src="Resources/JavaScript/main.js"></script>
-</body>
-
-</html>
+{% endblock %}

@@ -114,7 +114,16 @@ ScrollReveal().reveal('.comment_text', {
   distance: "80px",
   mobile: false
 });
-
+ScrollReveal().reveal('#register-button', {
+  delay: 400,
+  distance: "15px",
+  origin: "top"
+});
+ScrollReveal().reveal('#login-button', {
+  delay: 400,
+  distance: "15px",
+  origin: "top"
+});
 
 $('.count').each(function() {
   $(this).prop('Counter', 0).animate({

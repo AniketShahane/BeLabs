@@ -7,8 +7,12 @@
       </a>
       <ul class="right hide-on-med-and-down">
         <li><a href="{% url 'blogs' %}" style="font-size: 2.2vh !important;">Blogs</a></li>
+        {% if user.is_authenticated %}
+        <li><a href="javascript:{document.querySelector('#logout').submit()}" style="font-size: 2.2vh !important;">Logout</a></li>
+        {% else %}
         <li><a href="{% url 'login' %}" style="font-size: 2.2vh !important;">Login</a></li>
         <li><a href="{% url 'register' %}" style="font-size: 2.2vh !important;">Register</a></li>
+        {% endif %}
       </ul>
     </div>
   </nav>
@@ -25,3 +29,8 @@
     <a href="{% url 'register' %}" style="color: #f4f4f4 !important;">Register</a>
   </li>
 </ul>
+
+<form id="logout" action="{% url 'logout' %}" method="POST" style="display: none;">
+{% csrf_token %}
+<input type="text">
+</form>
