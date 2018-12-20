@@ -162,7 +162,8 @@
           <li class="collection-header" style="padding: auto auto !important;">
             <div class="row">
               <div class="col s12 m6">
-                <form class="goaler-form">
+                <form class="goaler-form" action="{% url 'goal' %}" method="post">
+                  {% csrf_token %}
                   <div class="goal-adder-section center">
                     <div class="up center">
                       <div class="icon">
@@ -170,36 +171,27 @@
                       </div>
                     </div>
                     <div class="down center">
-                      <div class="input-field goaler-input" style="margin-top: 0.4rem; margin-bottom: 0;">
-                        <input type="text" id="goaler" name="goal" placeholder="Eg. Learn React.js">
-                      </div>
-                      <div class="button" style="margin-top: 1.2rem;">
-                        <button type="submit" class="btn black waves-light waves-effect" name="button">Add Now </button>
-                      </div>
+                        <div class="input-field goaler-input" style="margin-top: 0.4rem; margin-bottom: 0;">
+                          <input type="text" id="goaler" name="goal" placeholder="Eg. Learn React.js">
+                        </div>
+                        <div class="button" style="margin-top: 1.2rem;">
+                          <button type="submit" class="btn black waves-light waves-effect">Add Now </button>
+                        </div>
                     </div>
                   </div>
                 </form>
               </div>
               <div class="col s12 m6">
                 <ul class="collection left-align goalboard" style="overflow-y: scroll; height: 14.3rem; margin: 0.4rem auto; padding: auto auto;">
+                  {% for goal in goals %}
                   <li class="collection-item">
-                    <div style="font-family: 'Poppins', sans-serif; color: #f9a825;font-size: 2vh;"><i class="fas fa-angle-right"></i> Learn React.js <a href="#!" class="secondary-content" style="color: #272727;"><i class="far fa-times-circle"></i></a></div>
+                    <div style="font-family: 'Poppins', sans-serif; color: #f9a825;font-size: 2vh;"><i class="fas fa-angle-right"></i> {{goal.goal}} <a href="javascript:{document.querySelector('#delgoal{{goal.id}}').submit()}" class="secondary-content" style="color: #272727;"><i class="far fa-times-circle"></i></a></div>
                   </li>
-                  <li class="collection-item">
-                    <div style="font-family: 'Poppins', sans-serif; color: #f9a825;font-size: 2vh;"><i class="fas fa-angle-right"></i> Learn Node.js <a href="#!" class="secondary-content" style="color: #272727;"><i class="far fa-times-circle"></i></a></div>
-                  </li>
-                  <li class="collection-item">
-                    <div style="font-family: 'Poppins', sans-serif; color: #f9a825;font-size: 2vh;"><i class="fas fa-angle-right"></i> Learn React.js <a href="#!" class="secondary-content" style="color: #272727;"><i class="far fa-times-circle"></i></a></div>
-                  </li>
-                  <li class="collection-item">
-                    <div style="font-family: 'Poppins', sans-serif; color: #f9a825;font-size: 2vh;"><i class="fas fa-angle-right"></i> Learn React.js <a href="#!" class="secondary-content" style="color: #272727;"><i class="far fa-times-circle"></i></a></div>
-                  </li>
-                  <li class="collection-item">
-                    <div style="font-family: 'Poppins', sans-serif; color: #f9a825;font-size: 2vh;"><i class="fas fa-angle-right"></i> Learn React.js <a href="#!" class="secondary-content" style="color: #272727;"><i class="far fa-times-circle"></i></a></div>
-                  </li>
-                  <li class="collection-item">
-                    <div style="font-family: 'Poppins', sans-serif; color: #f9a825;font-size: 2vh;"><i class="fas fa-angle-right"></i> Learn React.js <a href="#!" class="secondary-content" style="color: #272727;"><i class="far fa-times-circle"></i></a></div>
-                  </li>
+                  <form id="delgoal{{goal.id}}" action="{% url 'delgoal' goal.id %}" method="post" style="display:none;">
+                    {% csrf_token %}
+                     <input type="text" style="display:none;">
+                  </form>
+                  {% endfor %}
                 </ul>
               </div>
             </div>

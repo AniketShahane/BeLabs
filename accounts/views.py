@@ -4,6 +4,7 @@ from django.contrib import auth
 from django.contrib.auth import authenticate
 from blog.models import Blog
 from comment.models import Comment
+from goal.models import Goal
 # Create your views here.
 def login(request):
     if request.method == "POST":
@@ -69,12 +70,16 @@ def dashboard(request):
         likes += blog.likes
         words += len(blog.body.split())
         comments += len(Comment.objects.all().filter(blog=blog))
+
+
+    goals = Goal.objects.order_by('-time').filter(writer=request.user)
     content = {
         'likes':likes,
         'words':words,
         'comments':comments,
         'no_blogs':no_blogs,
-        'blogs':blogs
+        'blogs':blogs,
+        'goals':goals
     }
     return render(request, 'Dashboard/dashboard.html', content)
 

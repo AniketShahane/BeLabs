@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'goal.apps.GoalConfig',
     'comment.apps.CommentConfig',
     'blog.apps.BlogConfig',
     'accounts.apps.AccountsConfig',
