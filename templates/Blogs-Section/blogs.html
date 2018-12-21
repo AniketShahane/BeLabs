@@ -75,7 +75,7 @@
     <div class="row">
       {% for blog in blogs %}
       {% if blog.blog.is_published %}
-      <div class="col s12 m6 l4">
+      <div class="col s12 m6 l6 xl4">
         <div class="card">
           <div class="card-image">
             <a href="{% url 'blog' blog.blog.id %}"><img src="{{blog.blog.main_image.url}}" style="object-fit:cover;" height="200" width="100%"></a>
@@ -84,7 +84,8 @@
           </div>
           <div class="card-content">
             <p style="font-weight: 500; font-size: 2vh;">{{blog.blog.small_body}}</p>
-            <p style="font-weight: 600; font-size: 1.8vh; float:right; margin-bottom: 4px;">~ {{blog.blog.author.first_name}} {{blog.blog.author.last_name}} ({{blog.blog.author.username}})</p>
+            <p style="font-weight: 600; font-size: 1.8vh;"><i class="fas fa-user-edit"></i> {{blog.blog.author.first_name}} {{blog.blog.author.last_name}} ({{blog.blog.author.username}})</p>
+            <p style="font-weight: 600; font-size: 1.8vh;"><i class="far fa-clock"></i> {{blog.blog.pretty_pub}}</p>
           </div>
         </div>
       </div>

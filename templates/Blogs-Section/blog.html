@@ -1,21 +1,4 @@
 {% extends 'partials/base.html' %}
-<!-- <!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="Resources/CSS/main.css">
-  <link href="https://fonts.googleapis.com/css?family=Kaushan+Script|Poppins|Roboto+Condensed" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-  <link href="Resources/lightbox2-master/dist/css/lightbox.css" rel="stylesheet">
-  <title>BeLabs</title>
-</head>
-
-<body class="bodyback-plain"> -->
-  <!-- <div class="overlay"></div> -->
   {% block content %}
   {% include 'partials/_navbar.html' %}
 
@@ -34,7 +17,7 @@
             <div class="card-content white-text center">
               <span class="card-title" style="display: inline-block; font-size: 3.4vh;font-family: 'Poppins', cursive; line-height: 1.2em ; padding: 1rem !important; margin: 0.2rem auto !important;"><i class="far fa-clipboard"></i> {{blog.title}}</span>
               <div class="courtesy-p">
-                <p style="margin-left: 1rem;font-size: 2vh; margin-top: 0.4rem;">Written By: {{blog.author.first_name}} {{blog.author.last_name}}</p>
+                <p style="margin-left: 1rem;font-size: 2vh; margin-top: 0.4rem;">Written By: {{blog.author.first_name}} {{blog.author.last_name}} ({{blog.author.username}}) </p>
                 <p style="margin-left: 1rem;font-size: 2vh; margin-top: 0.4rem;">Contact: {{blog.author.email}}</p>
               </div>
             </div>

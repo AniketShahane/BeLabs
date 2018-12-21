@@ -34,7 +34,7 @@
           </div>
           <div class="col s6 m6 center">
             <div class="card-panel " style="padding: 0 0.2rem; width: 100%; height: 100%; display: flex; flex-direction: column;">
-              <span style="font-size: 5vh; color: #388e3c" class="count">xxx</span>
+              <span style="font-size: 5vh; color: #388e3c" class="count">{{views}}</span>
               <small style="font-size: 2.8vh; font-weight: 300; margin: auto 0.4rem; padding: auto 0.1rem;" class="card-small"> VIEWS</small>
             </div>
           </div>
@@ -53,7 +53,7 @@
         <div class="row" style="margin: 0 auto !important;">
           <div class="col s12 m12 center">
             <div class="card-panel" style="padding: 0 0.2rem; width: 100%; height: 100%; display: flex; flex-direction: column;">
-              <span style="font-size: 5vh; color: #4a148c" class="count">xxx</span>
+              <span style="font-size: 5vh; color: #4a148c" class="count">{{messages}}</span>
               <small style="font-size: 2.8vh; font-weight: 300; margin: auto 0.4rem; padding: auto 0.1rem;" class="card-small"> MESSAGES</small>
             </div>
           </div>
@@ -72,7 +72,8 @@
               <div class="container new_message_container">
                 <h3 style="text-align: center; font-family: 'Kaushan Script', cursive; font-size: 4.4vh; font-weight: 500;"><i class="fas fa-user-friends"></i> Message A Friend</h3>
                 <div class="new_message">
-                  <form>
+                  <form action="{% url 'sendmsg' %}" method="POST">
+                    {% csrf_token %}
                     <div class="user_button">
                       <input type="text" name="username" style="font-size: 2.8vh; font-family: 'Roboto Condensed', sans-serif;" value="" placeholder="Enter Username..." required>
                       <button type="submit" name="send_message" class="send_button">Send</button>
@@ -80,48 +81,23 @@
                     <div class="text-area">
                       <textarea name="text_message" style="font-size: 2.8vh; font-family: 'Roboto Condensed', sans-serif;" class="materialize-textarea" placeholder="Type your message in here..." required></textarea>
                     </div>
-
                   </form>
                 </div>
               </div>
             </div>
-            <!-- <div class="modal-footer">
-              <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
-            </div> -->
           </div>
         </li>
+        {% for message in final_messages %}
+        {% if message.is_sent %}
         <li class="collection-item">
-          <div style="font-family: 'Poppins', sans-serif; color: #f9a825; font-size: 2.2vh;"><i class="fas fa-user-tie"></i> Jason Mercier: <span style="font-size: 2vh; font-family:'Roboto Condensed', sans-serif; margin-left: 0.6rem; color: #272727">Hello
-              Son,</span><a href="messages.html" class="secondary-content" style="color: #272727;"><i class="material-icons">send</i></a></div>
+          <div style="font-family: 'Poppins', sans-serif; color: #283593; font-size: 2.2vh;"><i class="fas fa-user-tie"></i> <i class="fas fa-long-arrow-alt-right"></i> {{message.message.receiver.username}}: <span style="font-size: 2vh; font-family:'Roboto Condensed', sans-serif; margin-left: 0.6rem; color: #272727">{{message.message.small_message}}</span><a href="{% url 'message' message.message.receiver_id %}" class="secondary-content" style="color: #283593;"><i class="material-icons">send</i></a></div>
         </li>
+        {% else %}
         <li class="collection-item">
-          <div style="font-family: 'Poppins', sans-serif; color: #f9a825; font-size: 2.2vh;"><i class="fas fa-user-tie"></i> Phil Helmuth: <span style="font-size: 2vh; font-family:'Roboto Condensed', sans-serif; margin-left: 0.6rem; color: #272727">Hello
-              Son,</span><a href="messages.html" class="secondary-content" style="color: #272727;"><i class="material-icons">send</i></a></div>
+          <div style="font-family: 'Poppins', sans-serif; color: #f9a825; font-size: 2.2vh;"><i class="fas fa-user-tie"></i> <i class="fas fa-long-arrow-alt-left"></i> {{message.message.sender}}: <span style="font-size: 2vh; font-family:'Roboto Condensed', sans-serif; margin-left: 0.6rem; color: #272727">{{message.message.small_message}}</span><a href="{% url 'message' message.sender_ID %}" class="secondary-content" style="color: #f9a825;"><i class="material-icons">send</i></a></div>
         </li>
-        <li class="collection-item">
-          <div style="font-family: 'Poppins', sans-serif; color: #f9a825; font-size: 2.2vh;"><i class="fas fa-user-tie"></i> Gus Hansen: <span style="font-size: 2vh; font-family:'Roboto Condensed', sans-serif; margin-left: 0.6rem; color: #272727">Hello
-              Son,</span><a href="messages.html" class="secondary-content" style="color: #272727;"><i class="material-icons">send</i></a></div>
-        </li>
-        <li class="collection-item">
-          <div style="font-family: 'Poppins', sans-serif; color: #f9a825; font-size: 2.2vh;"><i class="fas fa-user-tie"></i> Daniel Negreanu: <span style="font-size: 2vh; font-family:'Roboto Condensed', sans-serif; margin-left: 0.6rem; color: #272727">Hello
-              Son,</span><a href="messages.html" class="secondary-content" style="color: #272727;"><i class="material-icons">send</i></a></div>
-        </li>
-        <li class="collection-item">
-          <div style="font-family: 'Poppins', sans-serif; color: #f9a825; font-size: 2.2vh;"><i class="fas fa-user-tie"></i> Daniel Negreanu: <span style="font-size: 2vh; font-family:'Roboto Condensed', sans-serif; margin-left: 0.6rem; color: #272727">Hello
-              Son,</span><a href="messages.html" class="secondary-content" style="color: #272727;"><i class="material-icons">send</i></a></div>
-        </li>
-        <li class="collection-item">
-          <div style="font-family: 'Poppins', sans-serif; color: #f9a825; font-size: 2.2vh;"><i class="fas fa-user-tie"></i> Daniel Negreanu: <span style="font-size: 2vh; font-family:'Roboto Condensed', sans-serif; margin-left: 0.6rem; color: #272727">Hello
-              Son,</span><a href="messages.html" class="secondary-content" style="color: #272727;"><i class="material-icons">send</i></a></div>
-        </li>
-        <li class="collection-item">
-          <div style="font-family: 'Poppins', sans-serif; color: #f9a825; font-size: 2.2vh;"><i class="fas fa-user-tie"></i> Daniel Negreanu: <span style="font-size: 2vh; font-family:'Roboto Condensed', sans-serif; margin-left: 0.6rem; color: #272727">Hello
-              Son,</span><a href="messages.html" class="secondary-content" style="color: #272727;"><i class="material-icons">send</i></a></div>
-        </li>
-        <li class="collection-item">
-          <div style="font-family: 'Poppins', sans-serif; color: #f9a825; font-size: 2.2vh;"><i class="fas fa-user-tie"></i> Daniel Negreanu: <span style="font-size: 2vh; font-family:'Roboto Condensed', sans-serif; margin-left: 0.6rem; color: #272727">Hello
-              Son,</span><a href="messages.html" class="secondary-content" style="color: #272727;"><i class="material-icons">send</i></a></div>
-        </li>
+        {% endif %}
+        {% endfor %}
       </ul>
     </div>
   </div>
@@ -129,9 +105,7 @@
   <div class="blogs-goals" style="margin: 0.2rem auto;">
 
     <div class="blog_images center" style="margin-top: 0.48rem;">
-      <div class="blog-header">
-        Your Blogs
-      </div>
+        <a class="waves-effect waves-light modal-trigger blog-header" id="publish_blog_a" href="#published" style="margin-top: 0 auto !important;">Your Blogs</a>
       <div class="row blogboard" style="overflow-y: scroll; height: 22rem;">
         {% for blog in blogs %}
         <div class="col s6 m4 l3">
@@ -142,6 +116,38 @@
         {% endfor %}
       </div>
     </div>
+
+  <!-- Modal Structure -->
+  <div id="published" class="modal">
+    <div class="modal-content">
+      <div class="container">
+          <h3 style="text-align: center; font-family: 'Kaushan Script', cursive; font-size: 4vh; font-weight: 500;"><i class="fas fa-scroll"></i> Choose Blogs To Publish</h3>
+               
+          <form action="{% url 'publishing' %}" method="POST">
+              {% csrf_token %}
+            <div class="publish_elements" id="publishing_blogs_checks" style="overflow-y: scroll; height: 45vh;">
+            {% for blog in blogs %}
+              <div class="blog_publishing" style="display: flex; width: 98% !important; justify-content: space-between; margin:0.2rem auto !important;">
+                <p style="font-family: 'Kaushan Script', cursive; font-size: 3vh;">{{blog.title}}</p>
+                <p style="font-size: 3vh;">
+                   <label>
+                     {% if blog.is_published %}
+                    <input type="checkbox" name="checkboxes" value="{{blog.id}}" checked="checked" />
+                    <span>Published</span>
+                    {% else %}
+                    <input type="checkbox" name="checkboxes" value="{{blog.id}}"/>
+                    <span>Not Published</span>
+                    {% endif %}
+                  </label>
+                </p>
+              </div>
+            {% endfor %}
+            </div> 
+            <button class="send_button" type="submit" style="width: 80% !important; margin: 0.4rem auto !important;">Publish Selected</button>
+          </form>
+      </div>
+    </div>
+  </div>
 
     <div class="goals" style="margin-top: 0;">
       <div class="motivation">

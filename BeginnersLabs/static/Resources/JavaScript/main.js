@@ -18,7 +18,7 @@ M.Materialbox.init(imageboxed, {
 });
 
 //Modal for creating new messages
-const modal_elements = document.querySelector('.modal');
+const modal_elements = document.querySelectorAll('.modal');
 M.Modal.init(modal_elements, {});
 
 // Light Box Options
@@ -136,3 +136,6 @@ $('.count').each(function() {
     }
   });
 });
+
+var objDiv = document.querySelector(".person_comments");
+objDiv.scrollTop = objDiv.scrollHeight;

@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate
 from blog.models import Blog
 from comment.models import Comment
 from goal.models import Goal
+from message.models import Message
 # Create your views here.
 def login(request):
     if request.method == "POST":
@@ -60,16 +61,43 @@ def register(request):
 def dashboard(request):
     # Get all the blogs written by the user
     blogs = Blog.objects.order_by('-pub_date').filter(author_id=request.user.id)
+    sent_messages = Message.objects.order_by('-time').filter(sender=request.user.username)
+    received_messages = Message.objects.order_by('-time').filter(receiver=request.user)
+    
+    s=0
+    r=0
+
+    final_messages = []
+
+    while s < len(sent_messages) and r < len(received_messages):
+        if sent_messages[s].time > received_messages[r].time:
+            final_messages.append({'message':sent_messages[s], 'is_sent': True})
+            s += 1
+        else: 
+            sender = User.objects.get(username=received_messages[r].sender)
+            sender_ID = sender.id
+            final_messages.append({'message':received_messages[r], 'is_sent':False, 'sender_ID': sender_ID})
+            r += 1
+    while s < len(sent_messages):
+        final_messages.append({'message':sent_messages[s], 'is_sent':True})
+        s += 1
+    while r < len(received_messages):
+        sender = User.objects.get(username=received_messages[r].sender)
+        sender_ID = sender.id
+        final_messages.append({'message':received_messages[r], 'is_sent':False, 'sender_ID': sender_ID})
+        r += 1
+
     likes = 0
     comments = 0
     no_blogs = len(blogs)
-    # views = 0
+    views = 0
     words = 0
-    # messages = 0
+    messages = len(sent_messages) + len(received_messages)
     for blog in blogs:
         likes += blog.likes
         words += len(blog.body.split())
         comments += len(Comment.objects.all().filter(blog=blog))
+        views += blog.views 
 
 
     goals = Goal.objects.order_by('-time').filter(writer=request.user)
@@ -78,8 +106,11 @@ def dashboard(request):
         'words':words,
         'comments':comments,
         'no_blogs':no_blogs,
+        'messages':messages,
         'blogs':blogs,
-        'goals':goals
+        'goals':goals,
+        'views':views,
+        'final_messages': final_messages
     }
     return render(request, 'Dashboard/dashboard.html', content)
 

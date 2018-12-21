@@ -1,0 +1,44 @@
+New things that we learned in this project 
+
+#01. How to deal with images files as input 
+--> The type of the input has to set to file and name must also be given to the input tag 
+"""Eg. <input type="file" name="image">   """
+--> Next we create a forms.py file and write the following code inside the file 
+"""
+    from django import forms 
+
+    class ImageUpload(forms.Form):
+        image = forms.ImageField()
+"""
+--> Import this forms.py file wherever you want to use it
+"""
+    from .forms import ImageUpload 
+
+    form = ImageUpload(request.POST, request.FILES)
+    
+    image = form.cleaned_data['image']
+
+    # Here we have got our image file we can then use this as the argument to a model, to create a new one 
+"""
+
+#02. How to set a minimum/maximum length or minimum/maximum value to a field 
+--> First import the required validators 
+"""
+    from django.contrib.validators import MinValueValidator, MaxValueValidator, MinLengthValidator, MaxLengthValidator
+"""
+--> Then use these validators directly into your model 
+"""
+    text = models.TextField(validators=[MinLengthValidator(30), MaxLengthValidator(100)])
+    # So the text will have 30 letters atleast 
+    # the value validators can be used in the case of integers 
+"""
+
+#03. How to get the checkbox response as the post request
+--> Inside views.py write the following code 
+"""
+    checklist = request.POST.getlist('checkbox_name')
+    # The checklist var will now store an array of ""values"" of the checked var
+"""
+
+#04. How to render the content of the blog as it is (ie with line breaks and all...)
+--> use {{blog.body|linebreaks}}

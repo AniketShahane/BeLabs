@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
+from django.core.validators import MinLengthValidator
 # Create your models here.
 
 """
@@ -14,7 +15,7 @@ class Blog(models.Model):
     # This is going to be the user who publishes the blog
     pub_date = models.DateTimeField(default=datetime.now())
     main_image = models.ImageField(upload_to='blog-images/')
-    body = models.TextField()
+    body = models.TextField(validators=[MinLengthValidator(30)])
     likes = models.IntegerField(default=1)
     comments = models.IntegerField(default=0)
     views = models.IntegerField(default=1)
@@ -25,7 +26,7 @@ class Blog(models.Model):
         return len(self.body.split())
 
     def pretty_pub(self):
-        return self.pub_date.strftime('%b %e, 20%Y')
+        return self.pub_date.strftime('%b %d, %H:%M')
 
     def small_body(self):
         if len(self.body) > 80:

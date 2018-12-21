@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+{% extends 'partials/base.html' %}
+<!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -13,9 +14,9 @@
   <title>BeLabs</title>
 </head>
 
-<body class="bodyback-plain">
+<body class="bodyback-plain"> -->
   <!-- <div class="overlay"></div> -->
-  <div class="navbar-fixed">
+  <!-- <div class="navbar-fixed">
     <nav class="main-navbar">
       <div class="nav-wrapper container">
         <a href="main.html" class="brand-logo valign-wrapper">BeLabs</a>
@@ -41,54 +42,41 @@
     <li>
       <a href="register.html" style="color: #f4f4f4 !important;">Register</a>
     </li>
-  </ul>
-
+  </ul> -->
+  {% block content %}
+  {% include 'partials/_navbar.html' %}
   <div class="container center" style="margin-bottom: 2rem;">
     <h4 style="font-size: 4.6vh; font-family: 'Poppins', sans-serif; font-weight: 600;" class="dashboard-header"><i class="fas fa-comment-alt"></i> Messages</h4>
     <hr style="width: 8rem; border: 2px solid #f4f4f4;border-radius: 6px;margin: 1rem auto;">
   </div>
 
   <div class="container comments_section">
-    <h4 id="chat_person" style="font-size: 5vh; font-family: 'Kaushan Script', cursive; font-weight: 600; margin-bottom: 1rem !important; margin-top: 0.6rem !important; text-align: center;">Chat With Daniel Negreanu</h4>
+    <h4 id="chat_person" style="font-size: 5vh; font-family: 'Kaushan Script', cursive; font-weight: 600; margin-bottom: 1rem !important; margin-top: 0.6rem !important; text-align: center;">Chat With {{receiver.first_name}} {{receiver.last_name}} ({{receiver.username}})</h4>
 
     <div class="comments" style="margin: 0.6rem auto !important;">
-      <div class="person_comments" style="height: 56vh">
-        <div class="left-comment message comment_text">
-          <p class="" style="padding: 0.6rem 0.4rem !important; margin: 0 !important; font-size: 2.2vh;">Hey Son, Just wanted to say Hello This is a Simple comment</p>
-          <div class="message_time" style="color: #ffe400; font-size: 2vh; text-align: right; margin: 0.2rem 0.6rem !important;">23:01</div>
-        </div>
-        <div class="right-comment message comment_text">
-          <p class="" style="padding: 0.6rem 0.4rem !important; margin: 0 !important; font-size: 2.2vh;">Hey Son, Just wanted to say you're an idiot</p>
-          <div class="message_time" style="color: #ffe400; font-size: 2vh; text-align: right; margin: 0.2rem 0.6rem !important;">23:01</div>
-        </div>
-        <div class="left-comment message comment_text">
-          <p class="" style="padding: 0.6rem 0.4rem !important; margin: 0 !important; font-size: 2.2vh;">Hey Son, Just wanted to say Hello This is a Simple comment</p>
-          <div class="message_time" style="color: #ffe400; font-size: 2vh; text-align: right; margin: 0.2rem 0.6rem !important;">23:01</div>
-        </div>
-        <div class="right-comment message comment_text">
-          <p class="" style="padding: 0.6rem 0.4rem !important; margin: 0 !important; font-size: 2.2vh;">Hey Son, Just wanted to say you're an idiot</p>
-          <div class="message_time" style="color: #ffe400; font-size: 2vh; text-align: right; margin: 0.2rem 0.6rem !important;">23:01</div>
-        </div>
-        <div class="left-comment message comment_text">
-          <p class="" style="padding: 0.6rem 0.4rem !important; margin: 0 !important; font-size: 2.2vh;">Hey Son, Just wanted to say Hello This is a Simple comment</p>
-          <div class="message_time" style="color: #ffe400; font-size: 2vh; text-align: right; margin: 0.2rem 0.6rem !important;">23:01</div>
-        </div>
-        <div class="right-comment message comment_text">
-          <p class="" style="padding: 0.6rem 0.4rem !important; margin: 0 !important; font-size: 2.2vh;">Hey Son, Just wanted to say you're an idiot</p>
-          <div class="message_time" style="color: #ffe400; font-size: 2vh; text-align: right; margin: 0.2rem 0.6rem !important;">23:01</div>
-        </div>
-        <div class="left-comment message comment_text">
-          <p class="" style="padding: 0.6rem 0.4rem !important; margin: 0 !important; font-size: 2.2vh;">Hey Son, Just wanted to say Hello This is a Simple comment</p>
-          <div class="message_time" style="color: #ffe400; font-size: 2vh; text-align: right; margin: 0.2rem 0.6rem !important;">23:01</div>
-        </div>
-        <div class="right-comment message comment_text">
-          <p class="" style="padding: 0.6rem 0.4rem !important; margin: 0 !important; font-size: 2.2vh;">Hey Son, Just wanted to say you're an idiot</p>
-          <div class="message_time" style="color: #ffe400; font-size: 2vh; text-align: right; margin: 0.2rem 0.6rem !important;">23:01</div>
-        </div>
+      <div class="person_comments" id="scrollBottom" style="height: 56vh">
+        {% if messages %}
+          {% for message in messages %}
+          {% if message.is_sent %}
+          <div class="right-comment message comment_text">
+            <p class="" style="padding: 0.6rem 0.4rem !important; margin: 0 !important; font-size: 2.2vh;">{{message.message.message_text}}</p>
+            <div class="message_time" style="color: #ffe400; font-size: 2vh; text-align: right; margin: 0.2rem 0.6rem !important;">{{message.message.pretty_time}}</div>
+          </div>
+          {% else %}
+          <div class="left-comment message comment_text">
+            <p class="" style="padding: 0.6rem 0.4rem !important; margin: 0 !important; font-size: 2.2vh;">{{message.message.message_text}}</p>
+            <div class="message_time" style="color: #ffe400; font-size: 2vh; text-align: right; margin: 0.2rem 0.6rem !important;">{{message.message.pretty_time}}</div>
+          </div>
+          {% endif %}
+          {% endfor %}
+        {% else %}
+        No messages 
+        {% endif %}
       </div>
       <div class="post_comment" style="margin-bottom: 1rem; margin-top: 1rem;">
-        <form style="display: flex; align-items:center;">
-          <input style="flex: 6; font-size: 2vh; font-family: 'Roboto Condensed', sans-serif;" id="comment" type="text" name="comment" value="" placeholder="Type Your Response...">
+        <form style="display: flex; align-items:center;" action="{% url 'sendmsg2' receiver.id %}" method="POST">
+          {% csrf_token %}
+          <input style="flex: 6; font-size: 2vh; font-family: 'Roboto Condensed', sans-serif;" id="comment" type="text" name="text_message" value="" placeholder="Type Your Response...">
           <button style="flex: 1; margin-left: 1rem;" type="submit" name="post_comment_button" id="post_button">Send</button>
         </form>
       </div>
@@ -103,7 +91,8 @@
   <script src="https://unpkg.com/scrollreveal"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-  <script type="text/javascript" src="Resources/JavaScript/main.js"></script>
+{% endblock %}
+ <!-- <script type="text/javascript" src="Resources/JavaScript/main.js"></script>
 </body>
 
-</html>
+</html> -->

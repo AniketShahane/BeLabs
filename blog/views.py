@@ -2,8 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Blog
 from django.contrib.auth.models import User
 from comment.models import Comment
-# Create your views here.
-
+from .models import Blog
+from .forms import ImageUploadForm
 
 def blogs(request):
     blogs_list = Blog.objects.order_by('-pub_date')
@@ -66,6 +66,11 @@ def blog(request, blog_id):
     blog = Blog.objects.get(id=blog_id)
     comments = Comment.objects.order_by('pub_time').filter(blog=blog)
     num_comments = len(comments)
+
+    blog.views += 1 
+    blog.save()
+    print(blog.views)
+
     return render(request, 'Blogs-Section/blog.html', {'blog':blog, 'is_liked':is_liked, 'comments':comments, 'num_comments':num_comments})
 
 def liker(request, blog_id):
@@ -103,3 +108,36 @@ def liker2(request, blog_id):
             blog.likes -= 1
             blog.save()
         return redirect('blogs')
+
+def addblog(request):
+    if request.method == "POST":
+        form = ImageUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            blog_title = request.POST['blog_title']
+            blog_body = request.POST['blog_body']
+            blog_image = form.cleaned_data['image']
+            if len(blog_body.split()) > 30:
+                new_blog = Blog(title=blog_title, body=blog_body, main_image=blog_image, author=request.user)
+                new_blog.save()
+            else: 
+                print('Minimum 30 words are required')
+                return redirect('dashboard')
+            return redirect('/blogs/'+str(new_blog.id))
+    else: 
+        print('Getty')
+        return redirect('dashboard')
+ 
+def publishing(request):
+     if request.method == "POST":
+        checkedboxes = request.POST.getlist('checkboxes')
+        print(checkedboxes)
+        blogs = Blog.objects.all().filter(author=request.user)
+        print(blogs)
+        for blog in blogs:
+            if str(blog.id) in checkedboxes:
+                blog.is_published = True
+                blog.save() 
+            else: 
+                blog.is_published = False 
+                blog.save()
+        return redirect('dashboard')
