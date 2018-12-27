@@ -1,4 +1,5 @@
 {% extends 'partials/base.html' %}
+{% load static %}
 <!-- <!DOCTYPE html>
 <html lang="en">
 
@@ -15,8 +16,8 @@
 </head>
 
 <body class="bodyback-plain"> -->
-  <!-- <div class="overlay"></div> -->
-  <!-- <div class="navbar-fixed">
+<!-- <div class="overlay"></div> -->
+<!-- <div class="navbar-fixed">
     <nav class="main-navbar">
       <div class="nav-wrapper container">
         <a href="main.html" class="brand-logo valign-wrapper">BeLabs</a>
@@ -43,56 +44,94 @@
       <a href="register.html" style="color: #f4f4f4 !important;">Register</a>
     </li>
   </ul> -->
-  {% block content %}
-  {% include 'partials/_navbar.html' %}
-  <div class="container center" style="margin-bottom: 2rem;">
-    <h4 style="font-size: 4.6vh; font-family: 'Poppins', sans-serif; font-weight: 600;" class="dashboard-header"><i class="fas fa-comment-alt"></i> Messages</h4>
-    <hr style="width: 8rem; border: 2px solid #f4f4f4;border-radius: 6px;margin: 1rem auto;">
-  </div>
+{% block content %}
+{% include 'partials/_navbar.html' %}
+<div class="container center" style="margin-bottom: 2rem;">
+  <h4 style="font-size: 4.6vh; font-family: 'Poppins', sans-serif; font-weight: 600;" class="dashboard-header"><i class="fas fa-comment-alt"></i>
+    Messages</h4>
+  <hr style="width: 8rem; border: 2px solid #f4f4f4;border-radius: 6px;margin: 1rem auto;">
+</div>
 
-  <div class="container comments_section">
-    <h4 id="chat_person" style="font-size: 5vh; font-family: 'Kaushan Script', cursive; font-weight: 600; margin-bottom: 1rem !important; margin-top: 0.6rem !important; text-align: center;">Chat With {{receiver.first_name}} {{receiver.last_name}} ({{receiver.username}})</h4>
-
-    <div class="comments" style="margin: 0.6rem auto !important;">
-      <div class="person_comments" id="scrollBottom" style="height: 56vh">
-        {% if messages %}
-          {% for message in messages %}
-          {% if message.is_sent %}
-          <div class="right-comment message comment_text">
-            <p class="" style="padding: 0.6rem 0.4rem !important; margin: 0 !important; font-size: 2.2vh;">{{message.message.message_text}}</p>
-            <div class="message_time" style="color: #ffe400; font-size: 2vh; text-align: right; margin: 0.2rem 0.6rem !important;">{{message.message.pretty_time}}</div>
-          </div>
-          {% else %}
-          <div class="left-comment message comment_text">
-            <p class="" style="padding: 0.6rem 0.4rem !important; margin: 0 !important; font-size: 2.2vh;">{{message.message.message_text}}</p>
-            <div class="message_time" style="color: #ffe400; font-size: 2vh; text-align: right; margin: 0.2rem 0.6rem !important;">{{message.message.pretty_time}}</div>
-          </div>
-          {% endif %}
-          {% endfor %}
+<div id="chat_profile" class="modal profile-modal" style="border: 2px #ffe400 solid;">
+  <div class="modal-content" style="background: #272727 !important;">
+    <div class="container center">
+      <div class="profile-picture">
+        {% if cprofile.picture %}
+        <img src="{{cprofile.picture.url}}" style="height: 15rem; width: 15rem; border-radius: 50%; border: 2px solid #272727; padding: 0.6rem;">
         {% else %}
-        No messages 
+        <img src="{% static 'Resources/CSS/defaul.png' %}" style="height: 15rem; width: 15rem; border-radius: 50%; border: 2px solid #272727; padding: 0.6rem;">
         {% endif %}
       </div>
-      <div class="post_comment" style="margin-bottom: 1rem; margin-top: 1rem;">
-        <form style="display: flex; align-items:center;" action="{% url 'sendmsg2' receiver.id %}" method="POST">
-          {% csrf_token %}
-          <input style="flex: 6; font-size: 2vh; font-family: 'Roboto Condensed', sans-serif;" id="comment" type="text" name="text_message" value="" placeholder="Type Your Response...">
-          <button style="flex: 1; margin-left: 1rem;" type="submit" name="post_comment_button" id="post_button">Send</button>
-        </form>
+      <div class="Profile_details" style="color: #ffe400;">
+        <h3 id="profile_name">{{cprofile.user.first_name}} {{cprofile.user.last_name}}</h3>
+        <p id="profile_username"> <span id="username_word">Username:</span> {{cprofile.user.username}}</p>
+        <p id="profile_email"> <span id="email_word">Email Id:</span> {{cprofile.user.email}}</p>
+        <p id="profile_bio"> <span id="bio_word">Bio</span>: {{cprofile.bio}}</p>
+        <p id="interests"><span id="interests_word">Interests:</span> {{cinterest}}</p>
+        <div class="social_media_profile">
+          <p><a href="{{cprofile.github}}" target="_blank" id="github"><i class="fab fa-github"></i> GitHub </a></p>
+          <p><a href="{{cprofile.linkedIn}}" target="_blank" id="linkedin"><i class="fab fa-linkedin-in"></i> LinkedIn
+            </a></p>
+          <p><a href="#" id="message_profile"><i class="far fa-envelope"></i> Send A Message </a></p>
+          <p><a href="{% url 'redirectBlog' cprofile.user.username %}" id="message_profile"><i class="fas fa-scroll"></i> Other Blogs</a></p>
+        </div>
       </div>
     </div>
   </div>
+</div>
+
+<div class="container comments_section">
+  <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center;">
+    <a href="#chat_profile" class="waves-effect waves-light modal-trigger">
+      <img src="{{cprofile.picture.url}}" style="height: 10rem;object-fit: cover; width: 10rem; border-radius: 50%; border: 2px solid #272727; padding: 0.6rem; margin-right: 0.6rem;">
+    </a>
+    <h4 id="chat_person" style="font-size: 5vh; font-family: 'Kaushan Script', cursive; font-weight: 600; margin-bottom: 1rem !important; margin-top: 0.6rem !important; text-align: center;">{{receiver.first_name}}
+      {{receiver.last_name}} ~ {{receiver.username}}</h4>
+  </div>
+
+
+  <div class="comments" style="margin: 0.6rem auto !important;">
+    <div class="person_comments" id="scrollBottom" style="height:48vh; border: 2px solid #272727;">
+      {% if messages %}
+      {% for message in messages %}
+      {% if message.is_sent %}
+      <div class="right-comment message comment_text">
+        <p class="" style="padding: 0.6rem 0.4rem !important; margin: 0 !important; font-size: 2.2vh;">{{message.message.message_text}}</p>
+        <div class="message_time" style="color: #ffe400; font-size: 2vh; text-align: right; margin: 0.2rem 0.6rem !important;">{{message.message.pretty_time}}</div>
+      </div>
+      {% else %}
+      <div class="left-comment message comment_text">
+        <p class="" style="padding: 0.6rem 0.4rem !important; margin: 0 !important; font-size: 2.2vh;">{{message.message.message_text}}</p>
+        <div class="message_time" style="color: #ffe400; font-size: 2vh; text-align: right; margin: 0.2rem 0.6rem !important;">{{message.message.pretty_time}}</div>
+      </div>
+      {% endif %}
+      {% endfor %}
+      {% else %}
+      No messages
+      {% endif %}
+    </div>
+    <div class="post_comment" style="margin-bottom: 1rem; margin-top: 1rem;">
+      <form style="display: flex; align-items:center;" action="{% url 'sendmsg2' receiver.id %}" method="POST">
+        {% csrf_token %}
+        <input style="flex: 6; font-size: 2vh; font-family: 'Roboto Condensed', sans-serif;" id="comment" type="text"
+          name="text_message" value="" placeholder="Type Your Response...">
+        <button style="flex: 1; margin-left: 1rem;" type="submit" name="post_comment_button" id="post_button">Send</button>
+      </form>
+    </div>
+  </div>
+</div>
 
 
 
 
 
 
-  <script src="https://unpkg.com/scrollreveal"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/scrollreveal"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
 {% endblock %}
- <!-- <script type="text/javascript" src="Resources/JavaScript/main.js"></script>
+<!-- <script type="text/javascript" src="Resources/JavaScript/main.js"></script>
 </body>
 
 </html> -->

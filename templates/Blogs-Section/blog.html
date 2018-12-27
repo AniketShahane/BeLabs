@@ -1,114 +1,205 @@
 {% extends 'partials/base.html' %}
-  {% block content %}
-  {% include 'partials/_navbar.html' %}
+{% block content %}
+{% include 'partials/_navbar.html' %}
 
-  <div class="complete-blog center">
-    <div class="main-blog-image">
-      <div class="container img-contain">
-        <img src="{{blog.main_image.url}}" class="complete-blog-img materialboxed">
-      </div>
-
-      <!-- <div class="container"> -->
-      <!-- style="position: relative; top: 2rem; left: 4rem;" -->
-      <!-- style="position: relative; top: 10rem; left: 12rem;" -->
-      <div class="row title-like-cards">
-        <div class="col s12 m12 l8">
-          <div class="card" style="background: rgba(37, 37, 37,0.8); border: 2px solid #f4f4f4;margin-top: 0.8rem;">
-            <div class="card-content white-text center">
-              <span class="card-title" style="display: inline-block; font-size: 3.4vh;font-family: 'Poppins', cursive; line-height: 1.2em ; padding: 1rem !important; margin: 0.2rem auto !important;"><i class="far fa-clipboard"></i> {{blog.title}}</span>
-              <div class="courtesy-p">
-                <p style="margin-left: 1rem;font-size: 2vh; margin-top: 0.4rem;">Written By: {{blog.author.first_name}} {{blog.author.last_name}} ({{blog.author.username}}) </p>
-                <p style="margin-left: 1rem;font-size: 2vh; margin-top: 0.4rem;">Contact: {{blog.author.email}}</p>
+<div class="complete-blog center">
+  <div class="main-blog-image">
+    <div class="container img-contain">
+      <img src="{{ blog.main_image.url }}" class="complete-blog-img materialboxed" />
+    </div>
+    <div class="row title-like-cards">
+      <div class="col s12 m12 l12">
+        <div class="card" style="background: rgba(37, 37, 37,0.8); border: 2px solid #f4f4f4;margin-top: 0.8rem;">
+          <div class="card-content white-text center">
+            <span class="card-title" style="display: inline-block; font-size: 3.4vh;font-family: 'Poppins', cursive; line-height: 1.2em ; padding: 1rem 2rem !important; margin: 0.2rem auto !important;"><i
+                class="far fa-clipboard"></i> {{ blog.title }}
+              <div style="margin: 0.4rem;">
+                ~ {{ blog.author.first_name }} {{ blog.author.last_name }}
               </div>
+            </span>
+
+            <div class="courtesy-p">
+              <p style="margin-left: 1rem;font-size: 2vh; margin-top: 0.4rem;">
+                Published: {{ blog.pretty_pub }}
+              </p>
+              <p style="margin-left: 1rem;font-size: 2vh; margin-top: 0.4rem;">
+                Contact: {{ blog.author.email }}
+              </p>
             </div>
           </div>
         </div>
-        <div class="col s6 m6 l2 blog-icons">
-          <!-- <div class="card" style="background: rgba(37, 37, 37, 0); border: none;margin-top: 1.2rem;">
+      </div>
+    </div>
+    <div class="row title-like-cards">
+      <div class="col s3 m3 l3 blog-icons">
+        <!-- <div class="card" style="background: rgba(37, 37, 37, 0); border: none;margin-top: 1.2rem;">
               <div class="card-content white-text center"> -->
-          <a href="javascript:{document.querySelector('#liker').submit()}">
-            <span class="card-title"> {% if is_liked %} <i class="fas fa-heart"></i> {% else %} <i class="far fa-heart"></i> {% endif %} </span>
-            <p>{{blog.likes}}</p>
-          </a>
-          <form id="liker" action="{% url 'liker' blog.id %}" method="post" style="display:none;">
-            {% csrf_token %}
-            <input type="text" style="display:none;">
-          </form>
-          <!-- </div> -->
-          <!-- </div> -->
-        </div>
-        <div class="col s6 m6 l2 blog-icons">
-          <!-- <div class="card" style="background: rgba(37, 37, 37, 0); border: none;margin-top: 1.2rem;">
+        <a href="javascript:{document.getElementById('liker').submit()}">
+          <span class="card-title">
+            {% if is_liked %} <i class="fas fa-heart"></i> {% else %}
+            <i class="far fa-heart"></i> {% endif %}
+          </span>
+          <p>{{ blog.likes }}</p>
+        </a>
+        <form id="liker" action="{% url 'liker' blog.id %}" method="post" style="display:none;">
+          {% csrf_token %} <input type="text" style="display:none;" />
+        </form>
+        <!-- </div> -->
+        <!-- </div> -->
+      </div>
+      <div class="col s3 m3 l3 blog-icons">
+        <!-- <div class="card" style="background: rgba(37, 37, 37, 0); border: none;margin-top: 1.2rem;">
               <div class="card-content white-text center"> -->
-          <a href="#comment_section_box">
-            <span class="card-title"><i class="fas fa-comments"></i></span>
-            <p>{{num_comments}}</p>
-          </a>
-          <!-- </div> -->
-          <!-- </div> -->
-        </div>
+        <a href="#comment_section_box">
+          <span class="card-title"><i class="fas fa-comments"></i></span>
+          <p>{{ num_comments }}</p>
+        </a>
+        <!-- </div> -->
+        <!-- </div> -->
       </div>
-      <!-- </div> -->
-    </div>
-
-    <div class="container">
-      <div class="main-blog-content" style="border: 2px solid #f4f4f4; margin-bottom: 1.5rem !important;">
-        <div class="author-details" style="border: 2px solid #f4f4f4;">
-          <h3>{{blog.title}}</h3>
-          <p>{{blog.body}}</p>
-        </div>
+      <div class="col s3 m3 l3 blog-icons">
+        <!-- <div class="card" style="background: rgba(37, 37, 37, 0); border: none;margin-top: 1.2rem;">
+              <div class="card-content white-text center"> -->
+        <a href="#">
+          <span class="card-title"><i class="fas fa-eye"></i></span>
+          <p>{{ num_views }}</p>
+        </a>
+        <!-- </div> -->
+        <!-- </div> -->
       </div>
-    </div>
-
-    <div class="container comments_section" id="comment_section_box">
-      <h4 style="font-size: 5vh; font-family: 'Kaushan Script', cursive; font-weight: 600; margin: 0.4rem auto !important;"><i class="far fa-comment-dots"></i> Comment Section <i class="far fa-comment-dots" style="margin-left: 8px !important;"></i></h4>
-
-      <div class="comments" style="margin: 0.6rem auto !important;">
-        <div class="person_comments" style="height: 50vh">
-          {% for comment in comments %}
-          <p class="comment_text" style="padding: 0.6rem 0.4rem !important;"><span class="comment_poster" style="color: #ffe400; font-size: 2.4vh;">@{{comment.writer.username}}</span>: {{comment.comment_text}}</p>
-          {% endfor %}
-        </div>
-        <div class="post_comment" style="margin-bottom: 1rem; margin-top: 1rem;">
-          <form style="display: flex; align-items:center;" method="POST" action="{% url 'comment' blog.id %}">
-            {% csrf_token %}
-            <input style="flex: 6; font-size: 2vh; font-family: 'Roboto Condensed', sans-serif;" id="comment" type="text" name="comment" value="" placeholder="Write a comment..." required>
-            <button style="flex: 1; margin-left: 1rem;" type="submit" name="post_comment_button" id="post_button">Post</button>
-          </form>
-        </div>
+      <div class="col s3 m3 l3 blog-icons">
+        <!-- <div class="card" style="background: rgba(37, 37, 37, 0); border: none;margin-top: 1.2rem;">
+              <div class="card-content white-text center"> -->
+        <a href="#author_profile" class="modal-trigger waves-effect waves-light">
+          <span class="card-title"><i class="fas fa-user-astronaut"></i></span>
+          <p style="font-family: 'Poppins', sans-serif; font-weight: 500;">
+            Author
+          </p>
+        </a>
+        <!-- </div> -->
+        <!-- </div> -->
       </div>
     </div>
-
+    <!-- </div> -->
   </div>
 
-  <script src="https://unpkg.com/scrollreveal"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <script src="Resources/lightbox2-master/dist/js/lightbox.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <div class="container" style="width: 80% !important;">
+    <div class="main-blog-content" style="border: 2px solid #f4f4f4; margin-bottom: 1.5rem !important;">
+      <div class="author-details" style="border: 2px solid #f4f4f4;">
+        <h3>{{ blog.title }}</h3>
+        <p>{{ blog.body | linebreaks }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container comments_section" id="comment_section_box" s style="width; 80% !important;">
+    <h4 style="font-size: 5vh; font-family: 'Kaushan Script', cursive; font-weight: 600; margin: 0.4rem auto !important;">
+      <i class="far fa-comment-dots"></i> Comment Section
+      <i class="far fa-comment-dots" style="margin-left: 8px !important;"></i>
+    </h4>
+
+    <div class="comments" style="margin: 0.6rem auto !important;">
+      <div class="person_comments" style="height: 50vh">
+        {% for comment in comments %}
+        <p class="comment_text comment_animation" style="padding: 0.6rem 0.4rem !important;">
+          <span class="comment_poster" style="color: #ffe400; font-size: 2.4vh;">@{{ comment.writer.username }}</span>:
+          {{ comment.comment_text }}
+        </p>
+        {% endfor %}
+      </div>
+      <div class="post_comment" style="margin-bottom: 1rem; margin-top: 1rem;">
+        <form style="display: flex; align-items:center;" method="POST" action="{% url 'comment' blog.id %}">
+          {% csrf_token %}
+          <input style="flex: 6; font-size: 2vh; font-family: 'Roboto Condensed', sans-serif;" id="comment" type="text"
+            name="comment" value="" placeholder="Write a comment..." required />
+          <button style="flex: 1; margin-left: 1rem;" type="submit" name="post_comment_button" id="post_button">
+            Post
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Profile Modal -->
+<div id="author_profile" class="modal profile-modal" style="border: 2px #ffe400 solid;">
+  <div class="modal-content" style="background: #272727 !important;">
+    <div class="container center">
+      <div class="profile-picture">
+        <img src="{{profile.picture.url}}" style="height: 15rem; width: 15rem; border-radius: 50%; border: 2px solid #ffe400; padding: 0.6rem;">
+      </div>
+      <div class="Profile_details" style="color: #ffe400;">
+        <h3 id="profile_name">{{profile.user.first_name}} {{profile.user.last_name}}</h3>
+        <p id="profile_username"> <span id="username_word">Username:</span> {{profile.user.username}}</p>
+        <p id="profile_email"> <span id="email_word">Email Id:</span> {{profile.user.email}}</p>
+        <p id="profile_bio"> <span id="bio_word">Bio</span>: {{profile.bio}}</p>
+        <p id="interests"><span id="interests_word">Interests:</span> {{pinterests}}</p>
+        <div class="social_media_profile">
+          <p><a href="{{profile.github}}" target="_blank" id="github"><i class="fab fa-github"></i> GitHub </a></p>
+          <p><a href="{{profile.linkedIn}}" target="_blank" id="linkedin"><i class="fab fa-linkedin-in"></i> LinkedIn
+            </a></p>
+          <p><a href="#message_modal" class="modal-trigger" id="message_profile"><i class="far fa-envelope"></i> Send
+              A Message </a></p>
+          <p><a href="{% url 'redirectBlog' profile.user.username %}" id="message_profile"><i class="fas fa-scroll"></i> Other Blogs</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Structure -->
+<div id="message_modal" class="modal bottom-sheet">
+  <div class="modal-content">
+    <div class="container new_message_container">
+      <h3 style="text-align: center; font-family: 'Kaushan Script', cursive; font-size: 4.4vh; font-weight: 500;"><i
+          class="fas fa-user-friends"></i> Message A Friend</h3>
+      <div class="new_message">
+        <form action="{% url 'sendmsg' %}" method="POST">
+          {% csrf_token %}
+          <div class="user_button">
+            <input type="text" name="username" style="font-size: 2.8vh; font-family: 'Roboto Condensed', sans-serif;"
+              placeholder="Enter Username..." value="{{profile.user.username}}" required>
+            <button type="submit" name="send_message" class="send_button">Send</button>
+          </div>
+          <div class="text-area">
+            <textarea name="text_message" style="font-size: 2.8vh; font-family: 'Roboto Condensed', sans-serif;" class="materialize-textarea"
+              placeholder="Type your message in here..." required></textarea>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/scrollreveal"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
-$(document).ready(function(){
-  // Add smooth scrolling to all links
-  $("a").on('click', function(event) {
+  $(document).ready(function () {
+    // Add smooth scrolling to all links
+    $("a").on("click", function (event) {
+      // Make sure this.hash has a value before overriding default behavior
+      if (this.hash !== "") {
+        // Prevent default anchor click behavior
+        event.preventDefault();
 
-    // Make sure this.hash has a value before overriding default behavior
-    if (this.hash !== "") {
-      // Prevent default anchor click behavior
-      event.preventDefault();
+        // Store hash
+        var hash = this.hash;
 
-      // Store hash
-      var hash = this.hash;
-
-      // Using jQuery's animate() method to add smooth page scroll
-      // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
-      $('html, body').animate({
-        scrollTop: $(hash).offset().top
-      }, 800, function(){
-
-        // Add hash (#) to URL when done scrolling (default click behavior)
-        window.location.hash = hash;
-      });
-    } // End if
+        // Using jQuery's animate() method to add smooth page scroll
+        // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+        $("html, body").animate({
+          scrollTop: $(hash).offset().top
+        },
+          800,
+          function () {
+            // Add hash (#) to URL when done scrolling (default click behavior)
+            window.location.hash = hash;
+          }
+        );
+      } // End if
+    });
   });
-});
 </script>
-  {% endblock %}
+{% endblock %}

@@ -3,9 +3,7 @@ from .models import Goal
 # Create your views here.
 def goal(request):
     if request.method == "POST":
-        goal = request.POST['goal']
-        print('look below')
-        print(goal)
+        goal = request.POST['goal'].rstrip()
         new_goal = Goal(goal=goal, writer=request.user)
         new_goal.save()
         return redirect('dashboard')

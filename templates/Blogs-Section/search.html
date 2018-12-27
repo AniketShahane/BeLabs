@@ -7,23 +7,34 @@
     <div class="collapsing-resources center">
       <h3 class="blog-header" style="margin: 1rem 0;">Quick Search</h3>
       <div class="row" style="padding: 0.8rem 0;">
-        <form class="col s10 m10 offset-m1 offset-s1" method="post" action="{% url 'search' %}">
-          {% csrf_token %}
+        <form class="col s10 m10 offset-m1 offset-s1" method="GET" action="{% url 'search' %}">
           <div class="row">
             <div class="input-field col s12">
+              {% if title %}
+              <input id="title" type="text" class="validate" name="title" value="{{title}}" style="color: #272727; font-size: 2.6vh; font-family: 'Roboto Condensed', sans-serif;">
+              {% else %}
               <input id="title" type="text" class="validate" name="title" style="color: #272727; font-size: 2.6vh; font-family: 'Roboto Condensed', sans-serif;">
+              {% endif %}
               <label for="title" style="color: #272727; font-size: 2.4vh;">By Title</label>
             </div>
           </div>
           <div class="row">
             <div class="input-field col s12">
+              {% if keywords %}
+              <input id="keywords" type="text" class="validate" value="{{keywords}}" name="keywords" style="color: #272727; font-size: 2.6vh; font-family: 'Roboto Condensed', sans-serif;">
+              {% else %}
               <input id="keywords" type="text" class="validate" name="keywords" style="color: #272727; font-size: 2.6vh; font-family: 'Roboto Condensed', sans-serif;">
+              {% endif %}
               <label for="keywords" style="color: #272727; font-size: 2.4vh;">By Keywords</label>
             </div>
           </div>
           <div class="row">
             <div class="input-field col s12">
-              <input id="author_name" type="text" class="validate" name="author-name" style="color: #272727; font-size: 2.6vh; font-family: 'Roboto Condensed', sans-serif;">
+              {% if authorname %}
+              <input id="author_name" type="text" class="validate" value="{{authorname}}" name="author-name" style="color: #272727; font-size: 2.6vh; font-family: 'Roboto Condensed', sans-serif;">
+              {% else %}
+              <input id="author_name" type="text" class="validate" name="authorname" style="color: #272727; font-size: 2.6vh; font-family: 'Roboto Condensed', sans-serif;">
+              {% endif %}
               <label for="author_name" style="color: #272727; font-size: 2.4vh;">By Author's Name</label>
             </div>
           </div>

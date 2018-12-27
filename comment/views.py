@@ -5,7 +5,7 @@ from .models import Comment
 # Create your views here.
 def comment(request, blog_id):
     if request.method == "POST":
-        comment = request.POST['comment']
+        comment = request.POST['comment'].rstrip()
         user = User.objects.get(id=request.user.id)
         blog = Blog.objects.get(id=blog_id)
         new_comment = Comment(comment_text=comment, writer=user, blog=blog)

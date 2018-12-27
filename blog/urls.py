@@ -9,5 +9,6 @@ urlpatterns = [
     path('like/<int:blog_id>', views.liker, name='liker'),
     path('like2/<int:blog_id>', views.liker2, name='liker2'),
     path('addblog', views.addblog, name='addblog'),
-    path('publishing', views.publishing, name="publishing")
+    path('publishing', views.publishing, name="publishing"),
+    path('<str:blogWriter>', views.redirectBlog, name="redirectBlog"),
 ]

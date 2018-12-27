@@ -3,211 +3,239 @@
 {% block content %}
 {% include 'partials/_navbar.html' %}
 
-  <div class="container center" style="margin-bottom: 2rem;">
-    <h4 style="font-size: 4.6vh; font-family: 'Poppins', sans-serif; font-weight: 600;" class="dashboard-header">Welcome to your <span style="color: #f9a825;">Dashboard</span>, {{request.user.first_name}}</h4>
-    <hr style="width: 80%; border: 2px solid #f4f4f4;border-radius: 6px;margin: 1rem auto;">
-  </div>
+<div class="container center" style="margin-bottom: 2rem;">
+  <h4 style="font-size: 4.6vh; font-family: 'Poppins', sans-serif; font-weight: 600;" class="dashboard-header">Welcome
+    to your <span style="color: #f9a825;">Dashboard</span>, {{request.user.first_name}}</h4>
+  <hr style="width: 80%; border: 2px solid #f4f4f4;border-radius: 6px;margin: 1rem auto;">
+</div>
 
-  <div class="stat-message-container">
-    <div class="stat-container">
-      <div class="stats1">
-        <div class="row" style="margin: 0 auto !important;">
-          <div class="col s6 m6">
-            <div class="card-panel center" style="padding: 0 0.2rem; width: 100%; height: 100%; display: flex; flex-direction: column;">
-              <span style="font-size: 5vh;color: #ffab00" class="count">{{no_blogs}}</span>
-              <small style="font-size: 2.8vh; font-weight: 300; margin: auto 0.4rem; align-self:" class="card-small"> BLOGS </small>
-            </div>
-          </div>
-          <div class="col s6 m6">
-            <div class="card-panel center" style="padding: 0 0.2rem; width: 100%; height: 100%; display: flex; flex-direction: column;">
-              <span style="font-size: 5vh; margin; color: #e64a19" class="count">{{likes}}</span>
-              <small style="font-size: 2.8vh; font-weight: 300; margin: auto 0.4rem; padding: auto 0.1rem;" class="card-small"> LIKES</small>
-            </div>
+<div class="stat-message-container">
+  <div class="stat-container">
+    <div class="stats1">
+      <div class="row" style="margin: 0 auto !important;">
+        <div class="col s6 m6">
+          <div class="card-panel center" style="padding: 0 0.2rem; width: 100%; height: 100%; display: flex; flex-direction: column;">
+            <span style="font-size: 5vh;color: #ffab00" class="count">{{no_blogs}}</span>
+            <small style="font-size: 2.8vh; font-weight: 300; margin: auto 0.4rem; align-self:" class="card-small">
+              BLOGS </small>
           </div>
         </div>
-        <div class="row" style="margin: 0 auto !important;">
-          <div class="col s6 m6 center">
-            <div class="card-panel" style="padding: 0 0.2rem; width: 100%; height: 100%; display: flex; flex-direction: column;">
-              <span style="font-size: 5vh; color: #0288d1" class="count">{{comments}}</span>
-              <small style="font-size: 2.8vh; font-weight: 300; margin: auto 0.4rem; padding: auto 0.1rem;" class="card-small"> COMMENTS</small>
-            </div>
-          </div>
-          <div class="col s6 m6 center">
-            <div class="card-panel " style="padding: 0 0.2rem; width: 100%; height: 100%; display: flex; flex-direction: column;">
-              <span style="font-size: 5vh; color: #388e3c" class="count">{{views}}</span>
-              <small style="font-size: 2.8vh; font-weight: 300; margin: auto 0.4rem; padding: auto 0.1rem;" class="card-small"> VIEWS</small>
-            </div>
+        <div class="col s6 m6">
+          <div class="card-panel center" style="padding: 0 0.2rem; width: 100%; height: 100%; display: flex; flex-direction: column;">
+            <span style="font-size: 5vh; margin; color: #e64a19" class="count">{{likes}}</span>
+            <small style="font-size: 2.8vh; font-weight: 300; margin: auto 0.4rem; padding: auto 0.1rem;" class="card-small">
+              LIKES</small>
           </div>
         </div>
       </div>
-
-      <div class="stats2">
-        <div class="row" style="margin: 0 auto !important;">
-          <div class="col s12 m12 center">
-            <div class="card-panel" style="padding: 0 0.2rem; width: 100%; height: 100%; display: flex; flex-direction: column;">
-              <span style="font-size: 5vh; color: #4a148c" class="count">{{words}}</span>
-              <small style="font-size: 2.8vh; font-weight: 300; margin: auto 0.4rem; padding: auto 0.1rem;" class="card-small"> WORDS</small>
-            </div>
+      <div class="row" style="margin: 0 auto !important;">
+        <div class="col s6 m6 center">
+          <div class="card-panel" style="padding: 0 0.2rem; width: 100%; height: 100%; display: flex; flex-direction: column;">
+            <span style="font-size: 5vh; color: #0288d1" class="count">{{comments}}</span>
+            <small style="font-size: 2.8vh; font-weight: 300; margin: auto 0.4rem; padding: auto 0.1rem;" class="card-small">
+              COMMENTS</small>
           </div>
         </div>
-        <div class="row" style="margin: 0 auto !important;">
-          <div class="col s12 m12 center">
-            <div class="card-panel" style="padding: 0 0.2rem; width: 100%; height: 100%; display: flex; flex-direction: column;">
-              <span style="font-size: 5vh; color: #4a148c" class="count">{{messages}}</span>
-              <small style="font-size: 2.8vh; font-weight: 300; margin: auto 0.4rem; padding: auto 0.1rem;" class="card-small"> MESSAGES</small>
-            </div>
+        <div class="col s6 m6 center">
+          <div class="card-panel " style="padding: 0 0.2rem; width: 100%; height: 100%; display: flex; flex-direction: column;">
+            <span style="font-size: 5vh; color: #388e3c" class="count">{{views}}</span>
+            <small style="font-size: 2.8vh; font-weight: 300; margin: auto 0.4rem; padding: auto 0.1rem;" class="card-small">
+              VIEWS</small>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="messages">
-      <ul class="collection with-header messageboard" style="overflow-y: scroll; height: 16.4rem;">
-        <li class="collection-header">
-          <h4 style="font-family: 'Poppins', sans-serif; margin: 0.4rem 0.8rem;" class="message-header"><i class="far fa-envelope"></i> Messages<a href="#message_modal" class="waves-effect waves-light modal-trigger" style="float:right !important;"><i
-                class="fas fa-plus-circle" id="message_add_button" style="color: #272727;"></i></a></h4>
-          <!-- Modal Structure -->
-          <div id="message_modal" class="modal bottom-sheet">
-            <div class="modal-content">
-              <div class="container new_message_container">
-                <h3 style="text-align: center; font-family: 'Kaushan Script', cursive; font-size: 4.4vh; font-weight: 500;"><i class="fas fa-user-friends"></i> Message A Friend</h3>
-                <div class="new_message">
-                  <form action="{% url 'sendmsg' %}" method="POST">
-                    {% csrf_token %}
-                    <div class="user_button">
-                      <input type="text" name="username" style="font-size: 2.8vh; font-family: 'Roboto Condensed', sans-serif;" value="" placeholder="Enter Username..." required>
-                      <button type="submit" name="send_message" class="send_button">Send</button>
-                    </div>
-                    <div class="text-area">
-                      <textarea name="text_message" style="font-size: 2.8vh; font-family: 'Roboto Condensed', sans-serif;" class="materialize-textarea" placeholder="Type your message in here..." required></textarea>
-                    </div>
-                  </form>
-                </div>
+    <div class="stats2">
+      <div class="row" style="margin: 0 auto !important;">
+        <div class="col s12 m12 center">
+          <div class="card-panel" style="padding: 0 0.2rem; width: 100%; height: 100%; display: flex; flex-direction: column;">
+            <span style="font-size: 5vh; color: #4a148c" class="count">{{words}}</span>
+            <small style="font-size: 2.8vh; font-weight: 300; margin: auto 0.4rem; padding: auto 0.1rem;" class="card-small">
+              WORDS</small>
+          </div>
+        </div>
+      </div>
+      <div class="row" style="margin: 0 auto !important;">
+        <div class="col s12 m12 center">
+          <div class="card-panel" style="padding: 0 0.2rem; width: 100%; height: 100%; display: flex; flex-direction: column;">
+            <span style="font-size: 5vh; color: #4a148c" class="count">{{messages}}</span>
+            <small style="font-size: 2.8vh; font-weight: 300; margin: auto 0.4rem; padding: auto 0.1rem;" class="card-small">
+              MESSAGES</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="messages">
+    <ul class="collection with-header messageboard" style="overflow-y: scroll; height: 16.4rem;">
+      <li class="collection-header">
+        <h4 style="font-family: 'Poppins', sans-serif; margin: 0.4rem 0.8rem;" class="message-header"><i class="far fa-envelope"></i>
+          Messages<a href="#message_modal" class="waves-effect waves-light modal-trigger" style="float:right !important;"><i
+              class="fas fa-plus-circle" id="message_add_button" style="color: #272727;"></i></a></h4>
+        <!-- Modal Structure -->
+        <div id="message_modal" class="modal bottom-sheet">
+          <div class="modal-content">
+            <div class="container new_message_container">
+              <h3 style="text-align: center; font-family: 'Kaushan Script', cursive; font-size: 4.4vh; font-weight: 500;"><i
+                  class="fas fa-user-friends"></i> Message A Friend</h3>
+              <div class="new_message">
+                <form action="{% url 'sendmsg' %}" method="POST">
+                  {% csrf_token %}
+                  <div class="user_button">
+                    <input type="text" name="username" style="font-size: 2.8vh; font-family: 'Roboto Condensed', sans-serif;"
+                      value="" placeholder="Enter Username..." required>
+                    <button type="submit" name="send_message" class="send_button">Send</button>
+                  </div>
+                  <div class="text-area">
+                    <textarea name="text_message" style="font-size: 2.8vh; font-family: 'Roboto Condensed', sans-serif;"
+                      class="materialize-textarea" placeholder="Type your message in here..." required></textarea>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
-        </li>
-        {% for message in final_messages %}
-        {% if message.is_sent %}
-        <li class="collection-item">
-          <div style="font-family: 'Poppins', sans-serif; color: #283593; font-size: 2.2vh;"><i class="fas fa-user-tie"></i> <i class="fas fa-long-arrow-alt-right"></i> {{message.message.receiver.username}}: <span style="font-size: 2vh; font-family:'Roboto Condensed', sans-serif; margin-left: 0.6rem; color: #272727">{{message.message.small_message}}</span><a href="{% url 'message' message.message.receiver_id %}" class="secondary-content" style="color: #283593;"><i class="material-icons">send</i></a></div>
-        </li>
-        {% else %}
-        <li class="collection-item">
-          <div style="font-family: 'Poppins', sans-serif; color: #f9a825; font-size: 2.2vh;"><i class="fas fa-user-tie"></i> <i class="fas fa-long-arrow-alt-left"></i> {{message.message.sender}}: <span style="font-size: 2vh; font-family:'Roboto Condensed', sans-serif; margin-left: 0.6rem; color: #272727">{{message.message.small_message}}</span><a href="{% url 'message' message.sender_ID %}" class="secondary-content" style="color: #f9a825;"><i class="material-icons">send</i></a></div>
-        </li>
-        {% endif %}
-        {% endfor %}
-      </ul>
+        </div>
+      </li>
+      {% for message in final_messages %}
+      {% if message.is_sent %}
+      <li class="collection-item">
+        <div style="font-family: 'Poppins', sans-serif; color: #283593; font-size: 2.2vh;"><i class="fas fa-user-tie"></i>
+          <i class="fas fa-long-arrow-alt-right"></i> {{message.message.receiver.username}}: <span style="font-size: 2vh; font-family:'Roboto Condensed', sans-serif; margin-left: 0.6rem; color: #272727">{{message.message.small_message}}</span><a
+            href="{% url 'message' message.message.receiver_id %}" class="secondary-content" style="color: #283593;"><i
+              class="material-icons">send</i></a></div>
+      </li>
+      {% else %}
+      <li class="collection-item">
+        <div style="font-family: 'Poppins', sans-serif; color: #f9a825; font-size: 2.2vh;">
+          {% if message.message.is_read %}
+          {% else %}
+          <i class="fas fa-circle" style="color:#f9a825; font-size: 1vh; margin-bottom: auto !important;"></i>
+          {% endif %}<i class="fas fa-user-tie"></i>
+          <i class="fas fa-long-arrow-alt-left"></i> {{message.message.sender}}: <span style="font-size: 2vh; font-family:'Roboto Condensed', sans-serif; margin-left: 0.6rem; color: #272727">{{message.message.small_message}}</span><a
+            href="{% url 'message' message.sender_ID %}" class="secondary-content" style="color: #f9a825;"> <span style="margin: auto !important;"></span>
+            <i class="material-icons">send</i></a></div>
+      </li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+<div class="blogs-goals" style="margin: 0.2rem auto;">
+
+  <div class="blog_images center" style="margin-top: 0.48rem;">
+    <a class="waves-effect waves-light modal-trigger blog-header" id="publish_blog_a" href="#published" style="margin-top: 0 auto !important;">Your
+      Blogs</a>
+    <div class="row blogboard" style="overflow-y: scroll; height: 22rem;">
+      {% for blog in blogs %}
+      <div class="col s6 m4 l3">
+        <a href="{% url 'blog' blog.id %}" class="tooltipped" data-position="top" data-tooltip="{% if blog.is_published %} Published: {{blog.title}} {% else %} Unpublished: {{blog.title}} {% endif %}">
+          <img src="{{blog.main_image.url}}" class="hoverable img-reveal" style="object-fit:cover;" height="142" width="100%">
+        </a>
+      </div>
+      {% endfor %}
     </div>
   </div>
-
-  <div class="blogs-goals" style="margin: 0.2rem auto;">
-
-    <div class="blog_images center" style="margin-top: 0.48rem;">
-        <a class="waves-effect waves-light modal-trigger blog-header" id="publish_blog_a" href="#published" style="margin-top: 0 auto !important;">Your Blogs</a>
-      <div class="row blogboard" style="overflow-y: scroll; height: 22rem;">
-        {% for blog in blogs %}
-        <div class="col s6 m4 l3">
-          <a href="{% url 'blog' blog.id %}" class="tooltipped" data-position="top" data-tooltip="{{blog.title}}">
-            <img src="{{blog.main_image.url}}" class="hoverable img-reveal" style="object-fit:cover;" height="142" width="100%">
-          </a>
-        </div>
-        {% endfor %}
-      </div>
-    </div>
 
   <!-- Modal Structure -->
   <div id="published" class="modal">
     <div class="modal-content">
       <div class="container">
-          <h3 style="text-align: center; font-family: 'Kaushan Script', cursive; font-size: 4vh; font-weight: 500;"><i class="fas fa-scroll"></i> Choose Blogs To Publish</h3>
-               
-          <form action="{% url 'publishing' %}" method="POST">
-              {% csrf_token %}
-            <div class="publish_elements" id="publishing_blogs_checks" style="overflow-y: scroll; height: 45vh;">
+        <h3 style="text-align: center; font-family: 'Kaushan Script', cursive; font-size: 4vh; font-weight: 500;"><i
+            class="fas fa-scroll"></i> Choose Blogs To Publish</h3>
+
+        <form action="{% url 'publishing' %}" method="POST">
+          {% csrf_token %}
+          <div class="publish_elements" id="publishing_blogs_checks" style="overflow-y: scroll; height: 45vh;">
             {% for blog in blogs %}
-              <div class="blog_publishing" style="display: flex; width: 98% !important; justify-content: space-between; margin:0.2rem auto !important;">
-                <p style="font-family: 'Kaushan Script', cursive; font-size: 3vh;">{{blog.title}}</p>
-                <p style="font-size: 3vh;">
-                   <label>
-                     {% if blog.is_published %}
-                    <input type="checkbox" name="checkboxes" value="{{blog.id}}" checked="checked" />
-                    <span>Published</span>
-                    {% else %}
-                    <input type="checkbox" name="checkboxes" value="{{blog.id}}"/>
-                    <span>Not Published</span>
-                    {% endif %}
-                  </label>
-                </p>
-              </div>
+            <div class="blog_publishing" style="display: flex; width: 98% !important; justify-content: space-between; margin:0.2rem auto !important;">
+              <p style="font-family: 'Kaushan Script', cursive; font-size: 3vh;">{{blog.title}}</p>
+              <p style="font-size: 3vh;">
+                <label>
+                  {% if blog.is_published %}
+                  <input type="checkbox" name="checkboxes" value="{{blog.id}}" checked="checked" />
+                  <span>Published</span>
+                  {% else %}
+                  <input type="checkbox" name="checkboxes" value="{{blog.id}}" />
+                  <span>Not Published</span>
+                  {% endif %}
+                </label>
+              </p>
+            </div>
             {% endfor %}
-            </div> 
-            <button class="send_button" type="submit" style="width: 80% !important; margin: 0.4rem auto !important;">Publish Selected</button>
-          </form>
+          </div>
+          <button class="send_button" type="submit" style="width: 80% !important; margin: 0.4rem auto !important;">Publish
+            Selected</button>
+        </form>
       </div>
     </div>
   </div>
 
-    <div class="goals" style="margin-top: 0;">
-      <div class="motivation">
-        <div class="row" style="width: 100%; margin-bottom: 0;">
-          <div class="col s12 m12">
-            <div class="card indigo darken-3">
-              <div class="card-content white-text center">
-                <span class="card-title center-align" style="display: inline-block; background: #283593; font-family: 'Poppins', sans-serif; font-size: 3vh;padding: 0.4rem 0.4rem !important; margin: 0.2rem auto !important;">Keep Grinding Until You
-                  Do It !!</span>
-                <p style="font-size: 2.4vh;" class="center-align">Don’t watch the clock; do what it does. Keep going.</p>
-              </div>
+  <div class="goals" style="margin-top: 0;">
+    <div class="motivation">
+      <div class="row" style="width: 100%; margin-bottom: 0;">
+        <div class="col s12 m12">
+          <div class="card indigo darken-3">
+            <div class="card-content white-text center">
+              <span class="card-title center-align" style="display: inline-block; background: #283593; font-family: 'Poppins', sans-serif; font-size: 3vh;padding: 0.4rem 0.4rem !important; margin: 0.2rem auto !important;">Keep
+                Grinding Until You
+                Do It</span>
+              <p style="font-size: 2.4vh;" class="center-align">Don’t watch the clock; do what it does. Keep going.</p>
             </div>
           </div>
         </div>
       </div>
-      <div class="goal-lister">
-        <ul class="collection with-header" style="height: 98%;">
-          <li class="collection-header" style="padding: auto auto !important;">
-            <div class="row">
-              <div class="col s12 m6">
-                <form class="goaler-form" action="{% url 'goal' %}" method="post">
-                  {% csrf_token %}
-                  <div class="goal-adder-section center">
-                    <div class="up center">
-                      <div class="icon">
-                        <i class="far fa-list-alt"></i> Add A Goal
-                      </div>
-                    </div>
-                    <div class="down center">
-                        <div class="input-field goaler-input" style="margin-top: 0.4rem; margin-bottom: 0;">
-                          <input type="text" id="goaler" name="goal" placeholder="Eg. Learn React.js">
-                        </div>
-                        <div class="button" style="margin-top: 1.2rem;">
-                          <button type="submit" class="btn black waves-light waves-effect">Add Now </button>
-                        </div>
+    </div>
+    <div class="goal-lister">
+      <ul class="collection with-header" style="height: 98%;">
+        <li class="collection-header" style="padding: auto auto !important;">
+          <div class="row">
+            <div class="col s12 m6">
+              <form class="goaler-form" action="{% url 'goal' %}" method="post">
+                {% csrf_token %}
+                <div class="goal-adder-section center">
+                  <div class="up center">
+                    <div class="icon">
+                      <i class="far fa-list-alt"></i> Add A Goal
                     </div>
                   </div>
-                </form>
-              </div>
-              <div class="col s12 m6">
-                <ul class="collection left-align goalboard" style="overflow-y: scroll; height: 14.3rem; margin: 0.4rem auto; padding: auto auto;">
-                  {% for goal in goals %}
-                  <li class="collection-item">
-                    <div style="font-family: 'Poppins', sans-serif; color: #f9a825;font-size: 2vh;"><i class="fas fa-angle-right"></i> {{goal.goal}} <a href="javascript:{document.querySelector('#delgoal{{goal.id}}').submit()}" class="secondary-content" style="color: #272727;"><i class="far fa-times-circle"></i></a></div>
-                  </li>
-                  <form id="delgoal{{goal.id}}" action="{% url 'delgoal' goal.id %}" method="post" style="display:none;">
-                    {% csrf_token %}
-                     <input type="text" style="display:none;">
-                  </form>
-                  {% endfor %}
-                </ul>
-              </div>
+                  <div class="down center">
+                    <div class="input-field goaler-input" style="margin-top: 0.4rem; margin-bottom: 0;">
+                      <input type="text" id="goaler" name="goal" placeholder="Eg. Learn React.js">
+                    </div>
+                    <div class="button" style="margin-top: 1.2rem;">
+                      <button type="submit" class="btn black waves-light waves-effect">Add Now </button>
+                    </div>
+                  </div>
+                </div>
+              </form>
             </div>
-          </li>
-        </ul>
-      </div>
+            <div class="col s12 m6">
+              <ul class="collection left-align goalboard" style="overflow-y: scroll; height: 14.3rem; margin: 0.4rem auto; padding: auto auto;">
+                {% for goal in goals %}
+                <li class="collection-item">
+                  <div style="font-family: 'Poppins', sans-serif; color: #f9a825;font-size: 2vh;"><i class="fas fa-angle-right"></i>
+                    {{goal.goal}} <a href="javascript:{document.querySelector('#delgoal{{goal.id}}').submit()}" class="secondary-content"
+                      style="color: #272727;"><i class="far fa-times-circle"></i></a></div>
+                </li>
+                <form id="delgoal{{goal.id}}" action="{% url 'delgoal' goal.id %}" method="post" style="display:none;">
+                  {% csrf_token %}
+                  <input type="text" style="display:none;">
+                </form>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
+</div>
 
-  <script src="https://unpkg.com/scrollreveal"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/scrollreveal"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
 {% endblock %}

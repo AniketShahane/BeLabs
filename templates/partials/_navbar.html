@@ -1,15 +1,23 @@
+{% load static %}
 <div class="navbar-fixed">
   <nav class="main-navbar">
     <div class="nav-wrapper container">
-      <a href="{% url 'main' %}" class="brand-logo valign-wrapper">BeLabs</a>
+      <a href="{% url 'main' %}" class="brand-logo valign-wrapper"><i class="material-icons">important_devices</i>BeLabs</a>
       <a href="#" class="sidenav-trigger" data-target="mobile-nav">
         <i class="fas fa-bars"></i>
       </a>
       <ul class="right hide-on-med-and-down">
         <li><a href="{% url 'blogs' %}" style="font-size: 2.2vh !important;">Blogs</a></li>
         {% if user.is_authenticated %}
-        <li><a href="#addblog" class="waves-effect waves-light modal-trigger" style="font-size: 2.2vh !important;">Write A Blog </a></li>
-        <li><a href="javascript:{document.querySelector('#logout').submit()}" style="font-size: 2.2vh !important;">Logout</a></li>
+        <li><a href="#addblog" class="waves-effect waves-light modal-trigger" style="font-size: 2.2vh !important;">Write
+            A Blog </a></li>
+        {% if 'dashboard' in request.path %}
+        <li><a href="#profile" class="waves-effect waves-light modal-trigger" style="font-size: 2.2vh !important;">My
+            Profile </a></li>
+        {% else %}
+        <li><a href="{% url 'dashboard' %}" style="font-size: 2.2vh !important;">Dashboard</a></li>
+        {% endif %}
+        <li><a href="javascript:{document.getElementById('logout').submit()}" style="font-size: 2.2vh !important;">Logout</a></li>
         {% else %}
         <li><a href="{% url 'login' %}" style="font-size: 2.2vh !important;">Login</a></li>
         <li><a href="{% url 'register' %}" style="font-size: 2.2vh !important;">Register</a></li>
@@ -20,36 +28,68 @@
 </div>
 
 <!-- Modal Structure -->
-<div id="addblog" class="modal">
+<div id="addblog" class="modal" style="border: 3px solid #272727; width: 80vw !important;">
   <div class="modal-content">
-      <div class="container">
-          <h3 style="text-align: center; font-family: 'Kaushan Script', cursive; font-size: 4vh; font-weight: 500;"><i class="fas fa-pencil-alt"></i> Write A Blog</h3>
-          <div class="new_message">
-            <form action="{% url 'addblog' %}" class="center" method="POST" enctype="multipart/form-data" >
-              {% csrf_token %}
-              <div class="user_button">
-                <input type="text" name="blog_title" style="font-size: 2.8vh; font-family: 'Roboto Condensed', sans-serif;" value="" placeholder="Enter Title..." required>
-              </div>
-              <div class="text-area">
-                <textarea name="blog_body" style="font-size: 2.8vh; font-family: 'Roboto Condensed', sans-serif; height: 20rem; width: 100%; overflow-y: scroll;" id="blogspace" placeholder="Write Your Amazing Blog... (Minimum 30 words)" required></textarea>
-              </div>
-              <div class="file-field input-field">
-                  <div class="btn" style="background: #272727 !important; width: 35% !important;" >
-                    <span>File</span>
-                    <input type="file" name="image" required>
-                  </div>
-                  <div class="file-path-wrapper">
-                    <input class="file-path validate" style="font-size: 2.8vh; font-family: 'Roboto Condensed', sans-serif;" type="text" placeholder="Upload the image for your blog..." required>
-                  </div> 
-              </div>
-              <!-- <input type="file" name="image"> -->
-              <button type="submit" name="send_message" class="send_button" style="width: 50% !important;">Send</button>
-            </form>
+    <div class="container">
+      <h3 style="text-align: center; font-family: 'Kaushan Script', cursive; font-size: 4vh; font-weight: 500;"><i
+          class="fas fa-pencil-alt"></i> Write A Blog</h3>
+      <div class="new_message">
+        <form action="{% url 'addblog' %}" class="center" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="user_button">
+            <input type="text" name="blog_title" style="font-size: 2.4vh; font-family: 'Roboto Condensed', sans-serif;"
+              value="" placeholder="Enter Title..." required>
           </div>
-        </div>
+          <div class="text-area">
+            <textarea name="blog_body" style="font-size: 2.4vh; font-family: 'Roboto Condensed', sans-serif; height: 16rem; width: 100%; overflow-y: scroll;"
+              id="blogspace" placeholder="Write Your Amazing Blog... (Minimum 30 words)" required></textarea>
+          </div>
+          <div class="file-field input-field">
+            <div class="btn" style="background: #272727 !important; width: 35% !important;">
+              <span>File</span>
+              <input type="file" name="image" required>
+            </div> 
+            <div class="file-path-wrapper">
+              <input class="file-path validate" style="font-size: 2.4vh; font-family: 'Roboto Condensed', sans-serif;"
+                type="text" placeholder="Upload the image for your blog..." >
+            </div>
+          </div>
+          <!-- <input type="file" name="image"> -->
+          <button type="submit" name="send_message" class="send_button" style="width: 50% !important;">Send</button>
+        </form>
+      </div>
+    </div>
   </div>
 </div>
-        
+
+<!-- Profile Modal -->
+<div id="profile" class="modal profile-modal" style="border: 2px #ffe400 solid;">
+  <div class="modal-content" style="background: #272727 !important;">
+    <div class="container center">
+      <div class="profile-picture">
+        {% if profile.picture %}
+        <img src="{{profile.picture.url}}" style="height: 15rem; width: 15rem; border-radius: 50%; border: 2px solid #ffe400; padding: 0.6rem;">
+        {% else %}
+        <img src="{%  static 'Resources/CSS/defaul.png' %}" style="height: 15rem; width: 15rem; border-radius: 50%; border: 2px solid #ffe400; padding: 0.6rem;">
+        {% endif %}
+      </div>
+      <div class="Profile_details" style="color: #ffe400;">
+        <h3 id="profile_name">{{user.first_name}} {{user.last_name}}</h3>
+        <p id="profile_username"> <span id="username_word">Username:</span> {{user.username}}</p>
+        <p id="profile_email"> <span id="email_word">Email Id:</span> {{user.email}}</p>
+        <p id="profile_bio"> <span id="bio_word">Bio</span>: {{profile.bio}}</p>
+        <p id="interests"><span id="interests_word">Interests:</span> {{pinterests}}</p>
+        <div class="social_media_profile">
+          <p><a href="{{profile.github}}" target="_blank" id="github"><i class="fab fa-github"></i> GitHub </a></p>
+          <p><a href="{{profile.linkedIn}}" target="_blank" id="linkedin"><i class="fab fa-linkedin-in"></i> LinkedIn
+            </a></p>
+          <p><a href="#" id="message_profile"><i class="far fa-envelope"></i> Send A Message </a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <ul class="sidenav" id="mobile-nav" style="background: #272727;">
   {% if user.is_authenticated %}
@@ -57,11 +97,14 @@
     <a href="{% url 'blogs' %}" style="color: #f4f4f4 !important;">Blogs</a>
   </li>
   <li>
-      <a href="#addblog" class="waves-effect waves-light modal-trigger" style="color: #f4f4f4 !important;">Write A Blog</a>
-    </li>
+    <a href="#addblog" class="waves-effect waves-light modal-trigger" style="color: #f4f4f4 !important;">Write A Blog</a>
+  </li>
+  <li><a href="#profile" class="waves-effect waves-light modal-trigger" style="color: #f4f4f4 !important;">My Profile
+    </a>
+  </li>
   <li>
-      <a href="{% url 'logout' %}" style="color: #f4f4f4 !important;">Logout</a>
-    </li>
+    <a href="javascript:{document.getElementById('logout').submit()}" style="color: #f4f4f4 !important;">Logout</a>
+  </li>
   {% else %}
   <li>
     <a href="{% url 'login' %}" style="color: #f4f4f4 !important;">Login</a>
@@ -73,6 +116,6 @@
 </ul>
 
 <form id="logout" action="{% url 'logout' %}" method="POST" style="display: none;">
-{% csrf_token %}
-<input type="text">
+  {% csrf_token %}
+  <input type="text" style="display: none;">
 </form>

@@ -21,14 +21,6 @@ M.Materialbox.init(imageboxed, {
 const modal_elements = document.querySelectorAll('.modal');
 M.Modal.init(modal_elements, {});
 
-// Light Box Options
-// lightbox.option({
-//   'resizeDuration': 200,
-//   'wrapAround': true,
-//   'maxHeight': 800,
-//   'fadeDuration': 1000
-// });
-
 
 //Scroll Reveal
 ScrollReveal().reveal('.head', {
@@ -104,10 +96,10 @@ ScrollReveal().reveal('.blog-icons', {
 });
 ScrollReveal().reveal('#chat_person', {
   delay: 400,
-  distance: "15px",
-  origin: 'top'
+  distance: "20px",
+  origin: 'left'
 });
-ScrollReveal().reveal('.comment_text', {
+ScrollReveal().reveal('.comment_animation', {
   delay: 400,
   interval: 100,
   origin: 'bottom',
@@ -124,18 +116,26 @@ ScrollReveal().reveal('#login-button', {
   distance: "15px",
   origin: "top"
 });
+// ScrollReveal().reveal('.message', {
+//   delay: 400,
+//   interval: 100,
+//   origin: 'bottom',
+//   distance: "80px",
+//   mobile: false
+// });
 
-$('.count').each(function() {
+$('.count').each(function () {
   $(this).prop('Counter', 0).animate({
     Counter: $(this).text()
   }, {
-    duration: 2000,
-    easing: 'swing',
-    step: function(now) {
-      $(this).text(Math.ceil(now));
-    }
-  });
+      duration: 2000,
+      easing: 'swing',
+      step: function (now) {
+        $(this).text(Math.ceil(now));
+      }
+    });
 });
+
 
 var objDiv = document.querySelector(".person_comments");
 objDiv.scrollTop = objDiv.scrollHeight;
