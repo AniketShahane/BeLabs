@@ -7,6 +7,8 @@ from comment.models import Comment
 from goal.models import Goal
 from message.models import Message
 from accounts.models import Profile
+from .forms import ImageUploadForm
+from django.contrib import messages
 # Create your views here.
 
 
@@ -19,7 +21,7 @@ def login(request):
             auth.login(request, user)
             return redirect('dashboard')
         else:
-            print('Something is not right')
+            messages.error(request, 'Invalid Credentials')
             return redirect('login')
     else:
         if request.user.is_authenticated:
@@ -46,15 +48,18 @@ def register(request):
                     u = User.objects.create_user(
                         email=email, username=username, password=password, first_name=first_name, last_name=last_name)
                     u.save()
+                    messages.success(
+                        request, 'You\'ve been successfully registered. Login to continue...')
                     return redirect('login')
                 else:
-                    print('The email is already registered')
+                    messages.error(
+                        request, 'Email Id already used for registration')
                     return redirect('register')
             else:
-                print('The username is not availble')
+                messages.error(request, 'Username already taken')
                 return redirect('register')
         else:
-            print('passwords dont match')
+            messages.error(request, 'Passwords don\'t match')
             return redirect('register')
     else:
         if request.user.is_authenticated:
@@ -65,19 +70,25 @@ def register(request):
 
 def dashboard(request):
     # Get all the blogs written by the user
-    profile = Profile.objects.get(user=request.user)
-    pinterests = ''
-    interest = profile.interests.strip().split(';')
-    print(interest)
-    interest = list(filter(lambda a: a != '', interest))
-    print(interest)
-    for word in interest:
-        if interest.index(word) < len(interest) - 2:
-            pinterests += word + ', '
-        elif interest.index(word) == len(interest) - 2:
-            pinterests += word + ' '
-        elif interest.index(word) == len(interest) - 1:
-            pinterests += 'and ' + word
+    content = {}
+    try:
+        profile = Profile.objects.get(user=request.user)
+        pinterests = ''
+        interest = profile.interests.strip().split(';')
+        # print(interest)
+        interest = list(filter(lambda a: a != '', interest))
+        # print(interest)
+        for word in interest:
+            if interest.index(word) < len(interest) - 2:
+                pinterests += word + ', '
+            elif interest[-2] == word:
+                pinterests += word + ' '
+            elif interest[-1] == word:
+                pinterests += 'and ' + word
+        profile_content = {'profile': profile, 'pinterests': pinterests}
+        content.update(profile_content)
+    except:
+        pass
 
     blogs = Blog.objects.order_by(
         '-pub_date').filter(author_id=request.user.id)
@@ -150,19 +161,18 @@ def dashboard(request):
         views += blog.views
 
     goals = Goal.objects.order_by('-time').filter(writer=request.user)
-    content = {
+    person_content = {
         'likes': likes,
         'words': words,
         'comments': comments,
         'no_blogs': no_blogs,
-        'messages': messages,
+        'num_messages': messages,
         'blogs': blogs,
         'goals': goals,
         'views': views,
         'final_messages': final_messages,
-        'profile': profile,
-        'pinterests': pinterests
     }
+    content.update(person_content)
     return render(request, 'Dashboard/dashboard.html', content)
 
 
@@ -170,3 +180,36 @@ def logout(request):
     if request.method == "POST":
         auth.logout(request)
         return redirect('main')
+
+
+def update_profile(request):
+    if request.method == "POST":
+        user = User.objects.get(id=request.user.id)
+        try:
+            profile_user = Profile.objects.get(user=request.user)
+        except:
+            profile_user = Profile()
+        bio = request.POST['edit_bio']
+        interest = request.POST['edit_interests']
+        email = request.POST['edit_email']
+        github = request.POST['edit_github']
+        linkedin = request.POST['edit_linkedin']
+        if 'picture' in request.FILES:
+            if request.FILES['picture']:
+                print('The form is valid now')
+                profile_picture = request.FILES['picture']
+                profile_user.picture = profile_picture
+            else:
+                print('Form is not valid')
+        profile_user.bio = bio
+        if len(bio) > 140:
+            print('BioCharError')
+            return redirect('dashboard')
+        profile_user.interests = interest
+        profile_user.github = github
+        profile_user.linkedIn = linkedin
+        user.email = email
+        user.save()
+        profile_user.user = user
+        profile_user.save()
+        return redirect('dashboard')

@@ -34,7 +34,7 @@
       <h3 style="text-align: center; font-family: 'Kaushan Script', cursive; font-size: 4vh; font-weight: 500;"><i
           class="fas fa-pencil-alt"></i> Write A Blog</h3>
       <div class="new_message">
-        <form action="{% url 'addblog' %}" class="center" method="POST" enctype="multipart/form-data">
+        <form action="{% url 'addblog' %}" class="center" method="POST" enctype="multipart/form-data" id="blog_submit_form">
           {% csrf_token %}
           <div class="user_button">
             <input type="text" name="blog_title" style="font-size: 2.4vh; font-family: 'Roboto Condensed', sans-serif;"
@@ -48,14 +48,14 @@
             <div class="btn" style="background: #272727 !important; width: 35% !important;">
               <span>File</span>
               <input type="file" name="image" required>
-            </div> 
+            </div>
             <div class="file-path-wrapper">
               <input class="file-path validate" style="font-size: 2.4vh; font-family: 'Roboto Condensed', sans-serif;"
-                type="text" placeholder="Upload the image for your blog..." >
+                type="text" placeholder="Upload the image for your blog...">
             </div>
           </div>
-          <!-- <input type="file" name="image"> -->
-          <button type="submit" name="send_message" class="send_button" style="width: 50% !important;">Send</button>
+          <a href="javascript:{document.getElementById('blog_submit_form').submit()}" type="submit" name="send_message"
+            class="send_button" style="width: 50% !important;">Send</a>
         </form>
       </div>
     </div>
@@ -68,13 +68,15 @@
     <div class="container center">
       <div class="profile-picture">
         {% if profile.picture %}
-        <img src="{{profile.picture.url}}" style="height: 15rem; width: 15rem; border-radius: 50%; border: 2px solid #ffe400; padding: 0.6rem;">
+        <img src="{{profile.picture.url}}" style="object-fit: cover ;height: 15rem; width: 15rem; border-radius: 50%; border: 2px solid #ffe400; padding: 0.6rem;">
         {% else %}
-        <img src="{%  static 'Resources/CSS/defaul.png' %}" style="height: 15rem; width: 15rem; border-radius: 50%; border: 2px solid #ffe400; padding: 0.6rem;">
+        <img src="{%  static 'Resources/CSS/defaul.png' %}" style="object-fit: cover ;height: 15rem; width: 15rem; border-radius: 50%; border: 2px solid #ffe400; padding: 0.6rem;">
         {% endif %}
       </div>
       <div class="Profile_details" style="color: #ffe400;">
-        <h3 id="profile_name">{{user.first_name}} {{user.last_name}}</h3>
+        <h3 id="profile_name">{{user.first_name}} {{user.last_name}} <span class="profile_editer" style="font-size: 1.8vh; background: #ffe400; color: #272727; border-radius: 40px; padding: 0.2rem 0.6rem; margin: auto 0.6rem !important;"><a
+              href="#profile_editor_modal" class="modal-trigger modal-close">Edit</a></span>
+        </h3>
         <p id="profile_username"> <span id="username_word">Username:</span> {{user.username}}</p>
         <p id="profile_email"> <span id="email_word">Email Id:</span> {{user.email}}</p>
         <p id="profile_bio"> <span id="bio_word">Bio</span>: {{profile.bio}}</p>
@@ -83,11 +85,82 @@
           <p><a href="{{profile.github}}" target="_blank" id="github"><i class="fab fa-github"></i> GitHub </a></p>
           <p><a href="{{profile.linkedIn}}" target="_blank" id="linkedin"><i class="fab fa-linkedin-in"></i> LinkedIn
             </a></p>
-          <p><a href="#" id="message_profile"><i class="far fa-envelope"></i> Send A Message </a></p>
         </div>
       </div>
     </div>
   </div>
+</div>
+
+<!-- Profile Editor Modal -->
+<div id="profile_editor_modal" class="modal profile-modal" style="border: 2px #ffe400 solid;">
+  <div class="modal-content" style="background: #272727 !important;">
+    <div class="container center">
+      <div style="display: flex; flex-wrap: wrap;">
+        <h3 id="profile_name" style="color: #ffe400;"><i class="far fa-user-circle"></i> Edit Your Profile</h3>
+        <a href="javascript:{document.getElementById('editor_form').submit()}" id="change_profile_button" style="width: 50% !important; margin-bottom: 0 !important;">Update</a>
+      </div>
+      <form action="{% url 'update_profile' %}" method="post" enctype="multipart/form-data" id="editor_form">
+        {% csrf_token %}
+        <div class="row">
+          <div class="col s12">
+            <div class="file-field input-field">
+              <div class="btn" style="background: #ffe400; color: #272727;">
+                <span style="font-family: 'Roboto Condensed', sans-serif; font-weight: 450; font-size: 2vh;">Upload
+                  Your Image</span>
+                <input type="file" name="picture">
+              </div>
+              <div class="file-path-wrapper" style="font-size: 2.4vh; font-family: 'Roboto Condensed', sans-serif;">
+                <input class="file-path validate input_picture" type="text" name="picture">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col s4 m2">
+            <label for="edit_bio" class="bio_word">Bio</label>
+          </div>
+          <div class="col s8 m10">
+            <textarea id="edit_bio" name="edit_bio" style="line-height: 1.8em;" class="materialize-textarea editing">{{profile.bio}}</textarea>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col s4 m2">
+            <label for="edit_interests" class="interests_word">Interests</label>
+          </div>
+          <div class="col s8 m10 left-align">
+            <textarea name="edit_interests" style="line-height: 1.8em;" id="edit_interests" class="materialize-textarea editing">{{profile.interests}}</textarea>
+            <small class="helper-text" style="color: #f4f4f4; font-size: 1.8vh;">Separate your interests
+              by adding a semicolon...</small>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col s4 m2">
+            <label for="edit_email" class="email_word">Email</label>
+          </div>
+          <div class="col s8 m10">
+            <input type="text" id="edit_email" name="edit_email" class="validate editing" value="{{user.email}}">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col s4 m2">
+            <label for="edit_github" class="github">GitHub</label>
+          </div>
+          <div class="col s8 m10">
+            <input type="text" id="edit_github" name="edit_github" class="editing" value="{{profile.github}}">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col s4 m2">
+            <label for="edit_linkedIn" class="linkedin">LinkedIn</label>
+          </div>
+          <div class="col s8 m10">
+            <input type="text" id="edit_linkedIn" name="edit_linkedin" class="editing" value="{{profile.linkedIn}}">
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 </div>
 
 
@@ -99,9 +172,13 @@
   <li>
     <a href="#addblog" class="waves-effect waves-light modal-trigger" style="color: #f4f4f4 !important;">Write A Blog</a>
   </li>
+  {% if 'dashboard' in request.path %}
   <li><a href="#profile" class="waves-effect waves-light modal-trigger" style="color: #f4f4f4 !important;">My Profile
     </a>
   </li>
+  {% else %}
+  <li><a href="{% url 'dashboard' %}" style="font-size: 2.2vh !important;">Dashboard</a></li>
+  {% endif %}
   <li>
     <a href="javascript:{document.getElementById('logout').submit()}" style="color: #f4f4f4 !important;">Logout</a>
   </li>

@@ -124,18 +124,46 @@ ScrollReveal().reveal('#login-button', {
 //   mobile: false
 // });
 
-$('.count').each(function () {
-  $(this).prop('Counter', 0).animate({
-    Counter: $(this).text()
-  }, {
-      duration: 2000,
-      easing: 'swing',
-      step: function (now) {
-        $(this).text(Math.ceil(now));
-      }
-    });
-});
+try {
+  $('.count').each(function () {
+    $(this).prop('Counter', 0).animate({
+      Counter: $(this).text()
+    }, {
+        duration: 2000,
+        easing: 'swing',
+        step: function (now) {
+          $(this).text(Math.ceil(now));
+        }
+      });
+  });
+}
+catch (err) {
+  console.log(err);
+}
+try {
+  $('.alert_messages').fadeOut(5000, () => {
+    //Animation chala bhai 
+  });
+}
+catch (err) {
+  console.log(err);
+}
 
+try {
+  var objDiv = document.querySelector(".person_comments");
+  objDiv.scrollTop = objDiv.scrollHeight;
+}
+catch (err) {
+  console.log(err);
+}
 
-var objDiv = document.querySelector(".person_comments");
-objDiv.scrollTop = objDiv.scrollHeight;
+// try {
+//   ClassicEditor
+//     .create(document.getElementById('blogspace'))
+//     .catch((e) => {
+//       console.log(e);
+//     });
+// }
+// catch (err) {
+//   console.log(err);
+// }

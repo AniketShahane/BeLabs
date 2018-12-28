@@ -1,49 +1,5 @@
 {% extends 'partials/base.html' %}
 {% load static %}
-<!-- <!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="Resources/CSS/main.css">
-  <link href="https://fonts.googleapis.com/css?family=Kaushan+Script|Poppins|Roboto+Condensed" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <title>BeLabs</title>
-</head>
-
-<body class="bodyback-plain"> -->
-<!-- <div class="overlay"></div> -->
-<!-- <div class="navbar-fixed">
-    <nav class="main-navbar">
-      <div class="nav-wrapper container">
-        <a href="main.html" class="brand-logo valign-wrapper">BeLabs</a>
-        <a href="#" class="sidenav-trigger" data-target="mobile-nav">
-          <i class="fas fa-bars"></i>
-        </a>
-        <ul class="right hide-on-med-and-down">
-          <li><a href="blogs.html" style="font-size: 2.2vh !important;">Blogs</a></li>
-          <li><a href="login.html" style="font-size: 2.2vh !important;">Login</a></li>
-          <li><a href="register.html" style="font-size: 2.2vh !important;">Register</a></li>
-        </ul>
-      </div>
-    </nav>
-  </div>
-
-  <ul class="sidenav" id="mobile-nav" style="background: #272727;">
-    <li>
-      <a href="blogs.html" style="color: #f4f4f4 !important;">Blogs</a>
-    </li>
-    <li>
-      <a href="login.html" style="color: #f4f4f4 !important;">Login</a>
-    </li>
-    <li>
-      <a href="register.html" style="color: #f4f4f4 !important;">Register</a>
-    </li>
-  </ul> -->
 {% block content %}
 {% include 'partials/_navbar.html' %}
 <div class="container center" style="margin-bottom: 2rem;">
@@ -56,24 +12,39 @@
   <div class="modal-content" style="background: #272727 !important;">
     <div class="container center">
       <div class="profile-picture">
-        {% if cprofile.picture %}
-        <img src="{{cprofile.picture.url}}" style="height: 15rem; width: 15rem; border-radius: 50%; border: 2px solid #272727; padding: 0.6rem;">
+        {% if cprofile %}
+        <img src="{{cprofile.picture.url}}" style="object-fit: cover ;height: 15rem; width: 15rem; border-radius: 50%; border: 2px solid #272727; padding: 0.6rem;">
         {% else %}
-        <img src="{% static 'Resources/CSS/defaul.png' %}" style="height: 15rem; width: 15rem; border-radius: 50%; border: 2px solid #272727; padding: 0.6rem;">
+        <img src="{% static 'Resources/CSS/defaul.png' %}" style="object-fit: cover ;height: 15rem; width: 15rem; border-radius: 50%; border: 2px solid #272727; padding: 0.6rem;">
         {% endif %}
       </div>
       <div class="Profile_details" style="color: #ffe400;">
-        <h3 id="profile_name">{{cprofile.user.first_name}} {{cprofile.user.last_name}}</h3>
-        <p id="profile_username"> <span id="username_word">Username:</span> {{cprofile.user.username}}</p>
-        <p id="profile_email"> <span id="email_word">Email Id:</span> {{cprofile.user.email}}</p>
-        <p id="profile_bio"> <span id="bio_word">Bio</span>: {{cprofile.bio}}</p>
+        <h3 id="profile_name">{{receiver.first_name}} {{receiver.last_name}}</h3>
+        <p id="profile_username"> <span id="username_word">Username:</span> {{receiver.username}}</p>
+        <p id="profile_email"> <span id="email_word">Email Id:</span> {{receiver.email}}</p>
+        {% if cprofile.bio %}
+        <p id="profile_bio"> <span id="bio_word">Bio:</span> {{cprofile.bio}}</p>
+        {% else %}
+        {% endif %}
+        {% if cprofile.interests %}
         <p id="interests"><span id="interests_word">Interests:</span> {{cinterest}}</p>
+        {% else %}
+        {% endif %}
         <div class="social_media_profile">
+          <!-- {% if cprofile %} -->
+          {% if cprofile.github %}
           <p><a href="{{cprofile.github}}" target="_blank" id="github"><i class="fab fa-github"></i> GitHub </a></p>
+          {% else %}
+          {% endif %}
+          {% if cprofile.linkedIn %}
           <p><a href="{{cprofile.linkedIn}}" target="_blank" id="linkedin"><i class="fab fa-linkedin-in"></i> LinkedIn
             </a></p>
-          <p><a href="#" id="message_profile"><i class="far fa-envelope"></i> Send A Message </a></p>
-          <p><a href="{% url 'redirectBlog' cprofile.user.username %}" id="message_profile"><i class="fas fa-scroll"></i> Other Blogs</a></p>
+          {% else %}
+          {% endif %}
+          <!-- {% else %}
+          {% endif %} -->
+          <p><a href="{% url 'redirectBlog' receiver.username %}" id="message_profile"><i class="fas fa-scroll"></i>
+              Read Blogs</a></p>
         </div>
       </div>
     </div>
@@ -83,7 +54,7 @@
 <div class="container comments_section">
   <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center;">
     <a href="#chat_profile" class="waves-effect waves-light modal-trigger">
-      <img src="{{cprofile.picture.url}}" style="height: 10rem;object-fit: cover; width: 10rem; border-radius: 50%; border: 2px solid #272727; padding: 0.6rem; margin-right: 0.6rem;">
+      <img {% if cprofile %} src="{{cprofile.picture.url}}" {% else %} src="{% static 'Resources/CSS/defaul.png' %}" {% endif %} style="object-fit: cover ;height: 10rem;object-fit: cover; width: 10rem; border-radius: 50%; border: 2px solid #272727; padding: 0.6rem; margin-right: 0.6rem;">
     </a>
     <h4 id="chat_person" style="font-size: 5vh; font-family: 'Kaushan Script', cursive; font-weight: 600; margin-bottom: 1rem !important; margin-top: 0.6rem !important; text-align: center;">{{receiver.first_name}}
       {{receiver.last_name}} ~ {{receiver.username}}</h4>

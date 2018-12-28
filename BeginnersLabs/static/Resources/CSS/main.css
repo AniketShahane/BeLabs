@@ -8,6 +8,7 @@ body {
 
 /* Font Imports */
 @import url('https://fonts.googleapis.com/css?family=Kaushan+Script');
+@import url('https://fonts.googleapis.com/css?family=Dancing+Script:700');
 
 /* Media Queries  */
 @media only screen and (min-width:1260px) {
@@ -177,6 +178,8 @@ Gray:     #747474;
 Red:      #ff652f;
 Yellow:   #ffe400;
 Green:    #14a76c; */
+
+
 /* Main Body  */
 .bodyback-plain {
   background-color: #ffe400;
@@ -514,6 +517,27 @@ li {
   border-radius: 10px;
 }
 
+.profile_editer {
+  transition: all 0.4s !important;
+}
+
+.profile_editer a {
+color: #272727 !important;
+}
+
+.profile_editer:hover {
+  color: #272727 !important;
+  background: #f4f4f4 !important;
+}
+
+.comment_poster{
+  transition: all 0.4s !important;
+}
+
+.comment_poster:hover {
+  color: #da7400 !important;
+}
+
 /* Upload Blog Section */
 #blogspace::-webkit-scrollbar {
   width: 0.4em;
@@ -738,6 +762,43 @@ body::-webkit-scrollbar-thumb {
   width: 6rem !important;
 }
 
+.bio_word, .interests_word, .email_word, .github, .linkedin{
+  font-size: 2.6vh;
+  color: #ffe400;
+}
+
+
+.editing {
+  font-size: 2.6vh !important; 
+  color: #f4f4f4;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-weight:400; 
+}
+
+
+#change_profile_button {
+  font-size: 2.6vh;
+  color: #272727;
+  background: #ffe400;
+  border-radius: 40px;
+  padding: 0.6rem 0.8rem !important;
+  margin: 0.4rem auto !important;
+  text-decoration: none !important;
+  border: 2px solid #ffe400;
+  cursor: pointer;
+  transition: all 0.4s;
+  font-weight: 400;
+}
+
+#change_profile_button:hover {
+  color: #ffe400 !important;
+  border:2px solid #ffe400 !important;
+  background: #272727;
+}
+
+#profile_editor_modal .row{
+  margin: 0.2rem auto !important;
+}
 
 .social_media_profile {
   display: flex;

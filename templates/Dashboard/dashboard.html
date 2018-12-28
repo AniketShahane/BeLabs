@@ -7,6 +7,7 @@
   <h4 style="font-size: 4.6vh; font-family: 'Poppins', sans-serif; font-weight: 600;" class="dashboard-header">Welcome
     to your <span style="color: #f9a825;">Dashboard</span>, {{request.user.first_name}}</h4>
   <hr style="width: 80%; border: 2px solid #f4f4f4;border-radius: 6px;margin: 1rem auto;">
+  {% include 'partials/_alerts.html' %}
 </div>
 
 <div class="stat-message-container">
@@ -59,7 +60,7 @@
       <div class="row" style="margin: 0 auto !important;">
         <div class="col s12 m12 center">
           <div class="card-panel" style="padding: 0 0.2rem; width: 100%; height: 100%; display: flex; flex-direction: column;">
-            <span style="font-size: 5vh; color: #4a148c" class="count">{{messages}}</span>
+            <span style="font-size: 5vh; color: #4a148c" class="count">{{num_messages}}</span>
             <small style="font-size: 2.8vh; font-weight: 300; margin: auto 0.4rem; padding: auto 0.1rem;" class="card-small">
               MESSAGES</small>
           </div>
@@ -98,6 +99,7 @@
           </div>
         </div>
       </li>
+      {% if final_messages %}
       {% for message in final_messages %}
       {% if message.is_sent %}
       <li class="collection-item">
@@ -119,6 +121,10 @@
       </li>
       {% endif %}
       {% endfor %}
+      {% else %}
+      <h4 style="font-family: 'Kaushan Script', cursive; font-size: 3vh; text-align: center; margin: 1rem auto !important; width: 80% !important; line-height: 2em;"><i
+          class="fas fa-network-wired"></i> Go Ahead & Connect</h4>
+      {% endif %}
     </ul>
   </div>
 </div>
@@ -126,9 +132,12 @@
 <div class="blogs-goals" style="margin: 0.2rem auto;">
 
   <div class="blog_images center" style="margin-top: 0.48rem;">
-    <a class="waves-effect waves-light modal-trigger blog-header" id="publish_blog_a" href="#published" style="margin-top: 0 auto !important;">Your
+    <a class="waves-effect waves-light modal-trigger blog-header" id="publish_blog_a" href="#published" style="margin-top: 0 auto !important;"><i
+        class="fas fa-scroll"></i> Your
       Blogs</a>
+
     <div class="row blogboard" style="overflow-y: scroll; height: 22rem;">
+      {% if blogs %}
       {% for blog in blogs %}
       <div class="col s6 m4 l3">
         <a href="{% url 'blog' blog.id %}" class="tooltipped" data-position="top" data-tooltip="{% if blog.is_published %} Published: {{blog.title}} {% else %} Unpublished: {{blog.title}} {% endif %}">
@@ -136,6 +145,12 @@
         </a>
       </div>
       {% endfor %}
+      {% else %}
+      <h4 style="line-height: 2em; font-family: 'Kaushan Script', cursive; font-size: 3.8vh; margin: 0.6rem auto !important;">No
+        Blogs Written...</h4>
+      <h4 style="line-height: 2em; font-family: 'Kaushan Script', cursive; font-size: 3.8vh; margin: 0.6rem auto !important;"><i
+          class="fas fa-praying-hands"></i> Please share your work!!</h4>
+      {% endif %}
     </div>
   </div>
 
@@ -149,6 +164,7 @@
         <form action="{% url 'publishing' %}" method="POST">
           {% csrf_token %}
           <div class="publish_elements" id="publishing_blogs_checks" style="overflow-y: scroll; height: 45vh;">
+            {% if blogs %}
             {% for blog in blogs %}
             <div class="blog_publishing" style="display: flex; width: 98% !important; justify-content: space-between; margin:0.2rem auto !important;">
               <p style="font-family: 'Kaushan Script', cursive; font-size: 3vh;">{{blog.title}}</p>
@@ -165,6 +181,12 @@
               </p>
             </div>
             {% endfor %}
+            {% else %}
+            <h4 style="line-height: 2em; font-family: 'Kaushan Script', cursive; font-size: 3.8vh; margin: 0.6rem auto !important;">No
+              Blogs Written...</h4>
+            <h4 style="line-height: 2em; font-family: 'Kaushan Script', cursive; font-size: 3.8vh; margin: 0.6rem auto !important;"><i
+                class="fas fa-praying-hands"></i> Please share your work!!</h4>
+            {% endif %}
           </div>
           <button class="send_button" type="submit" style="width: 80% !important; margin: 0.4rem auto !important;">Publish
             Selected</button>
@@ -214,6 +236,7 @@
             </div>
             <div class="col s12 m6">
               <ul class="collection left-align goalboard" style="overflow-y: scroll; height: 14.3rem; margin: 0.4rem auto; padding: auto auto;">
+                {% if goals %}
                 {% for goal in goals %}
                 <li class="collection-item">
                   <div style="font-family: 'Poppins', sans-serif; color: #f9a825;font-size: 2vh;"><i class="fas fa-angle-right"></i>
@@ -225,6 +248,10 @@
                   <input type="text" style="display:none;">
                 </form>
                 {% endfor %}
+                {% else %}
+                <h4 style="font-family: 'Kaushan Script', cursive; font-size: 2.8vh; text-align: center; margin: 1rem auto !important; width: 80% !important; line-height: 2em;"><i
+                    class="fas fa-haykal"></i> Set your goals high and don't stop until you get there...</h4>
+                {% endif %}
               </ul>
             </div>
           </div>

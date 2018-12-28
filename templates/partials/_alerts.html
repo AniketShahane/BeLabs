@@ -1,0 +1,10 @@
+{% if messages %}
+{% for message in messages %}
+{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+<small class="alert_messages" style="font-size: 2vh; font-weight: 400; font-family: 'Poppins', sans-serif; margin-right: auto !important; color: #ff652f"><strong>Error:</strong>
+    {{message}}</small>
+{% else %}
+<small class="alert_messages" style="font-size: 2vh; font-weight: 400; font-family: 'Poppins', sans-serif; text-align: left; color: #14a76c">{{message}}</small>
+{% endif %}
+{% endfor %}
+{% endif %}

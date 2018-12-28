@@ -17,7 +17,8 @@ class Blog(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     # This is going to be the user who publishes the blog
     pub_date = models.DateTimeField(default=timezone.now())
-    main_image = models.ImageField(upload_to='blog-images/', default="/defaults/default_blog_image.jpg")
+    main_image = models.ImageField(
+        upload_to='blog-images/', default="/defaults/default_blog_image.jpg")
     body = models.TextField(validators=[MinLengthValidator(30)])
     likes = models.IntegerField(default=1)
     comments = models.IntegerField(default=0)

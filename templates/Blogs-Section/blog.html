@@ -1,4 +1,5 @@
 {% extends 'partials/base.html' %}
+{% load static %}
 {% block content %}
 {% include 'partials/_navbar.html' %}
 
@@ -103,9 +104,115 @@
       <div class="person_comments" style="height: 50vh">
         {% for comment in comments %}
         <p class="comment_text comment_animation" style="padding: 0.6rem 0.4rem !important;">
-          <span class="comment_poster" style="color: #ffe400; font-size: 2.4vh;">@{{ comment.writer.username }}</span>:
-          {{ comment.comment_text }}
+          <a href="#comment_poster_modal{{comment.comment.writer.id}}" class="comment_poster modal-trigger" style="color: #ffe400; font-size: 2.4vh;">@{{comment.comment.writer.username}}</a>:
+          {{ comment.comment.comment_text }}
         </p>
+        <!-- Profile Modal -->
+        {% if comment.has_profile %}
+        <div id="comment_poster_modal{{comment.comment.writer.id}}" class="modal profile-modal" style="border: 2px #ffe400 solid;">
+          <div class="modal-content" style="background: #272727 !important;">
+            <div class="container center">
+              <div class="profile-picture">
+                <img src="{{comment.profile.picture.url}}" style="object-fit: cover ;height: 15rem; width: 15rem; border-radius: 50%; border: 2px solid #ffe400; padding: 0.6rem;">
+              </div>
+              <div class="Profile_details" style="color: #ffe400;">
+                <h3 id="profile_name">{{comment.profile.user.first_name}} {{comment.profile.user.last_name}}</h3>
+                <p id="profile_username"> <span id="username_word">Username:</span> {{comment.profile.user.username}}</p>
+                <p id="profile_email"> <span id="email_word">Email Id:</span> {{comment.profile.user.email}}</p>
+                <p id="profile_bio"> <span id="bio_word">Bio</span>: {{comment.profile.bio}}</p>
+                <div class="social_media_profile">
+                  <p><a href="{{comment.profile.github}}" target="_blank" id="github"><i class="fab fa-github"></i>
+                      GitHub </a></p>
+                  <p><a href="{{comment.profile.linkedIn}}" target="_blank" id="linkedin"><i class="fab fa-linkedin-in"></i>
+                      LinkedIn
+                    </a></p>
+                  <p><a href="#message_modal{{comment.comment.writer.id}}" class="modal-trigger" id="message_profile"><i
+                        class="far fa-envelope"></i>
+                      Send
+                      A Message </a></p>
+                  <p><a href="{% url 'redirectBlog' comment.profile.user.username %}" id="message_profile"><i class="fas fa-scroll"></i>
+                      Blogs</a></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="message_modal{{comment.comment.writer.id}}" class="modal bottom-sheet">
+          <div class="modal-content">
+            <div class="container new_message_container">
+              <h3 style="text-align: center; font-family: 'Kaushan Script', cursive; font-size: 4.4vh; font-weight: 500;"><i
+                  class="fas fa-user-friends"></i> Message A Friend</h3>
+              <div class="new_message">
+                <form action="{% url 'sendmsg' %}" method="POST">
+                  {% csrf_token %}
+                  <div class="user_button">
+                    <input type="text" name="username" style="font-size: 2.8vh; font-family: 'Roboto Condensed', sans-serif;"
+                      placeholder="Enter Username..." value="{{comment.profile.user.username}}" required>
+                    <button type="submit" name="send_message" class="send_button">Send</button>
+                  </div>
+                  <div class="text-area">
+                    <textarea name="text_message" style="font-size: 2.8vh; font-family: 'Roboto Condensed', sans-serif;"
+                      class="materialize-textarea" placeholder="Type your message in here..." required></textarea>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% else %}
+        <div id="comment_poster_modal{{comment.comment.writer.id}}" class="modal profile-modal" style="border: 2px #ffe400 solid;">
+          <div class="modal-content" style="background: #272727 !important;">
+            <div class="container center">
+              <div class="profile-picture">
+                <img src="{%static 'Resources/CSS/defaul.png'%}" style="object-fit: cover ;height: 15rem; width: 15rem; border-radius: 50%; border: 2px solid #ffe400; padding: 0.6rem;">
+              </div>
+              <div class="Profile_details" style="color: #ffe400;">
+                <h3 id="profile_name">{{comment.poster.first_name}} {{comment.poster.last_name}}</h3>
+                <p id="profile_username"> <span id="username_word">Username:</span> {{comment.poster.username}}</p>
+                <p id="profile_email"> <span id="email_word">Email Id:</span> {{comment.poster.email}}</p>
+                <div class="social_media_profile">
+                  <p><a target="_blank" id="github"><i class="fab fa-github"></i>
+                      GitHub </a></p>
+                  <p><a target="_blank" id="linkedin"><i class="fab fa-linkedin-in"></i>
+                      LinkedIn
+                    </a></p>
+                  <p><a href="#message_modal{{comment.comment.writer.id}}" class="modal-trigger" id="message_profile"><i
+                        class="far fa-envelope"></i>
+                      Send
+                      A Message </a></p>
+                  <p><a href="{% url 'redirectBlog' comment.poster.username %}" id="message_profile"><i class="fas fa-scroll"></i>
+                      Blogs</a></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="message_modal{{comment.comment.writer.id}}" class="modal bottom-sheet">
+          <div class="modal-content">
+            <div class="container new_message_container">
+              <h3 style="text-align: center; font-family: 'Kaushan Script', cursive; font-size: 4.4vh; font-weight: 500;"><i
+                  class="fas fa-user-friends"></i> Message A Friend</h3>
+              <div class="new_message">
+                <form action="{% url 'sendmsg' %}" method="POST">
+                  {% csrf_token %}
+                  <div class="user_button">
+                    <input type="text" name="username" style="font-size: 2.8vh; font-family: 'Roboto Condensed', sans-serif;"
+                      placeholder="Enter Username..." value="{{comment.poster.username}}" required>
+                    <button type="submit" name="send_message" class="send_button">Send</button>
+                  </div>
+                  <div class="text-area">
+                    <textarea name="text_message" style="font-size: 2.8vh; font-family: 'Roboto Condensed', sans-serif;"
+                      class="materialize-textarea" placeholder="Type your message in here..." required></textarea>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
         {% endfor %}
       </div>
       <div class="post_comment" style="margin-bottom: 1rem; margin-top: 1rem;">
@@ -127,21 +234,34 @@
   <div class="modal-content" style="background: #272727 !important;">
     <div class="container center">
       <div class="profile-picture">
-        <img src="{{profile.picture.url}}" style="height: 15rem; width: 15rem; border-radius: 50%; border: 2px solid #ffe400; padding: 0.6rem;">
+        <img src="{{profile.picture.url}}" style="object-fit: cover;height: 15rem; width: 15rem; border-radius: 50%; border: 2px solid #ffe400; padding: 0.6rem;">
       </div>
       <div class="Profile_details" style="color: #ffe400;">
         <h3 id="profile_name">{{profile.user.first_name}} {{profile.user.last_name}}</h3>
         <p id="profile_username"> <span id="username_word">Username:</span> {{profile.user.username}}</p>
         <p id="profile_email"> <span id="email_word">Email Id:</span> {{profile.user.email}}</p>
+        {% if profile.bio %}
         <p id="profile_bio"> <span id="bio_word">Bio</span>: {{profile.bio}}</p>
+        {% else %}
+        {% endif %}
+        {% if profile.interests %}
         <p id="interests"><span id="interests_word">Interests:</span> {{pinterests}}</p>
+        {% else %}
+        {% endif %}
         <div class="social_media_profile">
+          {% if profile.github %}
           <p><a href="{{profile.github}}" target="_blank" id="github"><i class="fab fa-github"></i> GitHub </a></p>
+          {% else %}
+          {% endif %}
+          {% if profile.linkedIn %}
           <p><a href="{{profile.linkedIn}}" target="_blank" id="linkedin"><i class="fab fa-linkedin-in"></i> LinkedIn
             </a></p>
+          {% else %}
+          {% endif %}
           <p><a href="#message_modal" class="modal-trigger" id="message_profile"><i class="far fa-envelope"></i> Send
               A Message </a></p>
-          <p><a href="{% url 'redirectBlog' profile.user.username %}" id="message_profile"><i class="fas fa-scroll"></i> Other Blogs</a></p>
+          <p><a href="{% url 'redirectBlog' profile.user.username %}" id="message_profile"><i class="fas fa-scroll"></i>
+              Other Blogs</a></p>
         </div>
       </div>
     </div>

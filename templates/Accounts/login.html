@@ -2,35 +2,36 @@
 {% block content %}
 {% include 'partials/_navbar.html' %}
 
-  <div class="center form-container">
-    <h3 class="blog-header" style="margin-top: 4rem;">Login</h3>
-    <div class="center">
-      <div class="row">
-        <form class="col s10 m8 offset-m2 offset-s1" method="post" action="{% url 'login' %}">
-          {% csrf_token %}
-          <div class="row">
-            <div class="input-field col s12">
-              <!-- class="validate" -->
-              <input id="email" type="text"  name="username" style="color: #272727; font-size: 2.6vh; font-family: 'Roboto Condensed', sans-serif;">
-              <label for="email" style="color: #272727; font-size: 2.4vh;">Username</label>
-            </div>
+<div class="center form-container">
+  <h3 class="blog-header" style="margin-top: 4rem;">Login</h3>
+  <div class="center">
+    <div class="row">
+      <form class="col s10 m8 offset-m2 offset-s1" method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <div class="row">
+          <div class="input-field col s12">
+            <!-- class="validate" -->
+            <input class="validate" id="email" type="text" name="username" style="color: #272727; font-size: 2.6vh; font-family: 'Roboto Condensed', sans-serif;" required>
+            <label for="email" style="color: #272727; font-size: 2.4vh;">Username</label>
           </div>
-          <div class="row">
-            <div class="input-field col s12">
-              <input id="password" type="password" class="validate" name="password" style="color: #272727; font-size: 2.6vh; font-family: 'Roboto Condensed', sans-serif;">
-              <label for="password" style="color: #272727; font-size: 2.4vh;">Password</label>
-            </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="password" type="password" class="validate" name="password" style="color: #272727; font-size: 2.6vh; font-family: 'Roboto Condensed', sans-serif;" required>
+            <label for="password" style="color: #272727; font-size: 2.4vh;">Password</label>
+            {% include 'partials/_alerts.html' %}
           </div>
-          <div id="login-button">
-            <button type="submit" name="submit" class="btn btn-large waves-light waves-effect form-buttons" style="background: #272727; color: #f4f4f4; font-family: 'Poppins', cursive; font-size: 2.2vh; margin-bottom: 4rem;">Login <i class="fas fa-share-square"
-              style="margin-left: 4px"></i></button>
-          </div>
-        </form>
-      </div>
+        </div>
+        <div id="login-button">
+          <button type="submit" name="submit" class="btn btn-large waves-light waves-effect form-buttons" style="background: #272727; color: #f4f4f4; font-family: 'Poppins', cursive; font-size: 2.2vh; margin-bottom: 4rem;">Login
+            <i class="fas fa-share-square" style="margin-left: 4px"></i></button>
+        </div>
+      </form>
     </div>
   </div>
+</div>
 
 
-  <script src="https://unpkg.com/scrollreveal"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="https://unpkg.com/scrollreveal"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 {% endblock %}

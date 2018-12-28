@@ -1,3 +1,4 @@
+from django.contrib.messages import constants as messages
 """
 Django settings for BeginnersLabs project.
 
@@ -42,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'ckeditor',
 ]
 
 MIDDLEWARE = [
@@ -131,3 +133,8 @@ STATICFILES_DIRS = [
 # Media
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+MESSAGE_TAGS = {
+    messages.ERROR: 'incorrect',
+    messages.SUCCESS: 'correct',
+}

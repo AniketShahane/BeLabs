@@ -1,6 +1,9 @@
 New things that we learned in this project 
 
 #01. How to deal with images files as input 
+--> Very Very Important Step is to make the enctype of the form equal to multipart/form-data
+
+*** A little complicated method ***
 --> The type of the input has to set to file and name must also be given to the input tag 
 """Eg. <input type="file" name="image">   """
 --> Next we create a forms.py file and write the following code inside the file 
@@ -20,6 +23,11 @@ New things that we learned in this project
 
     # Here we have got our image file we can then use this as the argument to a model, to create a new one 
 """
+
+*** Easier Method ***
+if request.FILES['name_input']:
+    ....
+
 
 #02. How to set a minimum/maximum length or minimum/maximum value to a field 
 --> First import the required validators 

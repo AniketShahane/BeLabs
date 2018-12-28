@@ -5,50 +5,59 @@ from comment.models import Comment
 from .models import Blog
 from .forms import ImageUploadForm
 from accounts.models import Profile
+from django.contrib import messages 
 
 
 def blogs(request):
-
+    content = {}
+    try:
     # Profile Information
-    profile = Profile.objects.get(user=request.user)
-    pinterests = ''
-    interest = profile.interests.strip().split(';')
-    print(interest)
-    interest = list(filter(lambda a: a != '', interest))
-    print(interest)
-    for word in interest:
-        if interest.index(word) < len(interest) - 2:
-            pinterests += word + ', '
-        elif interest.index(word) == len(interest) - 2:
-            pinterests += word + ' '
-        elif interest.index(word) == len(interest) - 1:
-            pinterests += 'and ' + word
-
+        profile = Profile.objects.get(user=request.user)
+        pinterests = ''
+        interest = profile.interests.strip().split(';')
+        interest = list(filter(lambda a: a != '', interest))
+        for word in interest:
+            if interest.index(word) < len(interest) - 2:
+                pinterests += word + ', '
+            elif interest.index(word) == len(interest) - 2:
+                pinterests += word + ' '
+            elif interest.index(word) == len(interest) - 1:
+                pinterests += 'and ' + word
+        profile_content = {'pinterests':pinterests, 'profile':profile}
+        content.update(profile_content)
+    except:
+        pass
     blogs_list = Blog.objects.order_by('-pub_date')
     blogs = []
     for blog in blogs_list:
         likers_list = [int(x) for x in blog.likers.split()]
         is_liked = request.user.id in likers_list
         blogs.append({'blog': blog, 'is_liked': is_liked})
+    blog_content_dict = {'blogs':blogs}
+    content.update(blog_content_dict)
     # This is a temporary fix for the blogs section. Later use database
-    return render(request, 'Blogs-Section/blogs.html', {'blogs': blogs, 'pinterests': pinterests, 'profile': profile})
+    return render(request, 'Blogs-Section/blogs.html',content)
 
 
 def search(request):
-    # Profile Information
-    profile = Profile.objects.get(user=request.user)
-    pinterests = ''
-    interest = profile.interests.strip().split(';')
-    print(interest)
-    interest = list(filter(lambda a: a != '', interest))
-    print(interest)
-    for word in interest:
-        if interest.index(word) < len(interest) - 2:
-            pinterests += word + ', '
-        elif interest.index(word) == len(interest) - 2:
-            pinterests += word + ' '
-        elif interest.index(word) == len(interest) - 1:
-            pinterests += 'and ' + word
+    content = {}
+    try: 
+        # Profile Information
+        profile = Profile.objects.get(user=request.user)
+        pinterests = ''
+        interest = profile.interests.strip().split(';')
+        interest = list(filter(lambda a: a != '', interest))
+        for word in interest:
+            if interest.index(word) < len(interest) - 2:
+                pinterests += word + ', '
+            elif interest.index(word) == len(interest) - 2:
+                pinterests += word + ' '
+            elif interest.index(word) == len(interest) - 1:
+                pinterests += 'and ' + word
+        profile_content = {'profile':profile, 'pinterests':pinterests}
+        content.update(profile_content)
+    except: 
+        pass
 
     results = Blog.objects.order_by('-pub_date')  # Gets all the objects
     if request.method == "GET":
@@ -58,14 +67,14 @@ def search(request):
             if title:
                 results = results.filter(title__icontains=title)
         else:
-            title=None
+            title = None
 
         if 'keywords' in request.GET:
             keywords = request.GET['keywords'].rstrip()
             if keywords:
                 results = results.filter(body__icontains=keywords)
         else:
-            keywords=None
+            keywords = None
         #
         if 'authorname' in request.GET:
             author = request.GET['authorname'].rstrip()
@@ -89,16 +98,17 @@ def search(request):
                         results_temp.append(result)
                 results = results_temp
         else:
-            author=None
+            author = None
 
-        return render(request, 'Blogs-Section/search.html', {'results': results, 'pinterests': pinterests, 'profile': profile, 'values':request.GET.values, 'keywords':keywords, 'authorname':author, 'title':title})
+        results_content = {'results':results, 'keywords': keywords, 'authorname':author, 'title':title, 'values':request.GET.values}
+        content.update(results_content)
+        return render(request, 'Blogs-Section/search.html',content)
     # else:
     #     return render(request, 'Blogs-Section/search.html', {'results': results, 'pinterests': pinterests, 'profile': profile})
 
 
 def blog(request, blog_id):
-    
-
+    content = {}
     blog = get_object_or_404(Blog, pk=blog_id)
     list_likers = blog.likers.split()
     likers = [int(x) for x in list_likers]
@@ -106,30 +116,44 @@ def blog(request, blog_id):
     if request.user.id in likers:
         is_liked = True
     blogger = blog.author
-    # Profile Information
-    profile = Profile.objects.get(user=blogger)
-    pinterests = ''
-    interest = profile.interests.strip().split(';')
-    print(interest)
-    interest = list(filter(lambda a: a != '', interest))
-    print(interest)
-    for word in interest:
-        if interest.index(word) < len(interest) - 2:
-            pinterests += word + ', '
-        elif interest.index(word) == len(interest) - 2:
-            pinterests += word + ' '
-        elif interest.index(word) == len(interest) - 1:
-            pinterests += 'and ' + word
+    try:
+        # Profile Information
+        profile = Profile.objects.get(user=blogger)
+        pinterests = ''
+        interest = profile.interests.strip().split(';')
+        interest = list(filter(lambda a: a != '', interest))
+        for word in interest:
+            if interest.index(word) < len(interest) - 2:
+                pinterests += word + ', '
+            elif interest.index(word) == len(interest) - 2:
+                pinterests += word + ' '
+            elif interest.index(word) == len(interest) - 1:
+                pinterests += 'and ' + word
+        profile_content = {'profile':profile, 'pinterests':pinterests}
+        content.update(profile_content)
+    except:
+        pass
+
     blog = Blog.objects.get(id=blog_id)
     comments = Comment.objects.order_by('pub_time').filter(blog=blog)
+    comments_and_poster = []
+    for comment in comments:
+        has_profile = False
+        try:
+            profile_user = Profile.objects.get(user=comment.writer)
+            has_profile = True
+            comments_and_poster.append(
+                {'comment': comment, 'profile': profile_user, 'has_profile':has_profile})
+        except:
+            comments_and_poster.append({'comment':comment, 'poster':comment.writer, 'has_profile':has_profile})
     num_comments = len(comments)
     num_views = blog.views
 
     blog.views += 1
     blog.save()
-
-    return render(request, 'Blogs-Section/blog.html', {'blog': blog, 'is_liked': is_liked, 'comments': comments, 'num_comments': num_comments,
-                                                       'num_views': num_views, 'pinterests': pinterests, 'profile': profile})
+    blog_content_dict = {'blog':blog,'is_liked':is_liked,'comments': comments_and_poster, 'num_comments': num_comments,'num_views': num_views}
+    content.update(blog_content_dict)
+    return render(request, 'Blogs-Section/blog.html',content)
 
 
 def liker(request, blog_id):
@@ -182,12 +206,9 @@ def addblog(request):
                                 main_image=blog_image, author=request.user)
                 new_blog.save()
             else:
-                print('Minimum 30 words are required')
+                messages.error(request, 'Minimum 30 words are required to post a blog...')
                 return redirect('dashboard')
             return redirect('/blogs/'+str(new_blog.id))
-    else:
-        print('Getty')
-        return redirect('dashboard')
 
 
 def publishing(request):
@@ -202,6 +223,7 @@ def publishing(request):
                 blog.is_published = False
                 blog.save()
         return redirect('dashboard')
+
 
 def redirectBlog(request, blogWriter):
     return redirect('/blogs/search/?authorname=' + blogWriter)
