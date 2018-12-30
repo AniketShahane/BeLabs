@@ -50,3 +50,36 @@ if request.FILES['name_input']:
 
 #04. How to render the content of the blog as it is (ie with line breaks and all...)
 --> use {{blog.body|linebreaks}}
+
+
+#05. How to get a rich text editor using CKEditor available in django ??
+--> Install django-ckeditor and add 'ckeditor' in the installed apps..
+--> Then add the following code snippet in models.py 
+'''
+    from ckeditor.fields import RichTextField
+    body = RichTextField(blank=True)
+'''
+--> After this we have to run 'python manage.py collectstatic' to collect all the static files that come with ckeditor like icons and stuff.... 
+--> If we want to upload stuff like images onto our blogs we have to add 'ckeditor_uploader' to the installed apps... Then we also have to add ....
+"""
+    CKEDITOR_UPLOAD_PATH = 'uploads/'
+    # This will automatically save the images to the 'media' directory under the uploads folder 
+"""
+-->Now we have to add the following code snippet to the models.py 
+"""
+    from ckeditor_uploader.fields import RichTextUploadingField(blank=True)
+"""
+--> To observe the changes we need to make migrations 
+--> To get the editor in the frontend we will have to make a custom form 
+* Create a forms.py field and add the following code 
+"""
+    from django.forms import ModelForm
+    from .models import Blog 
+
+    class PostForm(ModelForm):
+        class Meta:
+            model = Blog 
+            # We define the model here 
+            fields = ['body',]
+            # Here we add the fields that we want to edit or add during posting... 
+"""

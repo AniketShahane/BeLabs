@@ -28,7 +28,7 @@
 </div>
 
 <!-- Modal Structure -->
-<div id="addblog" class="modal" style="border: 3px solid #272727; width: 80vw !important;">
+<div id="addblog" class="modal" style="border: 3px solid #272727; width: 80vw !important; height: 70vh !important;">
   <div class="modal-content">
     <div class="container">
       <h3 style="text-align: center; font-family: 'Kaushan Script', cursive; font-size: 4vh; font-weight: 500;"><i
@@ -41,8 +41,8 @@
               value="" placeholder="Enter Title..." required>
           </div>
           <div class="text-area">
-            <textarea name="blog_body" style="font-size: 2.4vh; font-family: 'Roboto Condensed', sans-serif; height: 16rem; width: 100%; overflow-y: scroll;"
-              id="blogspace" placeholder="Write Your Amazing Blog... (Minimum 30 words)" required></textarea>
+            <textarea name="blog_body" style="font-size: 2.4vh; font-family: 'Roboto Condensed', sans-serif; height: 16rem !important; width: 100%; overflow-y: scroll; text-align: left;"
+              id="blogspace" placeholder="Min. 30 words will make a valid and awesome blog..." required></textarea>
           </div>
           <div class="file-field input-field">
             <div class="btn" style="background: #272727 !important; width: 35% !important;">
@@ -54,8 +54,7 @@
                 type="text" placeholder="Upload the image for your blog...">
             </div>
           </div>
-          <a href="javascript:{document.getElementById('blog_submit_form').submit()}" type="submit" name="send_message"
-            class="send_button" style="width: 50% !important;">Send</a>
+          <button type="submit" class="send_button" style="width: 50% !important; border-radius: 100px !important; border: 2px solid #272727;">Upload</button>
         </form>
       </div>
     </div>
@@ -196,3 +195,4 @@
   {% csrf_token %}
   <input type="text" style="display: none;">
 </form>
+<script src='https://cloud.tinymce.com/stable/tinymce.min.js'></script>

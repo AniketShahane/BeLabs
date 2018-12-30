@@ -4,6 +4,8 @@ from datetime import datetime
 from django.core.validators import MinLengthValidator
 from django.utils import timezone
 from time import time
+from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
 # Create your models here.
 
 """
@@ -19,7 +21,10 @@ class Blog(models.Model):
     pub_date = models.DateTimeField(default=timezone.now())
     main_image = models.ImageField(
         upload_to='blog-images/', default="/defaults/default_blog_image.jpg")
-    body = models.TextField(validators=[MinLengthValidator(30)])
+    # body = models.TextField(validators=[MinLengthValidator(30)])
+    # body = RichTextField(validators=[MinLengthValidator(30)], blank=True)
+    body = RichTextUploadingField(
+        validators=[MinLengthValidator(30)], blank=True)
     likes = models.IntegerField(default=1)
     comments = models.IntegerField(default=0)
     views = models.IntegerField(default=1)

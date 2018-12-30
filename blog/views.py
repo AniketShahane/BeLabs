@@ -5,43 +5,12 @@ from comment.models import Comment
 from .models import Blog
 from .forms import ImageUploadForm
 from accounts.models import Profile
-from django.contrib import messages 
+from django.contrib import messages
 
 
 def blogs(request):
     content = {}
     try:
-    # Profile Information
-        profile = Profile.objects.get(user=request.user)
-        pinterests = ''
-        interest = profile.interests.strip().split(';')
-        interest = list(filter(lambda a: a != '', interest))
-        for word in interest:
-            if interest.index(word) < len(interest) - 2:
-                pinterests += word + ', '
-            elif interest.index(word) == len(interest) - 2:
-                pinterests += word + ' '
-            elif interest.index(word) == len(interest) - 1:
-                pinterests += 'and ' + word
-        profile_content = {'pinterests':pinterests, 'profile':profile}
-        content.update(profile_content)
-    except:
-        pass
-    blogs_list = Blog.objects.order_by('-pub_date')
-    blogs = []
-    for blog in blogs_list:
-        likers_list = [int(x) for x in blog.likers.split()]
-        is_liked = request.user.id in likers_list
-        blogs.append({'blog': blog, 'is_liked': is_liked})
-    blog_content_dict = {'blogs':blogs}
-    content.update(blog_content_dict)
-    # This is a temporary fix for the blogs section. Later use database
-    return render(request, 'Blogs-Section/blogs.html',content)
-
-
-def search(request):
-    content = {}
-    try: 
         # Profile Information
         profile = Profile.objects.get(user=request.user)
         pinterests = ''
@@ -54,9 +23,40 @@ def search(request):
                 pinterests += word + ' '
             elif interest.index(word) == len(interest) - 1:
                 pinterests += 'and ' + word
-        profile_content = {'profile':profile, 'pinterests':pinterests}
+        profile_content = {'pinterests': pinterests, 'profile': profile}
         content.update(profile_content)
-    except: 
+    except:
+        pass
+    blogs_list = Blog.objects.order_by('-pub_date')
+    blogs = []
+    for blog in blogs_list:
+        likers_list = [int(x) for x in blog.likers.split()]
+        is_liked = request.user.id in likers_list
+        blogs.append({'blog': blog, 'is_liked': is_liked})
+    blog_content_dict = {'blogs': blogs}
+    content.update(blog_content_dict)
+    # This is a temporary fix for the blogs section. Later use database
+    return render(request, 'Blogs-Section/blogs.html', content)
+
+
+def search(request):
+    content = {}
+    try:
+        # Profile Information
+        profile = Profile.objects.get(user=request.user)
+        pinterests = ''
+        interest = profile.interests.strip().split(';')
+        interest = list(filter(lambda a: a != '', interest))
+        for word in interest:
+            if interest.index(word) < len(interest) - 2:
+                pinterests += word + ', '
+            elif interest.index(word) == len(interest) - 2:
+                pinterests += word + ' '
+            elif interest.index(word) == len(interest) - 1:
+                pinterests += 'and ' + word
+        profile_content = {'profile': profile, 'pinterests': pinterests}
+        content.update(profile_content)
+    except:
         pass
 
     results = Blog.objects.order_by('-pub_date')  # Gets all the objects
@@ -100,9 +100,10 @@ def search(request):
         else:
             author = None
 
-        results_content = {'results':results, 'keywords': keywords, 'authorname':author, 'title':title, 'values':request.GET.values}
+        results_content = {'results': results, 'keywords': keywords,
+                           'authorname': author, 'title': title, 'values': request.GET.values}
         content.update(results_content)
-        return render(request, 'Blogs-Section/search.html',content)
+        return render(request, 'Blogs-Section/search.html', content)
     # else:
     #     return render(request, 'Blogs-Section/search.html', {'results': results, 'pinterests': pinterests, 'profile': profile})
 
@@ -129,7 +130,7 @@ def blog(request, blog_id):
                 pinterests += word + ' '
             elif interest.index(word) == len(interest) - 1:
                 pinterests += 'and ' + word
-        profile_content = {'profile':profile, 'pinterests':pinterests}
+        profile_content = {'profile': profile, 'pinterests': pinterests}
         content.update(profile_content)
     except:
         pass
@@ -143,17 +144,19 @@ def blog(request, blog_id):
             profile_user = Profile.objects.get(user=comment.writer)
             has_profile = True
             comments_and_poster.append(
-                {'comment': comment, 'profile': profile_user, 'has_profile':has_profile})
+                {'comment': comment, 'profile': profile_user, 'has_profile': has_profile})
         except:
-            comments_and_poster.append({'comment':comment, 'poster':comment.writer, 'has_profile':has_profile})
+            comments_and_poster.append(
+                {'comment': comment, 'poster': comment.writer, 'has_profile': has_profile})
     num_comments = len(comments)
     num_views = blog.views
 
     blog.views += 1
     blog.save()
-    blog_content_dict = {'blog':blog,'is_liked':is_liked,'comments': comments_and_poster, 'num_comments': num_comments,'num_views': num_views}
+    blog_content_dict = {'blog': blog, 'is_liked': is_liked,
+                         'comments': comments_and_poster, 'num_comments': num_comments, 'num_views': num_views}
     content.update(blog_content_dict)
-    return render(request, 'Blogs-Section/blog.html',content)
+    return render(request, 'Blogs-Section/blog.html', content)
 
 
 def liker(request, blog_id):
@@ -196,19 +199,21 @@ def liker2(request, blog_id):
 
 def addblog(request):
     if request.method == "POST":
-        form = ImageUploadForm(request.POST, request.FILES)
-        if form.is_valid():
-            blog_title = request.POST['blog_title'].rstrip()
-            blog_body = request.POST['blog_body'].rstrip()
-            blog_image = form.cleaned_data['image']
-            if len(blog_body.split()) > 30:
-                new_blog = Blog(title=blog_title, body=blog_body,
-                                main_image=blog_image, author=request.user)
-                new_blog.save()
-            else:
-                messages.error(request, 'Minimum 30 words are required to post a blog...')
-                return redirect('dashboard')
+        # form = ImageUploadForm(request.POST, request.FILES)
+        # if form.is_valid():
+        blog_title = request.POST['blog_title'].rstrip()
+        blog_body = request.POST['blog_body'].rstrip()
+        if 'image' in request.FILES:
+            blog_image = request.FILES['image']
+        if len(blog_body.split()) > 30:
+            new_blog = Blog(title=blog_title, body=blog_body,
+                            main_image=blog_image, author=request.user)
+            new_blog.save()
             return redirect('/blogs/'+str(new_blog.id))
+        else:
+            messages.error(
+                request, 'Minimum 30 words are required to post a blog...')
+            return redirect('dashboard')
 
 
 def publishing(request):

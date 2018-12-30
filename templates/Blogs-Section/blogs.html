@@ -78,13 +78,17 @@
       <div class="col s12 m6 l6 xl4">
         <div class="card">
           <div class="card-image">
-            <a href="{% url 'blog' blog.blog.id %}"><img src="{{blog.blog.main_image.url}}" style="object-fit:cover;" height="200" width="100%"></a>
+            <a href="{% url 'blog' blog.blog.id %}"><img src="{{blog.blog.main_image.url}}" style="object-fit:cover;"
+                height="200" width="100%"></a>
             <span class="card-title hoverable"><a href="{% url 'blog' blog.blog.id %}" style="color: #f4f4f4;">{{blog.blog.title}}</a></span>
-            <a href="javascript:{document.querySelector('#liker2{{blog.blog.id}}').submit()}" class="btn-floating halfway-fab waves-effect waves-light red btn-large"> {% if blog.is_liked %} <i class="fas fa-heart"></i> {% else %} <i class="far fa-heart"></i> {% endif %} </a>
+            <a href="javascript:{document.querySelector('#liker2{{blog.blog.id}}').submit()}" class="btn-floating halfway-fab waves-effect waves-light red btn-large">
+              {% if blog.is_liked %} <i class="fas fa-heart"></i> {% else %} <i class="far fa-heart"></i> {% endif %}
+            </a>
           </div>
           <div class="card-content">
-            <p style="font-weight: 500; font-size: 2vh;">{{blog.blog.small_body}}</p>
-            <p style="font-weight: 600; font-size: 1.8vh;"><i class="fas fa-user-edit"></i> {{blog.blog.author.first_name}} {{blog.blog.author.last_name}} ({{blog.blog.author.username}})</p>
+            <!-- <p style="font-weight: 500; font-size: 2vh;">{{blog.blog.small_body | striptags}}</p> -->
+            <p style="font-weight: 600; font-size: 1.8vh;"><i class="fas fa-user-edit"></i>
+              {{blog.blog.author.first_name}} {{blog.blog.author.last_name}} ({{blog.blog.author.username}})</p>
             <p style="font-weight: 600; font-size: 1.8vh;"><i class="far fa-clock"></i> {{blog.blog.pretty_pub}}</p>
           </div>
         </div>

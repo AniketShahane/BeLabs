@@ -2,79 +2,80 @@
 {% block content %}
 {% include 'partials/_navbar.html' %}
 
-  <!-- Resources Collapsible Section  -->
-  <div class="main-rb-section">
-    <div class="collapsing-resources center">
-      <h3 class="blog-header" style="margin: 1rem 0;">Quick Search</h3>
-      <div class="row" style="padding: 0.8rem 0;">
-        <form class="col s10 m10 offset-m1 offset-s1" method="GET" action="{% url 'search' %}">
-          <div class="row">
-            <div class="input-field col s12">
-              {% if title %}
-              <input id="title" type="text" class="validate" name="title" value="{{title}}" style="color: #272727; font-size: 2.6vh; font-family: 'Roboto Condensed', sans-serif;">
-              {% else %}
-              <input id="title" type="text" class="validate" name="title" style="color: #272727; font-size: 2.6vh; font-family: 'Roboto Condensed', sans-serif;">
-              {% endif %}
-              <label for="title" style="color: #272727; font-size: 2.4vh;">By Title</label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="input-field col s12">
-              {% if keywords %}
-              <input id="keywords" type="text" class="validate" value="{{keywords}}" name="keywords" style="color: #272727; font-size: 2.6vh; font-family: 'Roboto Condensed', sans-serif;">
-              {% else %}
-              <input id="keywords" type="text" class="validate" name="keywords" style="color: #272727; font-size: 2.6vh; font-family: 'Roboto Condensed', sans-serif;">
-              {% endif %}
-              <label for="keywords" style="color: #272727; font-size: 2.4vh;">By Keywords</label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="input-field col s12">
-              {% if authorname %}
-              <input id="author_name" type="text" class="validate" value="{{authorname}}" name="author-name" style="color: #272727; font-size: 2.6vh; font-family: 'Roboto Condensed', sans-serif;">
-              {% else %}
-              <input id="author_name" type="text" class="validate" name="authorname" style="color: #272727; font-size: 2.6vh; font-family: 'Roboto Condensed', sans-serif;">
-              {% endif %}
-              <label for="author_name" style="color: #272727; font-size: 2.4vh;">By Author's Name</label>
-            </div>
-          </div>
-          <button type="submit" name="submit" id="register-button" class="btn btn-large waves-light waves-effect" style="background: #272727; color: #f4f4f4; font-family: 'Poppins', cursive; font-size: 2.2vh; margin-bottom: 2rem;">Search <i class="fas fa-search"
-              style="margin-left: 4px"></i></button>
-        </form>
-      </div>
-    </div>
-
-
-    <div class="blog-section">
-      <div class="blog-head-section" style="display: flex; justify-content: center;">
-        <h3 class="blog-header">Search Results</h3>
-      </div>
-      <div class="row">
-        {% for result in results %}
-        <div class="col s12 m6 l4">
-          <div class="card">
-            <div class="card-image">
-              <img src="{{result.main_image.url}}" style="object-fit:cover;" height="200" width="100%">
-              <span class="card-title hoverable"><a href="{% url 'blog' result.id %}" style="color: #f4f4f4;">{{result.title}}</a></span>
-              <!-- <a class="btn-floating halfway-fab waves-effect waves-light red btn-large"><i class="far fa-heart"></i></a> -->
-            </div>
-            <div class="card-content">
-              <p style="font-weight: 500; font-size: 2vh;">{{result.small_body}}</p>
-              <p style="font-weight: 600; font-size: 1.6vh; float:right; margin-bottom: 4px;">~ {{result.author.first_name}} {{result.author.last_name}} ({{result.author.username}})</p>
-            </div>
+<!-- Resources Collapsible Section  -->
+<div class="main-rb-section">
+  <div class="collapsing-resources center">
+    <h3 class="blog-header" style="margin: 1rem 0;">Quick Search</h3>
+    <div class="row" style="padding: 0.8rem 0;">
+      <form class="col s10 m10 offset-m1 offset-s1" method="GET" action="{% url 'search' %}">
+        <div class="row">
+          <div class="input-field col s12">
+            {% if title %}
+            <input id="title" type="text" class="validate" name="title" value="{{title}}" style="color: #272727; font-size: 2.6vh; font-family: 'Roboto Condensed', sans-serif;">
+            {% else %}
+            <input id="title" type="text" class="validate" name="title" style="color: #272727; font-size: 2.6vh; font-family: 'Roboto Condensed', sans-serif;">
+            {% endif %}
+            <label for="title" style="color: #272727; font-size: 2.4vh;">By Title</label>
           </div>
         </div>
-        {% endfor %}
-      </div>
+        <div class="row">
+          <div class="input-field col s12">
+            {% if keywords %}
+            <input id="keywords" type="text" class="validate" value="{{keywords}}" name="keywords" style="color: #272727; font-size: 2.6vh; font-family: 'Roboto Condensed', sans-serif;">
+            {% else %}
+            <input id="keywords" type="text" class="validate" name="keywords" style="color: #272727; font-size: 2.6vh; font-family: 'Roboto Condensed', sans-serif;">
+            {% endif %}
+            <label for="keywords" style="color: #272727; font-size: 2.4vh;">By Keywords</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            {% if authorname %}
+            <input id="author_name" type="text" class="validate" value="{{authorname}}" name="author-name" style="color: #272727; font-size: 2.6vh; font-family: 'Roboto Condensed', sans-serif;">
+            {% else %}
+            <input id="author_name" type="text" class="validate" name="authorname" style="color: #272727; font-size: 2.6vh; font-family: 'Roboto Condensed', sans-serif;">
+            {% endif %}
+            <label for="author_name" style="color: #272727; font-size: 2.4vh;">By Author's Name</label>
+          </div>
+        </div>
+        <button type="submit" name="submit" id="register-button" class="btn btn-large waves-light waves-effect" style="background: #272727; color: #f4f4f4; font-family: 'Poppins', cursive; font-size: 2.2vh; margin-bottom: 2rem;">Search
+          <i class="fas fa-search" style="margin-left: 4px"></i></button>
+      </form>
     </div>
   </div>
 
 
+  <div class="blog-section">
+    <div class="blog-head-section" style="display: flex; justify-content: center;">
+      <h3 class="blog-header">Search Results</h3>
+    </div>
+    <div class="row">
+      {% for result in results %}
+      <div class="col s12 m6 l4">
+        <div class="card">
+          <div class="card-image">
+            <img src="{{result.main_image.url}}" style="object-fit:cover;" height="200" width="100%">
+            <span class="card-title hoverable"><a href="{% url 'blog' result.id %}" style="color: #f4f4f4;">{{result.title}}</a></span>
+            <!-- <a class="btn-floating halfway-fab waves-effect waves-light red btn-large"><i class="far fa-heart"></i></a> -->
+          </div>
+          <div class="card-content">
+            <p style="font-weight: 600; font-size: 1.8vh;"><i class="fas fa-user-edit"></i>
+              {{result.author.first_name}} {{result.author.last_name}} ({{result.author.username}})</p>
+            <p style="font-weight: 600; font-size: 1.8vh;"><i class="far fa-clock"></i> {{result.pretty_pub}}</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
 
-  <script src="https://unpkg.com/scrollreveal"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+
+<script src="https://unpkg.com/scrollreveal"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 {% endblock %}
-  <!-- <script type="text/javascript" src="Resources/JavaScript/main.js"></script>
+<!-- <script type="text/javascript" src="Resources/JavaScript/main.js"></script>
 </body>
 
 </html> -->

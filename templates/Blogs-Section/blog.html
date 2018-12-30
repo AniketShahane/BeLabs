@@ -88,8 +88,8 @@
   <div class="container" style="width: 80% !important;">
     <div class="main-blog-content" style="border: 2px solid #f4f4f4; margin-bottom: 1.5rem !important;">
       <div class="author-details" style="border: 2px solid #f4f4f4;">
-        <h3>{{ blog.title }}</h3>
-        <p>{{ blog.body | linebreaks }}</p>
+        <h3 class="single_blog_title">{{ blog.title }}</h3>
+        <p>{{ blog.body | safe }}</p>
       </div>
     </div>
   </div>

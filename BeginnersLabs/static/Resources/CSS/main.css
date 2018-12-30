@@ -614,20 +614,20 @@ body::-webkit-scrollbar-thumb {
   margin: 0.4rem auto;
 }
 
-.main-blog-content h3 {
+.main-blog-content .single_blog_title {
   font-family: 'Kaushan Script', cursive;
   text-align: center;
   color: #f4f4f4;
   margin-top: 1rem;
 }
 
-.main-blog-content p {
-  font-size: 2.6vh;
+.main-blog-content  {
+  /* font-size: 2.6vh; */
   color: #f4f4f4;
-  width: 86%;
+  /* width: 86%;
   font-weight: 300;
   margin: 0.8rem auto;
-  text-align: center;
+  text-align: center; */
 }
 
 .blog-icons span:hover {

@@ -159,11 +159,42 @@ catch (err) {
 
 // try {
 //   ClassicEditor
-//     .create(document.getElementById('blogspace'))
-//     .catch((e) => {
-//       console.log(e);
-//     });
+// 		.create( document.getElementById('blogspace'), {
+// 			// toolbar: [ 'heading', '|', 'bold', 'italic', 'link' ]
+// 		} )
+// 		// .then( editor => {
+// 		// 	window.editor = editor;
+// 		// })
+// 		.catch( err => {
+// 			console.error( err.stack );
+// 		});
 // }
 // catch (err) {
 //   console.log(err);
+// }
+
+// try{
+//   ClassicEditor
+//     .create(document.getElementById('editor'), {
+//       toolbar: []
+//     })
+//     .then (editor => {
+//       window.editor = editor;
+//     })
+//     .catch( err => {
+//       console.error(err.stack);
+//     })
+// }
+// catch (err) {
+//   console.log(err)
+// }
+
+// try {
+//   tinymce.init({
+//     selector: '#blogspace'
+//   });
+// }
+
+// catch (error) {
+//   console.log(error)
 // }

@@ -11,4 +11,5 @@ urlpatterns = [
     path('comments/', include('comment.urls')),
     path('addgoal/', include('goal.urls')),
     path('messages/', include('message.urls')),
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('ckeditor/', include('ckeditor_uploader.urls')),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
