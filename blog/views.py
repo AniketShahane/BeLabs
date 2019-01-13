@@ -61,21 +61,17 @@ def search(request):
 
     results = Blog.objects.order_by('-pub_date')  # Gets all the objects
     if request.method == "GET":
-        # Check to see if title is in the post request that was made
-        if 'title' in request.GET:
-            title = request.GET['title'].rstrip()
-            if title:
-                results = results.filter(title__icontains=title)
-        else:
-            title = None
+        # This get function it gets the title if present in request.GET else sets the value as None
+        title = request.GET.get('title', None)
+        if title is not None:
+            title = title.rstrip()
+            results = results.filter(title__icontains=title)
 
-        if 'keywords' in request.GET:
-            keywords = request.GET['keywords'].rstrip()
-            if keywords:
-                results = results.filter(body__icontains=keywords)
-        else:
-            keywords = None
-        #
+        keywords = request.GET.get('keywords', None)
+        if keywords:
+            keywords = keywords.rstrip() 
+            results = results.filter(body__icontains=keywords)
+        
         if 'authorname' in request.GET:
             author = request.GET['authorname'].rstrip()
             if author:

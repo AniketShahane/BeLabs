@@ -31,7 +31,7 @@
         <div class="row">
           <div class="input-field col s12">
             {% if authorname %}
-            <input id="author_name" type="text" class="validate" value="{{authorname}}" name="author-name" style="color: #272727; font-size: 2.6vh; font-family: 'Roboto Condensed', sans-serif;">
+            <input id="author_name" type="text" class="validate" value="{{authorname}}" name="authorname" style="color: #272727; font-size: 2.6vh; font-family: 'Roboto Condensed', sans-serif;">
             {% else %}
             <input id="author_name" type="text" class="validate" name="authorname" style="color: #272727; font-size: 2.6vh; font-family: 'Roboto Condensed', sans-serif;">
             {% endif %}
@@ -50,6 +50,7 @@
       <h3 class="blog-header">Search Results</h3>
     </div>
     <div class="row">
+      {% if results %}
       {% for result in results %}
       <div class="col s12 m6 l4">
         <div class="card">
@@ -66,6 +67,10 @@
         </div>
       </div>
       {% endfor %}
+      {% else %}
+      <h4 style="line-height: 2em; font-family: 'Kaushan Script', cursive; font-size: 4.8vh; margin: 0.6rem auto !important;text-align: center;"><i class="fas fa-ban"></i> No Results Found...</h4> 
+      {% endif %}
+
     </div>
   </div>
 </div>
