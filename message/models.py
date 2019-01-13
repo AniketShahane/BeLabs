@@ -17,8 +17,8 @@ class Message(models.Model):
     pre_time = models.FloatField(default=tm.time())
 
     def small_message(self):
-        if len(self.message_text) > 25:
-            return self.message_text[:25] + '...'
+        if len(self.message_text) > 22:
+            return self.message_text[:22] + '...'
         else:
             return self.message_text
 

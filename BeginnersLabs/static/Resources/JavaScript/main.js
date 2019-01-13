@@ -21,7 +21,7 @@ M.Materialbox.init(imageboxed, {
 const modal_elements = document.querySelectorAll('.modal');
 M.Modal.init(modal_elements, {});
 
-
+/*
 //Scroll Reveal
 ScrollReveal().reveal('.head', {
   delay: 400,
@@ -123,6 +123,7 @@ ScrollReveal().reveal('#login-button', {
 //   distance: "80px",
 //   mobile: false
 // });
+*/
 
 try {
   $('.count').each(function () {

@@ -155,7 +155,7 @@
   </div>
 
   <!-- Modal Structure -->
-  <div id="published" class="modal">
+  <div id="published" class="modal" id="publishing_modal_content" style="overflow:hidden;">
     <div class="modal-content">
       <div class="container">
         <h3 style="text-align: center; font-family: 'Kaushan Script', cursive; font-size: 4vh; font-weight: 500;"><i
@@ -166,7 +166,7 @@
           <div class="publish_elements" id="publishing_blogs_checks" style="overflow-y: scroll; height: 45vh;">
             {% if blogs %}
             {% for blog in blogs %}
-            <div class="blog_publishing" style="display: flex; width: 98% !important; justify-content: space-between; margin:0.2rem auto !important;">
+            <div class="blog_publishing" id="blog_publishing_style">
               <p style="font-family: 'Kaushan Script', cursive; font-size: 3vh;">{{blog.title}}</p>
               <p style="font-size: 3vh;">
                 <label>

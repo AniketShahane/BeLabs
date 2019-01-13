@@ -58,6 +58,13 @@ body {
     align-items: center;
     justify-content: space-around;
   }
+
+  #blog_publishing_style {
+    display: flex;
+    width: 98% !important; 
+    justify-content: space-around; 
+    margin:0.2rem auto !important;
+  }
 }
 
 @media only screen and (max-width:1260px) {
@@ -120,6 +127,7 @@ body {
   .new_message_container {
     width: 90% !important;
   }
+
 }
 
 @media only screen and (max-width: 700px) {
@@ -163,6 +171,9 @@ body {
   .profile-modal {
     height: 96vh !important;
     width: 90vw !important;
+  }
+  #publishing_modal_content {
+    width: 100% !important;
   }
 }
 
@@ -723,6 +734,11 @@ body::-webkit-scrollbar-thumb {
 #publish_blog_a {
   color: #272727 !important;
   transition: all 0.4s !important;
+}
+
+#blog_publishing_style {
+  width: 98% !important;
+  margin:0.2rem auto !important;
 }
 
 #publish_blog_a:hover {
