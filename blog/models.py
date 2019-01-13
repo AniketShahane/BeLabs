@@ -4,9 +4,7 @@ from datetime import datetime
 from django.core.validators import MinLengthValidator
 from django.utils import timezone
 from time import time
-from ckeditor.fields import RichTextField
-from ckeditor_uploader.fields import RichTextUploadingField
-# Create your models here.
+# Create your models here. 
 
 """
     The blog needs to have: 1. Title, 2. Author Name, 3. Publishing Date, 4. Image, 5. Body, 6. No of likes, 7. No of comments, 8. No. of views, 9. Is published
@@ -21,10 +19,7 @@ class Blog(models.Model):
     pub_date = models.DateTimeField(default=timezone.now())
     main_image = models.ImageField(
         upload_to='blog-images/', default="/defaults/default_blog_image.jpg")
-    # body = models.TextField(validators=[MinLengthValidator(30)])
-    # body = RichTextField(validators=[MinLengthValidator(30)], blank=True)
-    body = RichTextUploadingField(
-        validators=[MinLengthValidator(30)], blank=True)
+    body = models.TextField(validators=[MinLengthValidator(30)])
     likes = models.IntegerField(default=1)
     comments = models.IntegerField(default=0)
     views = models.IntegerField(default=1)

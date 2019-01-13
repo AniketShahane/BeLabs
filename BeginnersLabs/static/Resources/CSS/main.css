@@ -621,13 +621,13 @@ body::-webkit-scrollbar-thumb {
   margin-top: 1rem;
 }
 
-.main-blog-content  {
-  /* font-size: 2.6vh; */
+.main-blog-content p {
+  font-size: 2.6vh;
   color: #f4f4f4;
-  /* width: 86%;
+  width: 86% !important; 
   font-weight: 300;
   margin: 0.8rem auto;
-  text-align: center; */
+  text-align: center; 
 }
 
 .blog-icons span:hover {
@@ -651,8 +651,8 @@ body::-webkit-scrollbar-thumb {
 }
 
 .blog-icons p {
-  font-size: 3.6vh;
-  margin-top: 0.4rem;
+  font-size: 3.6vh !important;
+  margin-top: 0.4rem !important;
   color: rgb(37, 37, 37);
 }
 

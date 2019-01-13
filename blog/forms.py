@@ -7,8 +7,3 @@ from .models import Blog
 class ImageUploadForm(forms.Form):
     image = forms.ImageField()
 
-
-# class PostForm(ModelForm):
-#     class Meta:
-#         model = Blog
-#         fields = ['body']

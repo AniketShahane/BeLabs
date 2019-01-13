@@ -99,13 +99,13 @@ ScrollReveal().reveal('#chat_person', {
   distance: "20px",
   origin: 'left'
 });
-ScrollReveal().reveal('.comment_animation', {
-  delay: 400,
-  interval: 100,
-  origin: 'bottom',
-  distance: "80px",
-  mobile: false
-});
+// ScrollReveal().reveal('.comment_animation', {
+//   delay: 400,
+//   interval: 100,
+//   origin: 'bottom',
+//   distance: "80px",
+//   mobile: false
+// });
 ScrollReveal().reveal('#register-button', {
   delay: 400,
   distance: "15px",
