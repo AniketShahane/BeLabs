@@ -135,7 +135,7 @@ def blog(request, blog_id):
     except:
         pass
 
-    blog = Blog.objects.get(id=blog_id)
+    # blog = Blog.objects.get(id=blog_id)
     comments = Comment.objects.order_by('pub_time').filter(blog=blog)
     comments_and_poster = []
     for comment in comments:
@@ -211,8 +211,7 @@ def addblog(request):
             new_blog.save()
             return redirect('/blogs/'+str(new_blog.id))
         else:
-            messages.error(
-                request, 'Minimum 30 words are required to post a blog...')
+            messages.error(request, 'Minimum 30 words are required to post a blog...')
             return redirect('dashboard')
 
 

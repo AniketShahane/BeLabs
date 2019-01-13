@@ -45,11 +45,11 @@ def register(request):
                 user = User.objects.all().filter(email=email)
                 if not user:
                     # We have a perfect registeration scenario
-                    u = User.objects.create_user(
-                        email=email, username=username, password=password, first_name=first_name, last_name=last_name)
+                    u = User.objects.create_user(email=email, username=username, password=password, first_name=first_name, last_name=last_name)
                     u.save()
-                    messages.success(
-                        request, 'You\'ve been successfully registered. Login to continue...')
+                    profile_newUser = Profile(user=u)
+                    profile_newUser.save()
+                    messages.success(request, 'You\'ve been successfully registered. Login to continue...')
                     return redirect('login')
                 else:
                     messages.error(
@@ -90,12 +90,9 @@ def dashboard(request):
     except:
         pass
 
-    blogs = Blog.objects.order_by(
-        '-pub_date').filter(author_id=request.user.id)
-    sent_messages = Message.objects.order_by(
-        '-pre_time').filter(sender=request.user.username)
-    received_messages = Message.objects.order_by(
-        '-pre_time').filter(receiver=request.user)
+    blogs = Blog.objects.order_by('-pub_date').filter(author_id=request.user.id)
+    sent_messages = Message.objects.order_by('-pre_time').filter(sender=request.user.username)
+    received_messages = Message.objects.order_by('-pre_time').filter(receiver=request.user)
     messages = len(sent_messages) + len(received_messages)
     sent_messages_temp = []
     sent_to_id = []

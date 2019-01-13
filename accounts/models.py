@@ -14,3 +14,4 @@ class Profile(models.Model):
     github = models.CharField(max_length=100)
     linkedIn = models.CharField(max_length=100)
     is_bom = models.BooleanField(default=False)
+ 
