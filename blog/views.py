@@ -201,10 +201,24 @@ def addblog(request):
         blog_body = request.POST['blog_body'].rstrip()
         if 'image' in request.FILES:
             blog_image = request.FILES['image']
+        try:
+            # Some other type of file was being uploaded 
+            path_image = blog_image.temporary_file_path()
+        except:
+            # Correct type used 
+            path_image = '.png'
+
         if len(blog_body.split()) > 30:
-            new_blog = Blog(title=blog_title, body=blog_body,
-                            main_image=blog_image, author=request.user)
-            new_blog.save()
+            if len(blog_title) <= 30:
+                if path_image.endswith('.jpg') or path_image.endswith('.png') or path_image.endswith('.jpeg'):
+                    new_blog = Blog(title=blog_title, body=blog_body,main_image=blog_image, author=request.user)
+                    new_blog.save()
+                else:
+                    messages.error(request, 'Only the images with .jpg .jpeg and .png are allowed... ')
+                    return redirect('dashboard')
+            else:
+                messages.error(request, 'Blog title too long... Shorten to 30 characters')
+                return redirect('dashboard')
             return redirect('/blogs/'+str(new_blog.id))
         else:
             messages.error(request, 'Minimum 30 words are required to post a blog...')

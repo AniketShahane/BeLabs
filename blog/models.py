@@ -19,7 +19,7 @@ class Blog(models.Model):
     pub_date = models.DateTimeField(default=timezone.now())
     main_image = models.ImageField(
         upload_to='blog-images/', default="/defaults/default_blog_image.jpg")
-    body = models.TextField(validators=[MinLengthValidator(30)])
+    body = models.TextField()
     likes = models.IntegerField(default=1)
     comments = models.IntegerField(default=0)
     views = models.IntegerField(default=1)

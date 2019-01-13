@@ -91,8 +91,8 @@ def dashboard(request):
         pass
 
     blogs = Blog.objects.order_by('-pub_date').filter(author_id=request.user.id)
-    sent_messages = Message.objects.order_by('-pre_time').filter(sender=request.user.username)
-    received_messages = Message.objects.order_by('-pre_time').filter(receiver=request.user)
+    sent_messages = Message.objects.order_by('-time').filter(sender=request.user.username)
+    received_messages = Message.objects.order_by('-time').filter(receiver=request.user)
     messages = len(sent_messages) + len(received_messages)
     sent_messages_temp = []
     sent_to_id = []
@@ -126,7 +126,7 @@ def dashboard(request):
     final_messages = []
 
     while s < len(sent_messages) and r < len(received_messages):
-        if sent_messages[s].pre_time > received_messages[r].pre_time:
+        if sent_messages[s].time > received_messages[r].time:
             final_messages.append(
                 {'message': sent_messages[s], 'is_sent': True})
             s += 1

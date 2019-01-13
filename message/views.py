@@ -102,8 +102,10 @@ def sendmsg2(request, receiver_id):
         message_text = request.POST['text_message']
         user = User.objects.get(id=receiver_id)
         if user is not None:
-            new_message = Message(
-                receiver=user, sender=request.user.username, message_text=message_text)
+            new_message = Message(receiver=user, sender=request.user.username,message_text=message_text)
             new_message.save()
             return redirect('/messages/' + str(user.id))
+        else:
+            messages.error(request, 'No user with that username exists...')
+            return redirect('dashboard')
             # Make some changes so that the user is redirected to messages page
