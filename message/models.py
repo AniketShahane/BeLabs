@@ -14,7 +14,6 @@ class Message(models.Model):
     # Receiver variable also stores the username of the user
     time = models.DateTimeField(default=timezone.now())
     is_read = models.BooleanField(default=False)
-    pre_time = models.FloatField(default=tm.time())
 
     def small_message(self):
         if len(self.message_text) > 22:

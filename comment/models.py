@@ -12,7 +12,6 @@ class Comment(models.Model):
     writer = models.ForeignKey(User, on_delete=models.CASCADE)
     blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
     pub_time = models.DateTimeField(default=timezone.now())
-    pre_time = models.FloatField(default=time())
 
     def pub_pretty(self):
         return self.pub_time.strftime("%b %e, %Y")

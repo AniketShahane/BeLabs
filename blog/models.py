@@ -25,7 +25,6 @@ class Blog(models.Model):
     views = models.IntegerField(default=1)
     is_published = models.BooleanField(default=True)
     likers = models.TextField(default='', blank=True)
-    pre_time = models.FloatField(default=time())
 
     def words(self):
         return len(self.body.split())
