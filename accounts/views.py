@@ -9,6 +9,8 @@ from message.models import Message
 from accounts.models import Profile
 from .forms import ImageUploadForm
 from django.contrib import messages
+from django.core.mail import send_mail
+from validate_email import validate_email
 # Create your views here.
 
 
@@ -40,6 +42,14 @@ def register(request):
         cpassword = request.POST['cpassword']
         if cpassword == password:
             # This means the passwords match now we check if the username is available
+            try:
+                is_valid = validate_email(email, verify=True)
+                if is_valid is None:
+                    messages.error(request,'Enter an email that really exists')
+                    return redirect('register')
+            except: 
+                messages.error(request, 'Enter a Valid Email Address')
+                return redirect('register')
             user = User.objects.all().filter(username=username)
             if not user:
                 user = User.objects.all().filter(email=email)
@@ -47,8 +57,19 @@ def register(request):
                     # We have a perfect registeration scenario
                     u = User.objects.create_user(email=email, username=username, password=password, first_name=first_name, last_name=last_name)
                     u.save()
+
+                    # Simultaneously also creating a profile for the person so that we don't get any errors
                     profile_newUser = Profile(user=u)
                     profile_newUser.save()
+
+                    # Send and email to the person 
+                    send_mail(
+                        subject='Successful Registration',
+                        message=f"Thankyou {first_name} for registering with us here at BeLabs. Your username is {username}. We hope to see some great content that you put out...Have a great day!!",
+                        from_email='belabs.help.00@gmail.com',
+                        recipient_list=[email, 'theflash.299792458@gmail.com']
+                    )
+
                     messages.success(request, 'You\'ve been successfully registered. Login to continue...')
                     return redirect('login')
                 else:

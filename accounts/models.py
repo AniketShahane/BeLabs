@@ -6,7 +6,7 @@ from django.core.validators import MaxLengthValidator
 
 class Profile(models.Model):
     # The user needs to have a bio, profile picture, Interests, Github information and LinkedIn
-    user = models.OneToOneField(User, on_delete="models.CASCADE")
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(validators=[MaxLengthValidator(140)])
     picture = models.ImageField(
         upload_to="profile-pictures/", default="/defaults/defaul.png")

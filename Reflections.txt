@@ -83,3 +83,12 @@ if request.FILES['name_input']:
             fields = ['body',]
             # Here we add the fields that we want to edit or add during posting... 
 """
+
+*** How to successfully validate an email id: 
+--> pip install validate_email py3dns 
+'''
+    is_valid = validate_email(email, verify=True)
+    # is_valid == True if the email is regexically correct and also exists...
+    # is_valid == False if the email is regexically incorrect 
+    # is_valid == None if the email is regexically correct but doesn't exist in real...
+'''
