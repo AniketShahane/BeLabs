@@ -214,14 +214,13 @@ def update_profile(request):
         linkedin = request.POST['edit_linkedin']
         if 'picture' in request.FILES:
             if request.FILES['picture']:
-                print('The form is valid now')
                 profile_picture = request.FILES['picture']
                 profile_user.picture = profile_picture
             else:
-                print('Form is not valid')
+                pass
         profile_user.bio = bio
         if len(bio) > 140:
-            print('BioCharError')
+            messages.error(request, 'Your bio cant contain more than 140 characters')
             return redirect('dashboard')
         profile_user.interests = interest
         profile_user.github = github
