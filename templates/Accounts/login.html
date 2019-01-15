@@ -3,7 +3,7 @@
 {% include 'partials/_navbar.html' %}
 
 <div class="center form-container">
-  <h3 class="blog-header" style="margin-top: 4rem;">Login</h3>
+  <h3 class="blog-header animated fadeInDown faster" style="margin-top: 4rem;">Login</h3>
   <div class="center">
     <div class="row">
       <form class="col s10 m8 offset-m2 offset-s1" method="post" action="{% url 'login' %}">
@@ -22,7 +22,7 @@
             {% include 'partials/_alerts.html' %}
           </div>
         </div>
-        <div id="login-button">
+        <div id="login-button" class="animated fadeInDown faster">
           <button type="submit" name="submit" class="btn btn-large waves-light waves-effect form-buttons" style="background: #272727; color: #f4f4f4; font-family: 'Poppins', cursive; font-size: 2.2vh; margin-bottom: 4rem;">Login
             <i class="fas fa-share-square" style="margin-left: 4px"></i></button>
         </div>
